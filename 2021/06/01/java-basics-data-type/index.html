@@ -22,30 +22,33 @@
     var CONFIG = {"hostname":"konoakira.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="akira&#39;s notes.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="DYSTOPIA">
-<meta property="og:url" content="https://konoakira.com/index.html">
+  <meta name="description" content="本文总结了 Java 中的数据类型知识。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java basics - data type">
+<meta property="og:url" content="https://konoakira.com/2021/06/01/java-basics-data-type/index.html">
 <meta property="og:site_name" content="DYSTOPIA">
-<meta property="og:description" content="akira&#39;s notes.">
+<meta property="og:description" content="本文总结了 Java 中的数据类型知识。">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-01T01:59:08.000Z">
+<meta property="article:modified_time" content="2021-06-01T02:22:25.227Z">
 <meta property="article:author" content="Akira">
+<meta property="article:tag" content="basic">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://konoakira.com/">
+<link rel="canonical" href="https://konoakira.com/2021/06/01/java-basics-data-type/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>DYSTOPIA</title>
+  <title>java basics - data type | DYSTOPIA</title>
   
 
 
@@ -188,9 +191,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -206,10 +210,9 @@
       <meta itemprop="name" content="DYSTOPIA">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/01/java-basics-data-type/" class="post-title-link" itemprop="url">java basics - data type</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          java basics - data type
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -256,131 +259,129 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>本文总结了 Java 中的数据类型知识。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/06/01/java-basics-data-type/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
+        <p>本文总结了 Java 中的数据类型知识。</p>
+<span id="more"></span>
+
+<h2 id="原生数据类型（Primitive）"><a href="#原生数据类型（Primitive）" class="headerlink" title="原生数据类型（Primitive）"></a>原生数据类型（Primitive）</h2><table>
+<thead>
+<tr>
+<th align="center">Type</th>
+<th align="center">Length(byte)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">byte</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">char</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">short</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">int</td>
+<td align="center">4</td>
+</tr>
+<tr>
+<td align="center">long</td>
+<td align="center">8</td>
+</tr>
+<tr>
+<td align="center">float</td>
+<td align="center">4</td>
+</tr>
+<tr>
+<td align="center">double</td>
+<td align="center">8</td>
+</tr>
+<tr>
+<td align="center">boolean</td>
+<td align="center">1</td>
+</tr>
+</tbody></table>
+<h3 id="💡浮点类型精度丢失问题"><a href="#💡浮点类型精度丢失问题" class="headerlink" title="💡浮点类型精度丢失问题"></a>💡浮点类型精度丢失问题</h3><p>建议使用<code>java.math.BigDecimal</code>,能够完全自己控制精度，结果也准确。但是需要注意的是，<em>直接使用字符串来构造BigDecimal是绝对没有精度损失的，如果用double或者把double转化成string来构造BigDecimal依然会有精度损失，所以这种解决方法就是在数据库中就把浮点数用string来表示存放，涉及到运算直接用string构造BigDecimal，否则肯定会有精度损失</em>。不过BigDecimal也有缺点，就是效率不如double。</p>
+<h3 id="💡布尔类型与JVM"><a href="#💡布尔类型与JVM" class="headerlink" title="💡布尔类型与JVM"></a>💡布尔类型与JVM</h3><p>布尔类型boolean比较特殊，尽管Java虚拟机定义了boolean类型，但虚拟机对boolean类型的支持是有限的，没有为boolean值单独设计JVM指令。操作布尔值的表达式在编译之后，它使用的是JVM的int数据类型，也就是占用4个字节。<br>JVM也不会直接支持boolean数组，boolean数组在编译之后，它的元素采用byte数据类型，用0表示false，1表示true，也就是boolean数组的元素只占用一个字节。</p>
+<h3 id="💡无符号类型"><a href="#💡无符号类型" class="headerlink" title="💡无符号类型"></a>💡无符号类型</h3><p>在 C 和 C++ 这样的语言中，都提供了不同长度的整数类型：<code>char</code>, <code>short</code>, <code>int</code>, <code>long</code>在大部分的 32 位操作系统上，这些类型分别对应 1 字节，2 字节，4 字节和 8 字节。但是需要注意的是，这些整数类型所对应的字节长度在不同的平台上是不一样的。相对而言，由于 Java 是针对跨平台来设计的，所以无论运行在什么平台上，Java 中的 <code>byte</code> 永远是 1 字节，<code>short</code> 是 2 字节，<code>int</code> 是 4 字节，<code>long</code> 是 8 字节。</p>
+<p>C 语言中的整数类型都提供了对应的“无符号”版本，但是 Java 中就没有这个特性了，而大量的硬件接口、网络协议以及文件格式都会用到无符号类型！（Java 中提供的 <code>char</code> 类型和 C 中的 <code>char</code> 有所不同，在 Java 中，<code>chat</code> 是用 2 个字节来表示 Unicode 值，在 C 中，<code>char</code> 是用 1 个字节来表示 ASCII 值。虽然可以在 Java 中把 <code>char</code> 当做无符号短整型来使用，用来表示 0 到 2^16 的整数。但是这样来用可能产生各种诡异的事情，比如当你要打印这个数值的时候实际上打印出来的是这个数值对应的字符而不是这个数值本身的字符串表示）。</p>
+<p>那么，如何应对 Java 中无符号类型的缺失？答案就是：使用比要用的无符号类型更大的有符号类型。例如：使用 <code>short</code> 来处理无符号的字节，使用 <code>long</code> 来处理无符号整数等（甚至可以使用 <code>char</code> 来处理无符号短整型）。确实，这样看起来很浪费，因为你使用了 2 倍的存储空间，但是也没有更好的办法了。另外，需要提醒的是，对于 <code>long</code> 类型变量的访问不是原子性操作，所以，如果在多线程场景中，你得自己去处理同步的问题。</p>
+<hr>
+<h2 id="引用数据类型-（Reference）"><a href="#引用数据类型-（Reference）" class="headerlink" title="引用数据类型 （Reference）"></a>引用数据类型 （Reference）</h2><hr>
+<h2 id="包装类"><a href="#包装类" class="headerlink" title="包装类"></a>包装类</h2><p>包装类也是引用数据类型</p>
+<ul>
+<li>Boolean，使用 static final 定义</li>
+<li>Byte， 缓存区 -128 ~ 127</li>
+<li>Short，缓存区 -128 ~ 127</li>
+<li>Integer，缓存区 -128 ~ 127</li>
+<li>Long，缓存区 -128 ~ 127</li>
+<li>Character，缓存区 -128 ~ 127</li>
+<li>Float，无缓存</li>
+<li>Double，无缓存</li>
+</ul>
+<h3 id="💡为什么需要包装类？"><a href="#💡为什么需要包装类？" class="headerlink" title="💡为什么需要包装类？"></a>💡为什么需要包装类？</h3><ul>
+<li>包装类里面有一些很有用的方法和属性，如<code>HashCode</code>, <code>ParseInt</code></li>
+<li>基本类型不能赋 <code>null</code> 值</li>
+<li>有些地方不能直接用基本类型，比如集合</li>
+</ul>
+<h3 id="💡何时使用包装类？"><a href="#💡何时使用包装类？" class="headerlink" title="💡何时使用包装类？"></a>💡何时使用包装类？</h3><ul>
+<li><code>Pojo</code> 类定义的属性使用包装类，数据库中对应的字段为空时，如果使用基本类型，映射会出现问题，因为基本类型不能为 null。</li>
+<li><code>RPC</code> 方法中参数的类型和返回值类型要用包装类，原因同上，如果解释的参数为空，基本类型会报空指针异常。</li>
+<li>所以的<code>局部变量</code> 推荐使用基本数据类型，因为基本类型存储在栈，方法执行完毕后，栈上的内存空间也随之释放。</li>
+</ul>
+
     </div>
 
     
     
     
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://konoakira.com/2021/05/29/spring-cloud-alibaba-tutorial-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/64194311">
-      <meta itemprop="name" content="Akira">
-      <meta itemprop="description" content="akira's notes.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="DYSTOPIA">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/29/spring-cloud-alibaba-tutorial-1/" class="post-title-link" itemprop="url">spring cloud alibaba 全家桶食用记录-1：dubbo</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-29 23:28:31" itemprop="dateCreated datePublished" datetime="2021-05-29T23:28:31+08:00">2021-05-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-30 04:02:42" itemprop="dateModified" datetime="2021-05-30T04:02:42+08:00">2021-05-30</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/microservices/" itemprop="url" rel="index"><span itemprop="name">microservices</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.5k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>本文记录了Spring Boot 集成 Apache Dubbo 的过程。参考书目：<a target="_blank" rel="noopener" href="https://e.jd.com/30612335.html">Spring Cloud Alibaba 微服务原理与实战</a>。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/29/spring-cloud-alibaba-tutorial-1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Akira
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://konoakira.com/2021/06/01/java-basics-data-type/" title="java basics - data type">https://konoakira.com/2021/06/01/java-basics-data-type/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+          <div class="post-tags">
+              <a href="/tags/basic/" rel="tag"># basic</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/29/spring-cloud-alibaba-tutorial-1/" rel="prev" title="spring cloud alibaba 全家桶食用记录-1：dubbo">
+      <i class="fa fa-chevron-left"></i> spring cloud alibaba 全家桶食用记录-1：dubbo
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -427,6 +428,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%94%9F%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%88Primitive%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">原生数据类型（Primitive）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%92%A1%E6%B5%AE%E7%82%B9%E7%B1%BB%E5%9E%8B%E7%B2%BE%E5%BA%A6%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">💡浮点类型精度丢失问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%92%A1%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B%E4%B8%8EJVM"><span class="nav-number">1.2.</span> <span class="nav-text">💡布尔类型与JVM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%92%A1%E6%97%A0%E7%AC%A6%E5%8F%B7%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">💡无符号类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-%EF%BC%88Reference%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">引用数据类型 （Reference）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%85%E8%A3%85%E7%B1%BB"><span class="nav-number">3.</span> <span class="nav-text">包装类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%92%A1%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%8C%85%E8%A3%85%E7%B1%BB%EF%BC%9F"><span class="nav-number">3.1.</span> <span class="nav-text">💡为什么需要包装类？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%92%A1%E4%BD%95%E6%97%B6%E4%BD%BF%E7%94%A8%E5%8C%85%E8%A3%85%E7%B1%BB%EF%BC%9F"><span class="nav-number">3.2.</span> <span class="nav-text">💡何时使用包装类？</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -574,6 +576,25 @@ if (document.querySelectorAll('pre.mermaid').length) {
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'c2bb6ecdc360d1417817',
+      clientSecret: '3081aae8990bcbf19f97f3e13ce016eaa434b878',
+      repo        : 'konoakira.github.io',
+      owner       : 'konoakira',
+      admin       : ['konoakira'],
+      id          : '99d7521432f906a76fbbc12c56992373',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>
