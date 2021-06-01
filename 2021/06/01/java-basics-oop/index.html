@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"konoakira.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="本文总结了 Java 面向对象的一些知识。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 面向对象总结">
+<meta property="og:url" content="https://konoakira.com/2021/06/01/java-basics-oop/index.html">
+<meta property="og:site_name" content="DYSTOPIA">
+<meta property="og:description" content="本文总结了 Java 面向对象的一些知识。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-01T02:52:36.000Z">
+<meta property="article:modified_time" content="2021-06-01T15:45:42.530Z">
+<meta property="article:author" content="Akira">
+<meta property="article:tag" content="basic">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://konoakira.com/2021/06/01/java-basics-oop/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Java 面向对象总结 | DYSTOPIA</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">DYSTOPIA</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Where liberty dwells, there is my country.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://konoakira.com/2021/06/01/java-basics-oop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/64194311">
+      <meta itemprop="name" content="Akira">
+      <meta itemprop="description" content="akira's notes.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DYSTOPIA">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java 面向对象总结
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-01 10:52:36 / 修改时间：23:45:42" itemprop="dateCreated datePublished" datetime="2021-06-01T10:52:36+08:00">2021-06-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文总结了 Java 面向对象的一些知识。</p>
+<span id="more"></span>
+
+<h2 id="两个重要概念"><a href="#两个重要概念" class="headerlink" title="两个重要概念"></a>两个重要概念</h2><ul>
+<li>类（Class）：类是一个抽象的概念，类中包含了数据（称为属性，property 或 attribute，或者成员变量，member variable）和对数据的操作（称为方法，method）。</li>
+<li>对象（Object）：对象是一个具体的概念，是类的一种具体表达方式。</li>
+</ul>
+<h2 id="三个基本特征"><a href="#三个基本特征" class="headerlink" title="三个基本特征"></a>三个基本特征</h2><ul>
+<li><p>继承（Inheritance）</p>
+<p>Java 是单继承，意味着一个类只能从另一个类继承（被继承的类称为父类，基类或者超类），继承使用关键字 <code>extends</code> 。当生成子类对象时，Java 默认首先调用父类的不带参数的构造方法，然后执行构造方法，生成父类的对象。接下来，再去调用子类的构造方法，生成子类的构造对象。</p>
+<p>☢️注意以下几点：</p>
+<ul>
+<li>构造方法不能被继承</li>
+<li>方法和属性可以被继承</li>
+<li>子类的构造方法隐式地调用父类不带参数的构造方法</li>
+<li>当父类没有不带参数的构造方法时，子类需要使用super来显式地调用父类的构造方法</li>
+</ul>
+</li>
+<li><p>封装（Encapsulation）</p>
+<p>类包含了数据与方法，将数据与方法放在一个类中就构成了封装。</p>
+</li>
+<li><p>多态（Polymorphism）</p>
+<p>父类型的引用可以指向子类的对象。</p>
+</li>
+</ul>
+<h2 id="四种访问修饰符"><a href="#四种访问修饰符" class="headerlink" title="四种访问修饰符"></a>四种访问修饰符</h2><p>安装开放权限从高到低：</p>
+<ul>
+<li>public<ul>
+<li>可以被所以类访问</li>
+</ul>
+</li>
+<li>protected<ul>
+<li>类内部</li>
+<li>子类</li>
+<li>相同包</li>
+</ul>
+</li>
+<li>默认<ul>
+<li>类内部</li>
+<li>相同包</li>
+</ul>
+</li>
+<li>private<ul>
+<li>类内部</li>
+</ul>
+</li>
+</ul>
+<p>使用规则：</p>
+<ul>
+<li>如果不允许外部直接通过 <code>new</code> 来创建对象，比如单例模式，构造方法必须是 <code>private</code></li>
+<li>工具类不允许有 <code>public</code> 或 <code>default</code> 构造方法</li>
+<li>类非<code>static</code> 成员变量并且与子类共享，必须是 <code>protected</code></li>
+<li>类非<code>static</code> 成员变量并且仅在本类使用，必须是 <code>private</code></li>
+<li>类 <code>static</code> 成员变量如果仅在本类使用，必须是 <code>private</code></li>
+<li>若是 <code>static</code> 成员变量，必须考虑是否为 <code>final</code></li>
+<li>类成员方法只供内部使用时，必须为 <code>private</code></li>
+<li>类成员方法只对继承类公开时，要限制为 <code>protected</code></li>
+</ul>
+<h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><ul>
+<li><p><code>void</code>：如果方法不返回值，那么声明方法的时候使用 void关键字，在方法定义中可以由两种情况实现不返回值：</p>
+<ul>
+<li>不使用 return 语句</li>
+<li>使用return ,但 return 后面没有任何值或者变量，return 后面只有一个分号，表示退出方法，返回到方法的调用端。使用方式：<code>return;</code></li>
+</ul>
+</li>
+<li><p><code>super</code>: 对父类对象的引用。如果子类使用<code>super(...)</code>显式地调用父类的某个构造方法，那么在执行的时候就会寻找与<code>super(...)</code>对应的构造方法，而不会再去寻找父类的不带参数的构造方法。与<code>this(...)</code>一样，<code>super</code>也必须要作为构造方法的第一条执行语句，前面不能有任何可执行语句。</p>
+</li>
+<li><p><code>this</code>：访问本类实例属性和方法，调用时先在本类中寻找，没有则找父类。单独使用时，表示当前对象。</p>
+</li>
+</ul>
+<h2 id="重载（Overload）与重写（Override）"><a href="#重载（Overload）与重写（Override）" class="headerlink" title="重载（Overload）与重写（Override）"></a>重载（Overload）与重写（Override）</h2><ul>
+<li><p>方法签名：由方法名与参数列表（参数类型与顺序）组成，JVM通过方法签名这个唯一键来决定调用哪个重载方法。</p>
+</li>
+<li><p>构造方法重写：只需看参数即可。如果一个构造方法中调用另一个调用方法，可以用<code>this(...)</code>的方式调用。</p>
+</li>
+<li><p>方法重写：方法签名不能相同，而方法名要相同，因此方法重写要求参数列表不同，这里有几层含义：</p>
+<ul>
+<li>参数个数不同</li>
+<li>或者参数类型不同</li>
+<li>或者参数顺序不同</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">method0</span><span class="params">(<span class="keyword">int</span> arg0, <span class="keyword">boolean</span> arg1)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">method0</span><span class="params">(<span class="keyword">boolean</span> arg0, <span class="keyword">int</span> arg1)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>子类于父类的方法方法签名一样，这样我们说子类与父类构成了重写关系</p>
+</li>
+<li><p>当两个方法形成重写关系时，可以在子类方法中通过super.run()形式调用父类的run()方法，其中super.run()不必放在第一行语句，因此此时父类 对象已经构造完毕，先调用父类的run()方法还是先调用子类的run()方法是根据程序的逻辑决定的。</p>
+</li>
+<li><p>重写时子类的返回类型要比父类更严格，比如父类返回类型是<code>List&lt;String&gt;</code>，则子类可以是<code>ArrayList&lt;String&gt;</code>;子类方法的返回权限要比父类宽松，比如父类是<code>procted</code>则子类只能是<code>public</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseClass</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> List&lt;String&gt; <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SubClass</span> <span class="keyword">extends</span> <span class="title">BaseClass</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p> 方法重载和重写的关系</p>
+</li>
+</ul>
+<ul>
+<li>重载发生在同一个类内部的两个或者多个方法</li>
+<li>重写发生在父类和子类之间</li>
+</ul>
+<h2 id="抽象类与接口"><a href="#抽象类与接口" class="headerlink" title="抽象类与接口"></a>抽象类与接口</h2><ul>
+<li><p>**抽象类(abstract class)**： 使用了<code>abstract</code> 关键字所修饰的类叫做抽象类。抽象类无法实例化，也就是说，不能 <code>new</code> 出来一个抽象类的对象(实例)</p>
+<p><strong>抽象方法</strong>: 使用abstract 关键字所修饰的方法叫做抽象方法。抽象方法需要定义在抽象类中。相对于抽象方法，之前所定义的方法叫做具体方法(有声明，有实现)</p>
+<p>如果一个类包含了抽象方法，那么这个类一定是抽象类。如果某个类是抽象类，那么该类可以包含具体方法(有声明，有实现)。无论何种情况，只要一个类是抽象类，那么这个类就无法实例化。在子类继承父类(父类是个抽象类)的 情况下，那么该子类必须要实现父类中所定义的所有抽象方法；否则，该子类也要声明成一个 abstract class</p>
+<p>抽象类体现的就是一种模板模式的设计，抽象类作为多个子类的通用模板，子类在抽象类的基础是上进行扩展、改造</p>
+</li>
+<li><p><strong>接口(interface)</strong>: 接口的地位等同于<code>class</code>，接口中所有的方法都是抽象方法。在声明接口中的方法时，可以使用<code>abstract</code>关键字，也可以不使用，通常情况下，都会省略 abstract 关键字</p>
+<p>可以将接口看作成特殊的抽象类，而接口中只能有抽象方法，不能有具体方法(JDK8及以上可以定义默认的具体方法)。类可以实现接口，实现使用关键字 <code>implements</code> 表示，代表了某个实现类实现了某个接口</p>
+<p>一个类实现了某个接口，那么该类必须要实现接口中声明的所有方法。如果该类是一个抽象类，那么就无需实现接口中的方法了</p>
+<p>Java是单继承的，也就是说某个类只能有唯一的一个父类，一个类可以实现多个接口，多个接口之间使用逗号分隔</p>
+</li>
+<li><p>抽象类与接口最大的不同应该是语义的不同：抽象类是对一个类的模版抽象，而接口是对类的行为的抽象。当然除此之外，一个类可以单继承抽象类，却可以实现多个接口;抽象类可以有非静态成员，接口只能有静态final成员。如果理解了二者的设计目的，也就能理解这些区别</p>
+</li>
+</ul>
+<h2 id="static关键字"><a href="#static关键字" class="headerlink" title="static关键字"></a><code>static</code>关键字</h2><ul>
+<li><p>修饰属性</p>
+<p>无论一个类生成了多少对象，所有这些对象共同使用唯一一份静态的成员变量；一个对象对静态成员变量进行修改，其他对象的该静态变量的值也会随之发生改变。如果一个成员变量是 static 的，那么我们可以通过 类名.成员变量的方式来使用它</p>
+</li>
+<li><p>修饰方法</p>
+<p>static 修饰的方法叫做静态方法。对于静态方法来说，可以使用 类名.方法名 的方式来访问; 不能再静态方法中访问非静态成员变量，可以在静态方法中访问静态的成员变量</p>
+</li>
+<li><p>修饰类</p>
+<p>注意：只能修饰内部类</p>
+</li>
+<li><p>修饰代码块</p>
+<p>静态代码块的作用也是完成一些初始化工作。首先执行静态代码块，然后执行构造方法。静态代码块在类被加载的时候执行，而构造方法是在生成对象的时候执行；要想调用某个类来生成对象，首先需要将类加载到java 虚拟机上（JVM),然后由JVM加载这个类来生成对象</p>
+<p>类的静态代码块只会执行一次，是在类被加载的时候执行的，因为每个类只会被加载一次，所以静态代码块也会被执行一次；而构造方法则不然，每次生成一个对象的时候都会 调用类的构造方法，所以<code>new</code> 一次就会调用构造方法一次</p>
+<p>如果集成体系中既有构造方法，又有静态代码块，那么首先执行最顶层的类的静态代码块，一直执行到最底层的静态 代码块，然后再去执行最顶层的类的构造方法，一直执行到最底层类的构造方法</p>
+</li>
+</ul>
+<h2 id="final-关键字"><a href="#final-关键字" class="headerlink" title="final 关键字"></a><code>final</code> 关键字</h2><ul>
+<li><p>修饰属性</p>
+<p>表示不能被改写。当final修饰一个原生数据类型是，表示该原生类型的值不能发生变化。如果final 修饰的是一个引用类型时，表示该引用类型不能再指向其他对象了，但该引用所指向对象的内容是可以发生变化的。成员变量要么声明时赋值，要么在类的构造方法中赋值</p>
+</li>
+<li><p>修饰方法</p>
+<p>表示不能被重写</p>
+</li>
+<li><p>修饰类</p>
+<p>表示不能被继承</p>
+</li>
+</ul>
+<h2 id="new-关键字"><a href="#new-关键字" class="headerlink" title="new 关键字"></a><code>new</code> 关键字</h2><p><code>Cat c = new Cat();</code>语句初始化对象的三个步骤：</p>
+<ol>
+<li>给Cat对象分配内存</li>
+<li>调用Cat类的构造方法</li>
+<li>将c对象指向分配的内存空间</li>
+</ol>
+<h2 id="成员变量与局部变量"><a href="#成员变量与局部变量" class="headerlink" title="成员变量与局部变量"></a>成员变量与局部变量</h2><ul>
+<li>成员变量<ul>
+<li>实例变量，不以 <code>static</code> 修饰</li>
+<li>类变量，以 <code>static</code> 修饰</li>
+</ul>
+</li>
+<li>实例变量<ul>
+<li>形参</li>
+<li>方法局部变量</li>
+<li>代码块局部变量</li>
+</ul>
+</li>
+</ul>
+<h2 id="成员变量使用规则"><a href="#成员变量使用规则" class="headerlink" title="成员变量使用规则"></a>成员变量使用规则</h2><ul>
+<li>何时使用成员变量<ul>
+<li>如果需要定义的变量是用于描述某个类或者某个对象的固有信息</li>
+<li>如果在某个类中需要以一个变量来保存该类或者实例运行时的状态信息</li>
+<li>如果某个信息需要在某个类的多个方法之间共享</li>
+</ul>
+</li>
+<li>成员变量危害<ul>
+<li>增大变量的生存时间，将导致更大的内存开销</li>
+<li>扩大变量的作用域，不利于提高程序的内聚性</li>
+</ul>
+</li>
+</ul>
+<h2 id="类关系"><a href="#类关系" class="headerlink" title="类关系"></a>类关系</h2><ul>
+<li>继承，<code>extends</code>，is-a</li>
+<li>实现，<code>implements</code>，can-do</li>
+<li>组合，类是成员变量，contains-a，具有相同的生命周期，是一种非常强的整体与部分的关系</li>
+<li>聚合，类是成员变量，has-a，具有不同的生命周期，是一种松散的整体与部分的关系</li>
+<li>依赖，<code>import</code> 类，use-a</li>
+</ul>
+<h2 id="设计父类规则"><a href="#设计父类规则" class="headerlink" title="设计父类规则"></a>设计父类规则</h2><ul>
+<li>尽量隐藏父类的内部数据，尽量把父类的所有成员变量都设置成 <code>private</code> 访问类型，不要让子类直接访问父类的成员变量</li>
+<li>不要让子类可以随意访问、修改父类的方法。父类中那些仅为辅助其他的工具方法，应该使用 <code>private</code> 访问控制符修饰，让子类无法访问改方法。如果父类中方法需要被外部类调用，则必须以 <code>public</code> 修饰，但又不希望子类重写该方法，可以使用 <code>final</code> 修饰。如果希望父类的某个方法可以被子类重写，但不希望被其他类方法，可以用 <code>protected</code> 修饰该方法</li>
+<li>尽量不要在父类构造器中调用将被子类重写的方法</li>
+</ul>
+<h2 id="对象的引用"><a href="#对象的引用" class="headerlink" title="对象的引用"></a>对象的引用</h2><ul>
+<li><p>强引用（Strong Reference）</p>
+<p>程序创建一个对象，并把这个对象赋给一个引用变量，程序通过该引用变量来操作实际的对象。当一个对象被一个或一个以上的引用变量所引用时，它处于可达状态，不可能被系统垃圾回收机制回收</p>
+</li>
+<li><p>软引用（Soft Reference）</p>
+<p>当一个对象只有软引用时，它有可能被垃圾回收机制回收。对于只有软引用的对象而言，当系统内存空间足够时，它不会被系统回收，程序也可使用该对象；但系统内存空间不足时，系统可能会回收它。软引用通常用于对内存敏感的程序中</p>
+</li>
+</ul>
+<ul>
+<li><p>弱引用（Weak Reference）</p>
+<p>对于只有弱引用的对象而言，当系统垃圾回收机制运行时，不管系统内存是否足够，总会回收该对象所占用的内存</p>
+</li>
+<li><p>虚引用（幻象引用，Phantom Reference）</p>
+<p>幻象引用仅仅是提供了一种确保对象被finalize以后，做某些事情的机制，比如，通常用来做所谓的Post-Mortem清理机制</p>
+</li>
+</ul>
+<h2 id="类内方法"><a href="#类内方法" class="headerlink" title="类内方法"></a>类内方法</h2><ul>
+<li>实例方法（非静态方法），依附于实例对象，可以通过引用变量调用。当<code>.class</code>字节码文件加载之后，实例方法并不会被分配方法入口地址，只有在对象创建之后才会被分配</li>
+<li>类方法（静态方法），不能使用实例成员。当类加载后，即分配了相应的内存空间。静态方法不能使用<code>super</code>和<code>this</code>关键字，这两个关键字指代的都是需要被创建出来的对象。通常静态方法用于定义工具类中的方法</li>
+<li>静态代码块，不存在于任何方法体内。在类加载的时候就被调用，并先于构造方法执行，且只能执行一次</li>
+</ul>
+<h2 id="对象创建的几种方法"><a href="#对象创建的几种方法" class="headerlink" title="对象创建的几种方法"></a>对象创建的几种方法</h2><ul>
+<li><code>new</code>，调用构造方法</li>
+<li><code>clone</code>，在内存上</li>
+<li>反射，调用构造方法</li>
+<li>序列化，在文件上</li>
+<li>通过<code>Unsafe</code>实例化一个类</li>
+</ul>
+<h2 id="getter-amp-setter"><a href="#getter-amp-setter" class="headerlink" title="getter&amp;setter"></a><code>getter</code>&amp;<code>setter</code></h2><ul>
+<li><p>满足面向对象语言封装的特性，尽可能将类中的属性定义为 <code>private</code>。针对属性值的访问与修改需要使用相应的getter 与 setter 方法，而不是直接<code>public</code>的属性进行读取和修改。</p>
+</li>
+<li><p>有利于统一控制，业务要求对某个属性值的修改要增加统一的权限控制，如果有 setter 作为统一的属性修改方法则更容易实现。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Akira
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://konoakira.com/2021/06/01/java-basics-oop/" title="Java 面向对象总结">https://konoakira.com/2021/06/01/java-basics-oop/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/basic/" rel="tag"># basic</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/01/java-basics-data-type/" rel="prev" title="Java 数据类型">
+      <i class="fa fa-chevron-left"></i> Java 数据类型
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">两个重要概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E4%B8%AA%E5%9F%BA%E6%9C%AC%E7%89%B9%E5%BE%81"><span class="nav-number">2.</span> <span class="nav-text">三个基本特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E7%A7%8D%E8%AE%BF%E9%97%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">3.</span> <span class="nav-text">四种访问修饰符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">4.</span> <span class="nav-text">关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%EF%BC%88Overload%EF%BC%89%E4%B8%8E%E9%87%8D%E5%86%99%EF%BC%88Override%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">重载（Overload）与重写（Override）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3"><span class="nav-number">6.</span> <span class="nav-text">抽象类与接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#static%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">7.</span> <span class="nav-text">static关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#final-%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">8.</span> <span class="nav-text">final 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#new-%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">9.</span> <span class="nav-text">new 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E4%B8%8E%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F"><span class="nav-number">10.</span> <span class="nav-text">成员变量与局部变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E4%BD%BF%E7%94%A8%E8%A7%84%E5%88%99"><span class="nav-number">11.</span> <span class="nav-text">成员变量使用规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%85%B3%E7%B3%BB"><span class="nav-number">12.</span> <span class="nav-text">类关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E7%88%B6%E7%B1%BB%E8%A7%84%E5%88%99"><span class="nav-number">13.</span> <span class="nav-text">设计父类规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%BC%95%E7%94%A8"><span class="nav-number">14.</span> <span class="nav-text">对象的引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%86%85%E6%96%B9%E6%B3%95"><span class="nav-number">15.</span> <span class="nav-text">类内方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-number">16.</span> <span class="nav-text">对象创建的几种方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getter-amp-setter"><span class="nav-number">17.</span> <span class="nav-text">getter&amp;setter</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Akira"
+      src="https://avatars.githubusercontent.com/u/64194311">
+  <p class="site-author-name" itemprop="name">Akira</p>
+  <div class="site-description" itemprop="description">akira's notes.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:konoakira@outlook.com" title="E-Mail → mailto:konoakira@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Akira</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">9k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">16 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'c2bb6ecdc360d1417817',
+      clientSecret: '3081aae8990bcbf19f97f3e13ce016eaa434b878',
+      repo        : 'konoakira.github.io',
+      owner       : 'konoakira',
+      admin       : ['konoakira'],
+      id          : 'fcf9f4993a0c327539799169f965cbf4',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
