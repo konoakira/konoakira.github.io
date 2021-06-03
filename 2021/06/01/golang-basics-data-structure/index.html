@@ -20,22 +20,22 @@
     <meta name="keywords" content="hexo,hexo-theme,hexo-blog,blog,java,golang">
     
     <meta name="description" content="akira's notes.">
-    <meta name="description" content="本文总结了 Java 中的数据类型知识。">
+    <meta name="description" content="读Go 语言设计与实现笔记。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java 数据类型">
-<meta property="og:url" content="https://konoakira.com/2021/06/01/java-basics-data-type/index.html">
+<meta property="og:title" content="golang basics - data structure">
+<meta property="og:url" content="https://konoakira.com/2021/06/01/golang-basics-data-structure/index.html">
 <meta property="og:site_name" content="DYSTOPIA">
-<meta property="og:description" content="本文总结了 Java 中的数据类型知识。">
+<meta property="og:description" content="读Go 语言设计与实现笔记。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-06-01T01:59:08.000Z">
-<meta property="article:modified_time" content="2021-06-01T02:55:14.148Z">
+<meta property="article:published_time" content="2021-06-01T15:51:04.000Z">
+<meta property="article:modified_time" content="2021-06-02T10:36:28.935Z">
 <meta property="article:author" content="Akira">
 <meta property="article:tag" content="basic">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>Java 数据类型 · DYSTOPIA</title>
+    <title>golang basics - data structure · DYSTOPIA</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -246,7 +246,7 @@
                 <a href="/" >DYSTOPIA</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Java 数据类型</a>
+                <a href="#" class="post-name">golang basics - data structure</a>
             </div>
     </div>
     
@@ -276,7 +276,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Java 数据类型
+            golang basics - data structure
             <!-- 404 -->
             
         </h1>
@@ -301,7 +301,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.1k</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1.2k</span>阅读时长: <span class="post-count reading-time">5 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -430,76 +430,67 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>本文总结了 Java 中的数据类型知识。</p>
+        <p>读<a target="_blank" rel="noopener" href="https://draveness.me/golang/docs/">Go 语言设计与实现</a>笔记。</p>
 <span id="more"></span>
 
-<h2 id="原生数据类型（Primitive）"><a href="#原生数据类型（Primitive）" class="headerlink" title="原生数据类型（Primitive）"></a>原生数据类型（Primitive）</h2><table>
-<thead>
-<tr>
-<th align="center">Type</th>
-<th align="center">Length(byte)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">byte</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">char</td>
-<td align="center">2</td>
-</tr>
-<tr>
-<td align="center">short</td>
-<td align="center">2</td>
-</tr>
-<tr>
-<td align="center">int</td>
-<td align="center">4</td>
-</tr>
-<tr>
-<td align="center">long</td>
-<td align="center">8</td>
-</tr>
-<tr>
-<td align="center">float</td>
-<td align="center">4</td>
-</tr>
-<tr>
-<td align="center">double</td>
-<td align="center">8</td>
-</tr>
-<tr>
-<td align="center">boolean</td>
-<td align="center">1</td>
-</tr>
-</tbody></table>
-<h3 id="💡浮点类型精度丢失问题"><a href="#💡浮点类型精度丢失问题" class="headerlink" title="💡浮点类型精度丢失问题"></a>💡浮点类型精度丢失问题</h3><p>建议使用<code>java.math.BigDecimal</code>,能够完全自己控制精度，结果也准确。但是需要注意的是，<em>直接使用字符串来构造BigDecimal是绝对没有精度损失的，如果用double或者把double转化成string来构造BigDecimal依然会有精度损失，所以这种解决方法就是在数据库中就把浮点数用string来表示存放，涉及到运算直接用string构造BigDecimal，否则肯定会有精度损失</em>。不过BigDecimal也有缺点，就是效率不如double。</p>
-<h3 id="💡布尔类型与JVM"><a href="#💡布尔类型与JVM" class="headerlink" title="💡布尔类型与JVM"></a>💡布尔类型与JVM</h3><p>布尔类型boolean比较特殊，尽管Java虚拟机定义了boolean类型，但虚拟机对boolean类型的支持是有限的，没有为boolean值单独设计JVM指令。操作布尔值的表达式在编译之后，它使用的是JVM的int数据类型，也就是占用4个字节。<br>JVM也不会直接支持boolean数组，boolean数组在编译之后，它的元素采用byte数据类型，用0表示false，1表示true，也就是boolean数组的元素只占用一个字节。</p>
-<h3 id="💡无符号类型"><a href="#💡无符号类型" class="headerlink" title="💡无符号类型"></a>💡无符号类型</h3><p>在 C 和 C++ 这样的语言中，都提供了不同长度的整数类型：<code>char</code>, <code>short</code>, <code>int</code>, <code>long</code>在大部分的 32 位操作系统上，这些类型分别对应 1 字节，2 字节，4 字节和 8 字节。但是需要注意的是，这些整数类型所对应的字节长度在不同的平台上是不一样的。相对而言，由于 Java 是针对跨平台来设计的，所以无论运行在什么平台上，Java 中的 <code>byte</code> 永远是 1 字节，<code>short</code> 是 2 字节，<code>int</code> 是 4 字节，<code>long</code> 是 8 字节。</p>
-<p>C 语言中的整数类型都提供了对应的“无符号”版本，但是 Java 中就没有这个特性了，而大量的硬件接口、网络协议以及文件格式都会用到无符号类型！（Java 中提供的 <code>char</code> 类型和 C 中的 <code>char</code> 有所不同，在 Java 中，<code>chat</code> 是用 2 个字节来表示 Unicode 值，在 C 中，<code>char</code> 是用 1 个字节来表示 ASCII 值。虽然可以在 Java 中把 <code>char</code> 当做无符号短整型来使用，用来表示 0 到 2^16 的整数。但是这样来用可能产生各种诡异的事情，比如当你要打印这个数值的时候实际上打印出来的是这个数值对应的字符而不是这个数值本身的字符串表示）。</p>
-<p>那么，如何应对 Java 中无符号类型的缺失？答案就是：使用比要用的无符号类型更大的有符号类型。例如：使用 <code>short</code> 来处理无符号的字节，使用 <code>long</code> 来处理无符号整数等（甚至可以使用 <code>char</code> 来处理无符号短整型）。确实，这样看起来很浪费，因为你使用了 2 倍的存储空间，但是也没有更好的办法了。另外，需要提醒的是，对于 <code>long</code> 类型变量的访问不是原子性操作，所以，如果在多线程场景中，你得自己去处理同步的问题。</p>
-<hr>
-<h2 id="引用数据类型-（Reference）"><a href="#引用数据类型-（Reference）" class="headerlink" title="引用数据类型 （Reference）"></a>引用数据类型 （Reference）</h2><hr>
-<h2 id="包装类"><a href="#包装类" class="headerlink" title="包装类"></a>包装类</h2><p>包装类也是引用数据类型</p>
+<h2 id="数组（Array）"><a href="#数组（Array）" class="headerlink" title="数组（Array）"></a>数组（Array）</h2><ul>
+<li><p>初始化</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">arr1 := [<span class="number">3</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;</span><br><span class="line">arr2 := [...]<span class="keyword">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;</span><br><span class="line">fmt.Printf(<span class="string">&quot;type of arr1: %T\n&quot;</span>, arr1)</span><br><span class="line">fmt.Printf(<span class="string">&quot;type of arr2: %T\n&quot;</span>, arr2)</span><br><span class="line">fmt.Println(reflect.TypeOf(arr1)==reflect.TypeOf(arr2))</span><br><span class="line"><span class="comment">// result</span></span><br><span class="line"><span class="comment">// type of arr1: [3]int</span></span><br><span class="line"><span class="comment">// type of arr2: [4]int</span></span><br><span class="line"><span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p>初始化后大小无法改变，如👆所示，初始化有两种方式，其中第二中是一种语法糖。只有元素类型相同，数组大小相同才是相同类型的数组。</p>
+</li>
+<li><p>语句转换</p>
+<p>在不考虑逃逸分析的情况下，如果数组中元素的个数小于或者等于 4 个，那么所有的变量会直接在栈上初始化，如果数组元素大于 4 个，变量就会在静态存储区初始化然后拷贝到栈上。</p>
+</li>
+</ul>
+<h2 id="切片（Slice）"><a href="#切片（Slice）" class="headerlink" title="切片（Slice）"></a>切片（Slice）</h2><p>声明时只需指出类型，长度不定。</p>
 <ul>
-<li>Boolean，使用 static final 定义</li>
-<li>Byte， 缓存区 -128 ~ 127</li>
-<li>Short，缓存区 -128 ~ 127</li>
-<li>Integer，缓存区 -128 ~ 127</li>
-<li>Long，缓存区 -128 ~ 127</li>
-<li>Character，缓存区 -128 ~ 127</li>
-<li>Float，无缓存</li>
-<li>Double，无缓存</li>
+<li><p>切片的运行时表示：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> sliceHeader <span class="keyword">struct</span> &#123;</span><br><span class="line">	Data <span class="keyword">uintptr</span></span><br><span class="line">	Len  <span class="keyword">int</span></span><br><span class="line">	Cap  <span class="keyword">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>初始化</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">arr := [<span class="number">5</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;</span><br><span class="line">slice1 := arr[<span class="number">1</span>:<span class="number">4</span>]</span><br><span class="line">slice2 := []<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;</span><br><span class="line">slice3 := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line">fmt.Printf(<span class="string">&quot;type of slice1: %T\n&quot;</span>, slice1)</span><br><span class="line">fmt.Printf(<span class="string">&quot;type of slice2: %T\n&quot;</span>, slice2)</span><br><span class="line">fmt.Printf(<span class="string">&quot;type of slice3: %T\n&quot;</span>, slice3)</span><br><span class="line">fmt.Println(reflect.TypeOf(slice1)==reflect.TypeOf(slice2))</span><br><span class="line"><span class="comment">// result</span></span><br><span class="line"><span class="comment">// type of slice1: []int</span></span><br><span class="line"><span class="comment">// type of slice2: []int</span></span><br><span class="line"><span class="comment">// type of slice3: []int</span></span><br><span class="line"><span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>初始化有三种方式：</p>
+<ol>
+<li>下标，由于切片的底层是数组，使用下标初始化切片不会拷贝原数组或者原切片中的数据，它只会创建一个指向原数组的切片结构体，所以修改新切片的数据也会修改原切片。</li>
+<li>字面量，在静态存储区对底层数组大小进行推断并创建数组，然后利用下标方式创建切片</li>
+<li>关键字<code>make</code></li>
+</ol>
+</li>
+<li><p><code>len(slice)</code>获取切片长度，<code>cap(slice)</code>获取切片容量</p>
+</li>
+<li><p><code>append</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> slice []<span class="keyword">int64</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;%p\n&quot;</span>, &amp;slice) <span class="comment">// 0xc00000c030</span></span><br><span class="line">slice = <span class="built_in">append</span>(slice, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line">fmt.Println(<span class="built_in">cap</span>(slice)) <span class="comment">// 6</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;%p\n&quot;</span>, &amp;slice) <span class="comment">// 0xc00000c030</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;%p\n&quot;</span>,&amp;slice[<span class="number">0</span>]) <span class="comment">// 0xc000014270</span></span><br><span class="line">slice = <span class="built_in">append</span>(slice, <span class="number">6</span>, <span class="number">7</span>)</span><br><span class="line">fmt.Printf(<span class="string">&quot;%p\n&quot;</span>, &amp;slice) <span class="comment">// 0xc00000c030</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;%p\n&quot;</span>,&amp;slice[<span class="number">0</span>]) <span class="comment">// 0xc0000240c0</span></span><br></pre></td></tr></table></figure>
+
+<p><code>append</code>追加时，如果仅仅是<code>slice2 := append(slice, 1, 2, 3)</code>即不需要对原变量<code>slice</code>进行覆盖，则会调用<code>makeslice(ptr, newlen, cap)</code>方法;如果需要对原变量覆盖，则得到的新切片会赋值回原变量，如2，5，8行所示，slice指针未变。</p>
+<p>当追加元素后期望长度大于容量，就会出发扩容，如上6，9行，可以发现扩容前后，slice底层的数组发生了变化（数组长度不可变，如果扩容，指向的数组肯定要发生变化）。扩容策略如下：</p>
+<ol>
+<li>如果期望容量大于当前容量的两倍就会使用期望容量；</li>
+<li>如果当前切片的长度小于 1024 就会将容量翻倍；</li>
+<li>如果当前切片的长度大于 1024 就会每次增加 25% 的容量，直到新容量大于期望容量；</li>
+</ol>
+</li>
+<li><p><code>copy</code> 整块拷贝内存仍然会占用非常多的资源，在大切片上执行拷贝操作时一定要注意对性能的影响</p>
+</li>
 </ul>
-<h3 id="💡为什么需要包装类？"><a href="#💡为什么需要包装类？" class="headerlink" title="💡为什么需要包装类？"></a>💡为什么需要包装类？</h3><ul>
-<li>包装类里面有一些很有用的方法和属性，如<code>HashCode</code>, <code>ParseInt</code></li>
-<li>基本类型不能赋 <code>null</code> 值</li>
-<li>有些地方不能直接用基本类型，比如集合</li>
-</ul>
-<h3 id="💡何时使用包装类？"><a href="#💡何时使用包装类？" class="headerlink" title="💡何时使用包装类？"></a>💡何时使用包装类？</h3><ul>
-<li><code>Pojo</code> 类定义的属性使用包装类，数据库中对应的字段为空时，如果使用基本类型，映射会出现问题，因为基本类型不能为 null。</li>
-<li><code>RPC</code> 方法中参数的类型和返回值类型要用包装类，原因同上，如果解释的参数为空，基本类型会报空指针异常。</li>
-<li>所以的<code>局部变量</code> 推荐使用基本数据类型，因为基本类型存储在栈，方法执行完毕后，栈上的内存空间也随之释放。</li>
+<p>一个问题：</p>
+<blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	a := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">4</span>, <span class="number">8</span>)</span><br><span class="line">	b := <span class="built_in">append</span>(a, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">	a = <span class="built_in">append</span>(a, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line">	fmt.Printf(<span class="string">&quot;a[0] = %v, b[0] = %v\n&quot;</span>, a[<span class="number">0</span>], b[<span class="number">0</span>])</span><br><span class="line">	fmt.Printf(<span class="string">&quot;&amp;a = %p, &amp;b = %p&quot;</span>, &amp;a, &amp;b)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><code>a</code>,<code>b</code>两个切片地址是不同的，但是两个切片内部指向同一个数组，因此第二次追加会覆盖掉第一次的！结果为:</p>
+<p><code>a[0] = 0, b[0] = 0&amp;a = 0xc00000c030, &amp;b = 0xc00000c048</code></p>
+<h2 id="哈希表（map）"><a href="#哈希表（map）" class="headerlink" title="哈希表（map）"></a>哈希表（map）</h2><ul>
+<li><p>哈希函数。完美的哈希函数的输出范围大于输入范围，也即是输入输出1-1映射;但实际上是不可能实现的，我们可以让哈希函数的结果尽可能分布均匀，然后通过工程的手段解决哈希碰撞的问题。</p>
+</li>
+<li><p>冲突解决。1. 开放寻址法 2. 拉链法 装载因子=元素数量/桶数量。装载因子越大，哈希读写性能越差。一般情况下，不会超过1，较大时触发扩容。</p>
+</li>
+<li><p>初始化</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">brackets := <span class="keyword">map</span>[<span class="keyword">byte</span>]<span class="keyword">byte</span>&#123;</span><br><span class="line">   <span class="string">&#x27;]&#x27;</span>: <span class="string">&#x27;[&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;&#125;&#x27;</span>: <span class="string">&#x27;&#123;&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;)&#x27;</span>: <span class="string">&#x27;(&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line">hash := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">byte</span>]<span class="keyword">byte</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>访问</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> _, ok := brackets[<span class="string">&#x27;)&#x27;</span>]; ok &#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> k, v := <span class="keyword">range</span> brackets &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>扩容</p>
+<p>哈希表的每个桶都只能存储 8 个键值对，一旦当前哈希的某个桶超出 8 个，新的键值对就会存储到哈希的溢出桶中。随着键值对数量的增加，溢出桶的数量和哈希的装载因子也会逐渐升高，超过一定范围就会触发扩容，扩容会将桶的数量翻倍，元素再分配的过程也是在调用写操作时增量进行的，不会造成性能的瞬时巨大抖动。</p>
+</li>
 </ul>
 
     </article>
@@ -507,9 +498,9 @@ height:50vh;
     
         <div class="license-wrapper">
             <p>原文作者：<a href="https://konoakira.com">Akira</a>
-            <p>原文链接：<a href="https://konoakira.com/2021/06/01/java-basics-data-type/">https://konoakira.com/2021/06/01/java-basics-data-type/</a>
-            <p>发表日期：<a href="https://konoakira.com/2021/06/01/java-basics-data-type/">June 1st 2021, 9:59:08 am</a>
-            <p>更新日期：<a href="https://konoakira.com/2021/06/01/java-basics-data-type/">June 1st 2021, 10:55:14 am</a>
+            <p>原文链接：<a href="https://konoakira.com/2021/06/01/golang-basics-data-structure/">https://konoakira.com/2021/06/01/golang-basics-data-structure/</a>
+            <p>发表日期：<a href="https://konoakira.com/2021/06/01/golang-basics-data-structure/">June 1st 2021, 11:51:04 pm</a>
+            <p>更新日期：<a href="https://konoakira.com/2021/06/01/golang-basics-data-structure/">June 2nd 2021, 6:36:28 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -518,16 +509,16 @@ height:50vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href= "/2021/06/01/java-basics-oop/" title= "Java 面向对象总结">
-                    <div class="nextTitle">Java 面向对象总结</div>
+                <a href= "/2021/06/02/java-basics-map/" title= "Java map 总结">
+                    <div class="nextTitle">Java map 总结</div>
                 </a>
             
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2021/05/29/spring-cloud-alibaba-tutorial-1/" title= "spring cloud alibaba 全家桶食用记录-1：dubbo">
-                    <div class="prevTitle">spring cloud alibaba 全家桶食用记录-1：dubbo</div>
+                <a href= "/2021/06/01/java-basics-oop/" title= "Java 面向对象总结">
+                    <div class="prevTitle">Java 面向对象总结</div>
                 </a>
             
         </li>
@@ -547,7 +538,7 @@ height:50vh;
         var gitalk = new Gitalk({
             clientID: 'c2bb6ecdc360d1417817',
             clientSecret: '3081aae8990bcbf19f97f3e13ce016eaa434b878',
-            id: '1622512748000',
+            id: '1622562664000',
             repo: 'konoakira.github.io',
             owner: 'konoakira',
             admin: "konoakira",
@@ -664,7 +655,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%94%9F%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%88Primitive%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">原生数据类型（Primitive）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%A1%E6%B5%AE%E7%82%B9%E7%B1%BB%E5%9E%8B%E7%B2%BE%E5%BA%A6%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.</span> <span class="toc-text">💡浮点类型精度丢失问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%A1%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B%E4%B8%8EJVM"><span class="toc-number">1.2.</span> <span class="toc-text">💡布尔类型与JVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%A1%E6%97%A0%E7%AC%A6%E5%8F%B7%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.3.</span> <span class="toc-text">💡无符号类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-%EF%BC%88Reference%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">引用数据类型 （Reference）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%85%E8%A3%85%E7%B1%BB"><span class="toc-number">3.</span> <span class="toc-text">包装类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%A1%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%8C%85%E8%A3%85%E7%B1%BB%EF%BC%9F"><span class="toc-number">3.1.</span> <span class="toc-text">💡为什么需要包装类？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%A1%E4%BD%95%E6%97%B6%E4%BD%BF%E7%94%A8%E5%8C%85%E8%A3%85%E7%B1%BB%EF%BC%9F"><span class="toc-number">3.2.</span> <span class="toc-text">💡何时使用包装类？</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%EF%BC%88Array%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">数组（Array）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%87%E7%89%87%EF%BC%88Slice%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">切片（Slice）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8%EF%BC%88map%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">哈希表（map）</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
