@@ -372,14 +372,46 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2021/06/06/kubernetes-review/" >
+            
+                <span>Docker 总结一 Docker</span>
+        </a>
+        <div class="abstract-content">
+            容器技术进程来说，它的静态表现就是程序，平常都安安静静地待在磁盘上；而一旦运行起来，它就变成了计算机里的数据和状态的总和，这就是它的动态表现。而容器技术的核心功能，就是通过约束和修改进程的动态表现，从而为其创造出一个“边界”。
+对于 Docker等大多数 Linux 容器， Cgroups 技术用来制造约束;Namespace技术用来修改进程视图。
+隔离实现使用函数clone()创建进程时可为它制定全新的进程空间：
+1int pid = clone(main_function, stack_size, CLONE_NEWPID | SIGCHLD, NULL);
+
+CLONE_NEWPI...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/06</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2021/06/06/fail-fast-&-fail-safe-iterator/" >
             
                 <span>Fail Fast &amp; Fail Safe 迭代器</span>
         </a>
         <div class="abstract-content">
-            Java中的迭代器是Java集合框架的一部分，我们可以用它们来一个一个地获取元素。Java集合支持两种类型的迭代器；快速失败（Fail Fast）和安全失败（Fail Safe）。这些迭代器在异常处理中非常有用。快速失败迭代器一旦发生故障就会中止操作并停止整个操作。而安全失败迭代器在发生故障时不会中止操作。相反，它试图尽可能地避免失败。
-在理解快速失败和安全失败迭代器之前，我们有必要知道一下并发修改：
-并发修改Java中的并发修改是指在另一个任务运行在该对象上时并发地修改该对象。简单地说，并发修改是在另一个线程在其上运行时修改对象的过程。这里的修改包括改变数据集合的结构，或者通过删除、添...
+            <p>Java中的迭代器是Java集合框架的一部分，我们可以用它们来一个一个地获取元素。Java集合支持两种类型的迭代器；快速失败（Fail Fast）和安全失败（Fail Safe）。这些迭代器在异常处理中非常有用。快速失败迭代器一旦发生故障就会中止操作并停止整个操作。而安全失败迭代器在发生故障时不会中止操作。相反，它试图尽可能地避免失败。</p>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -703,9 +735,16 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 7
+        Total : 8
         </div>
         <!-- search  -->
         
@@ -722,6 +761,11 @@
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2021/06/06/kubernetes-review/" >Docker 总结一 Docker</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -767,6 +811,8 @@
     
         <span class="sidebar-tag-name" data-tags="dubbo"><span class="iconfont-archer">&#xe606;</span>dubbo</span>
     
+        <span class="sidebar-tag-name" data-tags="k8s"><span class="iconfont-archer">&#xe606;</span>k8s</span>
+    
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
     <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
@@ -800,11 +846,13 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
+        <span class="sidebar-category-name" data-categories="golang"><span class="iconfont-archer">&#xe60a;</span>golang</span>
+    
         <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
     
         <span class="sidebar-category-name" data-categories="microservices"><span class="iconfont-archer">&#xe60a;</span>microservices</span>
     
-        <span class="sidebar-category-name" data-categories="golang"><span class="iconfont-archer">&#xe60a;</span>golang</span>
+        <span class="sidebar-category-name" data-categories="Cloud-Native"><span class="iconfont-archer">&#xe60a;</span>Cloud-Native</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

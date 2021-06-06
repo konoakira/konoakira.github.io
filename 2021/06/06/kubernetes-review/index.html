@@ -20,21 +20,22 @@
     <meta name="keywords" content="hexo,hexo-theme,hexo-blog,blog,java,golang">
     
     <meta name="description" content="akira's notes.">
-    <meta name="description" content="akira&#39;s notes.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="https://konoakira.com/tags/index.html">
+    <meta name="description" content="容器技术进程来说，它的静态表现就是程序，平常都安安静静地待在磁盘上；而一旦运行起来，它就变成了计算机里的数据和状态的总和，这就是它的动态表现。而容器技术的核心功能，就是通过约束和修改进程的动态表现，从而为其创造出一个“边界”。 对于 Docker等大多数 Linux 容器， Cgroups 技术用来制造约束;Namespace技术用来修改进程视图。 隔离实现使用函数clone()创建进程时可为它制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker 总结一 Docker">
+<meta property="og:url" content="https://konoakira.com/2021/06/06/kubernetes-review/index.html">
 <meta property="og:site_name" content="DYSTOPIA">
-<meta property="og:description" content="akira&#39;s notes.">
+<meta property="og:description" content="容器技术进程来说，它的静态表现就是程序，平常都安安静静地待在磁盘上；而一旦运行起来，它就变成了计算机里的数据和状态的总和，这就是它的动态表现。而容器技术的核心功能，就是通过约束和修改进程的动态表现，从而为其创造出一个“边界”。 对于 Docker等大多数 Linux 容器， Cgroups 技术用来制造约束;Namespace技术用来修改进程视图。 隔离实现使用函数clone()创建进程时可为它制">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-05-29T18:15:42.000Z">
-<meta property="article:modified_time" content="2021-05-29T18:17:11.829Z">
+<meta property="article:published_time" content="2021-06-06T15:20:39.000Z">
+<meta property="article:modified_time" content="2021-06-06T16:59:28.229Z">
 <meta property="article:author" content="Akira">
+<meta property="article:tag" content="k8s">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>tags · DYSTOPIA</title>
+    <title>Docker 总结一 Docker · DYSTOPIA</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -231,12 +232,23 @@
 <meta name="generator" content="Hexo 5.4.0"></head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >DYSTOPIA</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Docker 总结一 Docker</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>DYSTOPIA</a>
 </header>
@@ -248,24 +260,69 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(https://source.unsplash.com/random)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            Docker 总结一 Docker
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">1.2k</span>阅读时长: <span class="post-count reading-time">5 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2021/06/06</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -368,15 +425,62 @@
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        
+        <h2 id="容器技术"><a href="#容器技术" class="headerlink" title="容器技术"></a>容器技术</h2><p>进程来说，它的静态表现就是程序，平常都安安静静地待在磁盘上；而一旦运行起来，它就变成了计算机里的数据和状态的总和，这就是它的动态表现。而<strong>容器技术的核心功能，就是通过约束和修改进程的动态表现，从而为其创造出一个“边界”。</strong></p>
+<p>对于 <code>Docker</code>等大多数 Linux 容器， <code>Cgroups</code> 技术用来制造约束;<code>Namespace</code>技术用来修改进程视图。</p>
+<h2 id="隔离"><a href="#隔离" class="headerlink" title="隔离"></a>隔离</h2><h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>使用函数<code>clone()</code>创建进程时可为它制定全新的进程空间：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> pid = clone(main_function, stack_size, CLONE_NEWPID | SIGCHLD, <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>CLONE_NEWPID</code>指的是<code>PID Namespace</code>,在这个进程空间中，进程看到的<code>PID</code>为1:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建容器</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run -it busybox /bin/sh</span></span><br><span class="line">/ # ps</span><br><span class="line">PID   USER     TIME  COMMAND</span><br><span class="line">    1 root      0:00 /bin/sh</span><br><span class="line">   11 root      0:00 ps</span><br></pre></td></tr></table></figure>
+
+<p>除了<code>PID Namespace</code>，Linux 操作系统还提供了<code>Mount</code>、<code>UTS</code>、<code>IPC</code>、<code>Network</code>和<code>User</code>这些 Namespace，用来对各种不同的进程上下文进行“障眼法”操作。比如，<code>Mount Namespace</code>，用于让被隔离进程只看到当前 Namespace 里的挂载点信息；<code>Network Namespace</code>，用于让被隔离进程看到当前 Namespace 里的网络设备和配置。这就是 Linux 容器最基本的实现原理了。</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ol>
+<li>容器化后的用户应用，却依然还是一个宿主机上的普通进程，这就意味着这些因为虚拟化而带来的性能损耗都是不存在的</li>
+<li>使用<code>Namespace</code>作为隔离手段的容器并不需要单独的Guest OS，这就使得容器额外的资源占用几乎可以忽略不计</li>
+</ol>
+<p>所以说，敏捷<em>和高性能</em>是容器相较于虚拟机最大的优势。</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ol>
+<li>既然容器只是运行在宿主机上的一种特殊的进程，那么多个容器之间使用的就还是同一个宿主机的操作系统内核</li>
+<li>在Linux内核中，有很多资源和对象是不能被<code>Namespace</code>化的，最典型的例子就是：时间。</li>
+</ol>
+<p>因此，<code>Docker</code>容器技术的主要缺点就是<em>隔离不彻底</em>。尤其是共享宿主机内核的事实，容器给应用暴露出来的攻击面是相当大的，应用“越狱”的难度自然也比虚拟机低得多。</p>
+<h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p>**Linux Cgroups(Linux Control Group)**就是 Linux 内核中用来为进程设置资源限制的一个重要功能，它最主要的作用就是限制一个进程组能够使用的资源上限，包括CPU、内存、磁盘、网络带宽等等。此外，Cgroups还能够对进程进行优先级设置、审计，以及将进程挂起和恢复等操作。</p>
+<h3 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h3><p>在Linux中，Cgroups给用户暴露出来的操作接口是文件系统，即它以文件和目录的方式组织在操作系统的/sys/fs/cgroup路径下。使用<code>mount</code>可以查看：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mount -t cgroup</span><br><span class="line">cgroup on /sys/fs/cgroup/systemd type cgroup (rw,nosuid,nodev,noexec,relatime,xattr,name=systemd)</span><br><span class="line">cgroup on /sys/fs/cgroup/memory type cgroup (rw,nosuid,nodev,noexec,relatime,memory)</span><br><span class="line">cgroup on /sys/fs/cgroup/cpu,cpuacct type cgroup (rw,nosuid,nodev,noexec,relatime,cpu,cpuacct)</span><br><span class="line">cgroup on /sys/fs/cgroup/net_cls,net_prio type cgroup (rw,nosuid,nodev,noexec,relatime,net_cls,net_prio)</span><br></pre></td></tr></table></figure>
+
+<p>这些不同的文件代表不同的资源，比如<code>memory</code>为进程设定内存限制，<code>blkio</code>为块设备设定 I/O 限制。比如在<code>/sys/fs/cgroup/cpu</code>创建文件夹<code>container</code>，这个文件夹就对应了进程组，系统会自动在这个文件夹下生成文件。比如<code>tasks</code>,可以将进程号追加到其中，这样系统就会利用该进程组下的资源配置来限制这个进程了。</p>
+<p>创建一个 cpu 受限的容器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker run -it --cpu-period=100000 --cpu-quota=20000 ubuntu /bin/bash</span></span><br></pre></td></tr></table></figure>
+
+<p>查看这个容器的id：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> docker ps</span></span><br><span class="line">CONTAINER ID   IMAGE     COMMAND     CREATED              STATUS              PORTS     NAMES</span><br><span class="line">dee757b6e1db   busybox   &quot;/bin/sh&quot;   About a minute ago   Up About a minute</span><br></pre></td></tr></table></figure>
+
+<p>那么我们应该能够在主系统下看到相应的变化：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> ls /sys/fs/cgroup/cpu/</span></span><br><span class="line">cgroup.clone_children  cpuacct.stat               cpuacct.usage_user</span><br><span class="line">cgroup.procs           cpuacct.usage              docker</span><br><span class="line">cgroup.sane_behavior   cpuacct.usage_all          notify_on_release</span><br><span class="line">cpu.cfs_period_us      cpuacct.usage_percpu       release_agent</span><br><span class="line">cpu.cfs_quota_us       cpuacct.usage_percpu_sys   system.slice</span><br><span class="line">cpu.shares             cpuacct.usage_percpu_user  tasks</span><br><span class="line">cpu.stat               cpuacct.usage_sys          user.slice</span><br></pre></td></tr></table></figure>
+
+<p>可以看到多出个<code>docker</code>文件夹，进去，可以看到该文件夹下有一下文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cgroup.clone_children  cpuacct.usage_percpu</span><br><span class="line">cgroup.procs           cpuacct.usage_percpu_sys</span><br><span class="line">cpu.cfs_period_us      cpuacct.usage_percpu_user</span><br><span class="line">cpu.cfs_quota_us       cpuacct.usage_sys</span><br><span class="line">cpu.shares             cpuacct.usage_user</span><br><span class="line">cpu.stat               dee757b6e1db23bda7accdc58a76d73950ff7e011d4a67c77c4ac1ad7bb4f48b</span><br><span class="line">cpuacct.stat           notify_on_release</span><br><span class="line">cpuacct.usage          tasks</span><br><span class="line">cpuacct.usage_all</span><br></pre></td></tr></table></figure>
+
+<p>其中一个以<code>dee757b6e1db</code>开头的正是我们的容器ID！</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="built_in">cd</span> dee757b6e1db23bda7accdc58a76d73950ff7e011d4a67c77c4ac1ad7bb4f48b</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> cat tasks</span></span><br><span class="line">20686</span><br></pre></td></tr></table></figure>
+
+<p>可以看到这个文件夹下有个进程号<code>20686</code>，我们可以查看一下它到底是不是 docker 容器进程：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">❯ ps -ef|grep 20686</span><br><span class="line">root     20686 20662  0 12:10 pts/0    00:00:00 /bin/sh</span><br></pre></td></tr></table></figure>
+
+<p>可以看到它正是我们要找的进程，可以看一下它的父进程：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root     <span class="number">20662</span>     <span class="number">1</span>  <span class="number">0</span> <span class="number">12</span>:<span class="number">10</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> /usr/bin/containerd-shim-runc-v2 -namespace moby -id dee757b6e1db23bda7accdc58a76d73950ff7e011d4a67c77c4ac1ad7bb4f48b -address /run/containerd/containerd.sock</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>-namespace moby</code>这个进程空间正是<code>Docker</code>公司将 docker 项目捐出去重新取的名字。</p>
+<p>归根到底，<strong>容器是一个单进程模型</strong>。</p>
+
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者：<a href="https://konoakira.com">Akira</a>
-            <p>原文链接：<a href="https://konoakira.com/tags/index.html">https://konoakira.com/tags/index.html</a>
-            <p>发表日期：<a href="https://konoakira.com/tags/index.html">May 30th 2021, 2:15:42 am</a>
-            <p>更新日期：<a href="https://konoakira.com/tags/index.html">May 30th 2021, 2:17:11 am</a>
+            <p>原文链接：<a href="https://konoakira.com/2021/06/06/kubernetes-review/">https://konoakira.com/2021/06/06/kubernetes-review/</a>
+            <p>发表日期：<a href="https://konoakira.com/2021/06/06/kubernetes-review/">June 6th 2021, 11:20:39 pm</a>
+            <p>更新日期：<a href="https://konoakira.com/2021/06/06/kubernetes-review/">June 7th 2021, 12:59:28 am</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -386,6 +490,11 @@
             
         </li>
         <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2021/06/06/fail-fast-&-fail-safe-iterator/" title= "Fail Fast & Fail Safe 迭代器">
+                    <div class="prevTitle">Fail Fast & Fail Safe 迭代器</div>
+                </a>
             
         </li>
     </ul>
@@ -404,7 +513,7 @@
         var gitalk = new Gitalk({
             clientID: 'c2bb6ecdc360d1417817',
             clientSecret: '3081aae8990bcbf19f97f3e13ce016eaa434b878',
-            id: '1622312142000',
+            id: '1622992839000',
             repo: 'konoakira.github.io',
             owner: 'konoakira',
             admin: "konoakira",
@@ -507,6 +616,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E6%8A%80%E6%9C%AF"><span class="toc-number">1.</span> <span class="toc-text">容器技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%94%E7%A6%BB"><span class="toc-number">2.</span> <span class="toc-text">隔离</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.1.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-number">2.2.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9"><span class="toc-number">2.3.</span> <span class="toc-text">缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%90%E5%88%B6"><span class="toc-number">3.</span> <span class="toc-text">限制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.1.</span> <span class="toc-text">具体实现</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -761,6 +888,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
