@@ -372,17 +372,74 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2021/06/06/kubernetes-review/" >
+        <a class="abstract-title" href = "/2021/06/08/n-queens-my-template/" >
             
-                <span>Docker 总结一 Docker</span>
+                <span>n 皇后，我的套路</span>
         </a>
         <div class="abstract-content">
-            容器技术进程来说，它的静态表现就是程序，平常都安安静静地待在磁盘上；而一旦运行起来，它就变成了计算机里的数据和状态的总和，这就是它的动态表现。而容器技术的核心功能，就是通过约束和修改进程的动态表现，从而为其创造出一个“边界”。
-对于 Docker等大多数 Linux 容器， Cgroups 技术用来制造约束;Namespace技术用来修改进程视图。
-隔离实现使用函数clone()创建进程时可为它制定全新的进程空间：
-1int pid = clone(main_function, stack_size, CLONE_NEWPID | SIGCHLD, NULL);
-
-CLONE_NEWPI...
+            <p>n 皇后问题是一个典型的回溯法解决的问题。这篇文章总结了我用回溯法的心得。</p>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/08</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "backtrack">backtrack</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/06/07/docker-review-2/" >
+            
+                <span>Docker 总结二 overlay2 与 镜像</span>
+        </a>
+        <div class="abstract-content">
+            <h2 id="Mount-Namespace"><a href="#Mount-Namespace" class="headerlink" title="Mount Namespace"></a>Mount Namespace</h2><blockquote>
+<p>每个文件系统都有独立的inode、block，super block等信息，这些文件系统要链接到目录树才能够被使用。将文件系统与目录树结合的操作被称为挂载。其中，挂载点是目录，该目录是进入文件系统的入口。</p>
+<p><em>《鸟哥的Linux私房菜》</em></p>
+</blockquote>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/07</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "docker">docker</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/06/06/docker-review-1/" >
+            
+                <span>Docker 总结一 隔离与限制</span>
+        </a>
+        <div class="abstract-content">
+            <h2 id="容器技术"><a href="#容器技术" class="headerlink" title="容器技术"></a>容器技术</h2><p>进程来说，它的静态表现就是程序，平常都安安静静地待在磁盘上；而一旦运行起来，它就变成了计算机里的数据和状态的总和，这就是它的动态表现。而<strong>容器技术的核心功能，就是通过约束和修改进程的动态表现，从而为其创造出一个“边界”。</strong></p>
+<p>对于 <code>Docker</code>等大多数 Linux 容器， <code>Cgroups</code> 技术用来制造约束;<code>Namespace</code>技术用来修改进程视图。</p>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -393,7 +450,7 @@ CLONE_NEWPI...
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "docker">docker</a>
     
 </div>
             
@@ -605,6 +662,10 @@ CLONE_NEWPI...
     
     <!-- paginator  -->
     
+    <nav class="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">NEXT &gt;</a>
+    </nav>
+    
 </main>
             <!-- profile -->
             
@@ -771,9 +832,46 @@ CLONE_NEWPI...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 8
+        Total : 11
         </div>
         <!-- search  -->
         
@@ -793,7 +891,17 @@ CLONE_NEWPI...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2021/06/06/kubernetes-review/" >Docker 总结一 Docker</a>
+            <span class="archive-post-date">06/08</span><a class="archive-post-title" href= "/2021/06/08/n-queens-my-template/" >n 皇后，我的套路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/07</span><a class="archive-post-title" href= "/2021/06/07/docker-review-2/" >Docker 总结二 overlay2 与 镜像</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2021/06/06/docker-review-1/" >Docker 总结一 隔离与限制</a>
         </li>
     
     
@@ -831,6 +939,11 @@ CLONE_NEWPI...
             <span class="archive-post-date">05/29</span><a class="archive-post-title" href= "/2021/05/29/spring-cloud-alibaba-tutorial-1/" >spring cloud alibaba 全家桶食用记录-1：dubbo</a>
         </li>
     
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/25</span><a class="archive-post-title" href= "/2021/01/25/slice-and-backtrack/" >切片和回溯法</a>
+        </li>
+    
     </div>
   </div>
         <div class="sidebar-panel-tags">
@@ -840,7 +953,11 @@ CLONE_NEWPI...
     
         <span class="sidebar-tag-name" data-tags="dubbo"><span class="iconfont-archer">&#xe606;</span>dubbo</span>
     
-        <span class="sidebar-tag-name" data-tags="k8s"><span class="iconfont-archer">&#xe606;</span>k8s</span>
+        <span class="sidebar-tag-name" data-tags="docker"><span class="iconfont-archer">&#xe606;</span>docker</span>
+    
+        <span class="sidebar-tag-name" data-tags="backtrack"><span class="iconfont-archer">&#xe606;</span>backtrack</span>
+    
+        <span class="sidebar-tag-name" data-tags="slice"><span class="iconfont-archer">&#xe606;</span>slice</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -882,6 +999,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="microservices"><span class="iconfont-archer">&#xe60a;</span>microservices</span>
     
         <span class="sidebar-category-name" data-categories="Cloud-Native"><span class="iconfont-archer">&#xe60a;</span>Cloud-Native</span>
+    
+        <span class="sidebar-category-name" data-categories="leetcode"><span class="iconfont-archer">&#xe60a;</span>leetcode</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

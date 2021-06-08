@@ -20,21 +20,22 @@
     <meta name="keywords" content="hexo,hexo-theme,hexo-blog,blog,java,golang">
     
     <meta name="description" content="akira's notes.">
-    <meta name="description" content="akira&#39;s notes.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="https://konoakira.com/tags/index.html">
+    <meta name="description" content="n 皇后问题是一个典型的回溯法解决的问题。这篇文章总结了我用回溯法的心得。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="n 皇后，我的套路">
+<meta property="og:url" content="https://konoakira.com/2021/06/08/n-queens-my-template/index.html">
 <meta property="og:site_name" content="DYSTOPIA">
-<meta property="og:description" content="akira&#39;s notes.">
+<meta property="og:description" content="n 皇后问题是一个典型的回溯法解决的问题。这篇文章总结了我用回溯法的心得。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-05-29T18:15:42.000Z">
-<meta property="article:modified_time" content="2021-05-29T18:17:11.829Z">
+<meta property="article:published_time" content="2021-06-08T09:03:12.000Z">
+<meta property="article:modified_time" content="2021-06-08T09:39:01.017Z">
 <meta property="article:author" content="Akira">
+<meta property="article:tag" content="backtrack">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>tags · DYSTOPIA</title>
+    <title>n 皇后，我的套路 · DYSTOPIA</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -231,12 +232,23 @@
 <meta name="generator" content="Hexo 5.4.0"></head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >DYSTOPIA</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">n 皇后，我的套路</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>DYSTOPIA</a>
 </header>
@@ -248,24 +260,69 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(https://source.unsplash.com/random)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            n 皇后，我的套路
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "backtrack">backtrack</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">1.1k</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2021/06/08</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -368,15 +425,47 @@
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        
+        <p>n 皇后问题是一个典型的回溯法解决的问题。这篇文章总结了我用回溯法的心得。</p>
+<span id="more"></span>
+
+<h2 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h2><blockquote>
+<p>n 皇后问题 研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。</p>
+<p>给你一个整数 n ，返回所有不同的 n 皇后问题 的解决方案。</p>
+<p>每一种解法包含一个不同的 n 皇后问题 的棋子放置方案，该方案中 ‘Q’ 和 ‘.’ 分别代表了皇后和空位。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/n-queens">https://leetcode-cn.com/problems/n-queens</a></p>
+</blockquote>
+<p>这个问题要求得到所有可能解的集合。一般的回溯法也都是类似的搜索问题——求出满足条件的全集。</p>
+<h2 id="问题分析与-tricks"><a href="#问题分析与-tricks" class="headerlink" title="问题分析与 tricks"></a>问题分析与 tricks</h2><p>这里要求我们求出全集，我们可能会定义一个这样的集合类型的答案作为最终解，然后利用函数递归地改变这个集合。比如这里我们可以定义<code>schemas := [][]**string**&#123;&#125;</code>作为结果。然后我们有两种方式去改变它，一是将它作为参数输入到递归函数中，另一种是作为全局变量。我个人更倾向于后者:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">solveNQueens</span><span class="params">(n <span class="keyword">int</span>)</span> [][]<span class="title">string</span></span> &#123;</span><br><span class="line">  ...</span><br><span class="line">  schemas := [][]<span class="keyword">string</span>&#123;&#125;</span><br><span class="line">  <span class="keyword">var</span> placeQueens <span class="function"><span class="keyword">func</span><span class="params">(<span class="keyword">int</span>, []<span class="keyword">string</span>)</span></span></span><br><span class="line">  placeQueens = <span class="function"><span class="keyword">func</span><span class="params">(i <span class="keyword">int</span>, schema []<span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">  placeQueens(<span class="number">0</span>,[]<span class="keyword">string</span>&#123;&#125;)</span><br><span class="line">  <span class="keyword">return</span> schemas</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="trick-1：减少递归函数参数的数量"><a href="#trick-1：减少递归函数参数的数量" class="headerlink" title="trick 1：减少递归函数参数的数量"></a>trick 1：减少递归函数参数的数量</h3><p>这里我在<code>solveNQueens</code>中又定义了一个函数，这个函数是真正干活的。之所以这样做是为了简洁，参数减少后我们能专注于自己要做的事情，毕竟算法题也不要求我们的函数复用性强;其次是安全，如果我把<code>schemas</code>放到更外面，跑多个用例时，如果我忘记重置可能会导致结果出错。</p>
+<h3 id="trick-2-初始化现场"><a href="#trick-2-初始化现场" class="headerlink" title="trick 2: 初始化现场"></a>trick 2: 初始化现场</h3><p>回溯要求我们根据之前保存的状态来确定当前的解决方案是否合理，如果不合理，返回之前的状态再做另外的决定。这个现场也如果我们的结果集一样应该是全局的，比如这里我们让棋盘作为一个全局状态（我称之为现场）:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">board := <span class="built_in">make</span>([][]<span class="keyword">int</span>, n)</span><br><span class="line"><span class="keyword">for</span> i := <span class="keyword">range</span>(board) &#123;</span><br><span class="line">  board[i] = <span class="built_in">make</span>([]<span class="keyword">int</span>, n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里 <code>board</code>某个格子为0，说明可以放置棋子，这有点像信号量。</p>
+<h3 id="trick-3-注意结果的保存"><a href="#trick-3-注意结果的保存" class="headerlink" title="trick 3: 注意结果的保存"></a>trick 3: 注意结果的保存</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> i &gt;= n &#123;</span><br><span class="line">  schemaCopy := <span class="built_in">make</span>([]<span class="keyword">string</span>, n)</span><br><span class="line">  <span class="built_in">copy</span>(schemaCopy, schema)</span><br><span class="line">  schemas = <span class="built_in">append</span>(schemas, schemaCopy)</span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码在递归函数开始部分起到退出递归的作用，注意这里用了<code>copy</code>机制，这与语言机制有关。很多语言结果集中保存的是地址或者引用，如果没有这一步，回溯后，<code>schema</code>一定会改变，进而可能改变已经保存的结果。</p>
+<h3 id="trick-4-剪枝"><a href="#trick-4-剪枝" class="headerlink" title="trick 4: 剪枝"></a>trick 4: 剪枝</h3><p>大部分搜索问题的时间复杂度可能为<code>O(2^n)</code>，如果没有剪枝过程，很可能会超时。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> j := <span class="number">0</span>; j &lt; n; j++ &#123;</span><br><span class="line">  <span class="keyword">if</span> canPlace(i, j, board) &#123;</span><br><span class="line">    schema = place(n, i, j, board, schema)</span><br><span class="line">    placeQueens(i+<span class="number">1</span>, schema)</span><br><span class="line">    schema = unPlace(n, i, j, board, schema)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>比如这里在第<code>i</code>行添加棋子时，就会判断某一列能否放置，如果能，再考虑接下来的操作。这里用到了我所谓的现场：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">canPlace</span><span class="params">(i, j <span class="keyword">int</span>, board [][]<span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> board[i][j] == <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="trick-5-改变现场与恢复线程"><a href="#trick-5-改变现场与恢复线程" class="headerlink" title="trick 5: 改变现场与恢复线程"></a>trick 5: 改变现场与恢复线程</h3><p>在这里的表现就是<code>place</code>和<code>unPlace</code>函数，他们发生在执行下一步前后，具体的实现也具有一定美感：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">place</span><span class="params">(n, i, j <span class="keyword">int</span>, board [][]<span class="keyword">int</span>, schema []<span class="keyword">string</span>)</span> []<span class="title">string</span></span>&#123;</span><br><span class="line">  <span class="keyword">for</span> k := i+<span class="number">1</span>; k &lt; n; k++ &#123;</span><br><span class="line">    <span class="keyword">if</span> i+j-k &gt;= <span class="number">0</span> &#123;</span><br><span class="line">      board[k][i+j-k]++</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> -i+j+k &lt; n &#123;</span><br><span class="line">      board[k][-i+j+k]++</span><br><span class="line">    &#125;</span><br><span class="line">    board[k][j]++</span><br><span class="line">  &#125;</span><br><span class="line">  temp := <span class="string">&quot;&quot;</span></span><br><span class="line">  <span class="keyword">for</span> k := <span class="number">0</span>; k &lt; n; k++ &#123;</span><br><span class="line">    <span class="keyword">if</span> k == j &#123;</span><br><span class="line">      temp += <span class="string">&quot;Q&quot;</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      temp += <span class="string">&quot;.&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  schema = <span class="built_in">append</span>(schema, temp)</span><br><span class="line">  <span class="keyword">return</span> schema</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">unPlace</span><span class="params">(n, i, j <span class="keyword">int</span>, board [][]<span class="keyword">int</span>, schema []<span class="keyword">string</span>)</span> []<span class="title">string</span></span>&#123;</span><br><span class="line">  <span class="keyword">for</span> k := i+<span class="number">1</span>; k &lt; n; k++ &#123;</span><br><span class="line">    <span class="keyword">if</span> i+j-k &gt;= <span class="number">0</span> &#123;</span><br><span class="line">      board[k][i+j-k]--</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> -i+j+k &lt; n &#123;</span><br><span class="line">      board[k][-i+j+k]--</span><br><span class="line">    &#125;</span><br><span class="line">    board[k][j]--</span><br><span class="line">  &#125;</span><br><span class="line">  schema = schema[:<span class="built_in">len</span>(schema)<span class="number">-1</span>]</span><br><span class="line">  <span class="keyword">return</span> schema</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出这两段函数具有很高的对称性。</p>
+<h3 id="trick-6-一定不要忘记在主函数中调用递归函数"><a href="#trick-6-一定不要忘记在主函数中调用递归函数" class="headerlink" title="trick 6: 一定不要忘记在主函数中调用递归函数"></a>trick 6: 一定不要忘记在主函数中调用递归函数</h3><p>由于我们在<code>solveNQueens</code>内部实现的<code>placeQueens(0,[]string&#123;&#125;)</code>，我们还有声明<code>var placeQueens func(int, []string)</code>，这很容易导致我们忘记调用它，导致全功尽弃。</p>
+
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者：<a href="https://konoakira.com">Akira</a>
-            <p>原文链接：<a href="https://konoakira.com/tags/index.html">https://konoakira.com/tags/index.html</a>
-            <p>发表日期：<a href="https://konoakira.com/tags/index.html">May 30th 2021, 2:15:42 am</a>
-            <p>更新日期：<a href="https://konoakira.com/tags/index.html">May 30th 2021, 2:17:11 am</a>
+            <p>原文链接：<a href="https://konoakira.com/2021/06/08/n-queens-my-template/">https://konoakira.com/2021/06/08/n-queens-my-template/</a>
+            <p>发表日期：<a href="https://konoakira.com/2021/06/08/n-queens-my-template/">六月 8日 2021, 5:03:12 下午</a>
+            <p>更新日期：<a href="https://konoakira.com/2021/06/08/n-queens-my-template/">June 8th 2021, 5:39:01 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -386,6 +475,11 @@
             
         </li>
         <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2021/06/07/docker-review-2/" title= "Docker 总结二 overlay2 与 镜像">
+                    <div class="prevTitle">Docker 总结二 overlay2 与 镜像</div>
+                </a>
             
         </li>
     </ul>
@@ -404,7 +498,7 @@
         var gitalk = new Gitalk({
             clientID: 'c2bb6ecdc360d1417817',
             clientSecret: '3081aae8990bcbf19f97f3e13ce016eaa434b878',
-            id: '1622312142000',
+            id: '1623142992000',
             repo: 'konoakira.github.io',
             owner: 'konoakira',
             admin: "konoakira",
@@ -507,6 +601,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">问题定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E-tricks"><span class="toc-number">2.</span> <span class="toc-text">问题分析与 tricks</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#trick-1%EF%BC%9A%E5%87%8F%E5%B0%91%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E7%9A%84%E6%95%B0%E9%87%8F"><span class="toc-number">2.1.</span> <span class="toc-text">trick 1：减少递归函数参数的数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#trick-2-%E5%88%9D%E5%A7%8B%E5%8C%96%E7%8E%B0%E5%9C%BA"><span class="toc-number">2.2.</span> <span class="toc-text">trick 2: 初始化现场</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#trick-3-%E6%B3%A8%E6%84%8F%E7%BB%93%E6%9E%9C%E7%9A%84%E4%BF%9D%E5%AD%98"><span class="toc-number">2.3.</span> <span class="toc-text">trick 3: 注意结果的保存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#trick-4-%E5%89%AA%E6%9E%9D"><span class="toc-number">2.4.</span> <span class="toc-text">trick 4: 剪枝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#trick-5-%E6%94%B9%E5%8F%98%E7%8E%B0%E5%9C%BA%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%BA%BF%E7%A8%8B"><span class="toc-number">2.5.</span> <span class="toc-text">trick 5: 改变现场与恢复线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#trick-6-%E4%B8%80%E5%AE%9A%E4%B8%8D%E8%A6%81%E5%BF%98%E8%AE%B0%E5%9C%A8%E4%B8%BB%E5%87%BD%E6%95%B0%E4%B8%AD%E8%B0%83%E7%94%A8%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0"><span class="toc-number">2.6.</span> <span class="toc-text">trick 6: 一定不要忘记在主函数中调用递归函数</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -819,6 +931,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
