@@ -20,22 +20,22 @@
     <meta name="keywords" content="hexo,hexo-theme,hexo-blog,blog,java,golang">
     
     <meta name="description" content="akira's notes.">
-    <meta name="description" content="给定一个三角形 triangle ，找出自顶向下的最小路径和。 每一步只能移动到下一行中相邻的结点上。相邻的结点 在这里指的是 下标 与 上一层结点下标 相同或者等于 上一层结点下标 + 1 的两个结点。也就是说，如果正位于当前行的下标 i ，那么下一步可以移动到下一行的下标 i 或 i + 1 。 来源：力扣（LeetCode）链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;proble">
+    <meta name="description" content="这篇文章记录了我在 leetcode 上遇到的背包问题。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="三角形最小路径和">
-<meta property="og:url" content="https://konoakira.com/2021/06/09/minimum-path-sum-from-top-to-bottom/index.html">
+<meta property="og:title" content="背包问题">
+<meta property="og:url" content="https://konoakira.com/2021/06/13/backpack-problems/index.html">
 <meta property="og:site_name" content="DYSTOPIA">
-<meta property="og:description" content="给定一个三角形 triangle ，找出自顶向下的最小路径和。 每一步只能移动到下一行中相邻的结点上。相邻的结点 在这里指的是 下标 与 上一层结点下标 相同或者等于 上一层结点下标 + 1 的两个结点。也就是说，如果正位于当前行的下标 i ，那么下一步可以移动到下一行的下标 i 或 i + 1 。 来源：力扣（LeetCode）链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;proble">
+<meta property="og:description" content="这篇文章记录了我在 leetcode 上遇到的背包问题。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-06-09T13:06:07.000Z">
-<meta property="article:modified_time" content="2021-06-09T13:26:00.145Z">
+<meta property="article:published_time" content="2021-06-12T16:34:08.000Z">
+<meta property="article:modified_time" content="2021-06-13T03:20:27.584Z">
 <meta property="article:author" content="Akira">
 <meta property="article:tag" content="dynamic programming">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>三角形最小路径和 · DYSTOPIA</title>
+    <title>背包问题 · DYSTOPIA</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -246,7 +246,7 @@
                 <a href="/" >DYSTOPIA</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">三角形最小路径和</a>
+                <a href="#" class="post-name">背包问题</a>
             </div>
     </div>
     
@@ -276,7 +276,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            三角形最小路径和
+            背包问题
             <!-- 404 -->
             
         </h1>
@@ -301,12 +301,12 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">565</span>Reading time: <span class="post-count reading-time">2 min</span></span>
+                        <span>Word count: <span class="post-count word-count">1.5k</span>Reading time: <span class="post-count reading-time">7 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2021/06/09</span>
+                    <span class="post-intro-time">2021/06/13</span>
                     
                     <span class="shareWrapper">
                         <span class="iconfont-archer shareIcon">&#xe71d;</span>
@@ -425,30 +425,80 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <blockquote>
-<p>给定一个三角形 triangle ，找出自顶向下的最小路径和。</p>
-<p>每一步只能移动到下一行中相邻的结点上。相邻的结点 在这里指的是 下标 与 上一层结点下标 相同或者等于 上一层结点下标 + 1 的两个结点。也就是说，如果正位于当前行的下标 i ，那么下一步可以移动到下一行的下标 i 或 i + 1 。</p>
-<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/triangle">https://leetcode-cn.com/problems/triangle</a></p>
-</blockquote>
+        <p>这篇文章记录了我在 leetcode 上遇到的背包问题。</p>
 <span id="more"></span>
 
-<p>很明显，这是一道动态规划的题目。假设状态矩阵中 <code>(i, j)</code> 的值<code>dp[i][j]</code>表示从定点到三角形<code>triangle[i][j]</code>的路径和最小值，显然有：<code>dp[i][j] = triangle[i][j] + min(dp[i-1][j-1], dp[i-1][j])</code>。如果可以原地修改三角形的话，我们就可以省掉<code>dp</code>矩阵的空间。如果不可以的话，我们也只需开辟一维数组，因为第<code>i</code>层的值仅与第<code>i-1</code>层有关。但是我们要考虑值的覆盖问题，还是有些麻烦。</p>
-<p>原地修改矩阵的写法：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">minimumTotal</span><span class="params">(triangle [][]<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  n := <span class="built_in">len</span>(triangle)</span><br><span class="line">  ans := <span class="number">1</span>&lt;&lt;<span class="number">63</span> - <span class="number">1</span></span><br><span class="line">  <span class="keyword">for</span> i := <span class="number">1</span>; i &lt; n; i++ &#123;</span><br><span class="line">    triangle[i][<span class="number">0</span>] += triangle[i<span class="number">-1</span>][<span class="number">0</span>]</span><br><span class="line">    triangle[i][i] += triangle[i<span class="number">-1</span>][i<span class="number">-1</span>]</span><br><span class="line">    <span class="keyword">for</span> j := <span class="number">1</span>; j &lt; i; j++ &#123;</span><br><span class="line">      <span class="keyword">if</span> triangle[i<span class="number">-1</span>][j] &gt; triangle[i<span class="number">-1</span>][j<span class="number">-1</span>] &#123;</span><br><span class="line">        triangle[i][j] += triangle[i<span class="number">-1</span>][j<span class="number">-1</span>]</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        triangle[i][j] += triangle[i<span class="number">-1</span>][j]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; n; i++ &#123;</span><br><span class="line">    <span class="keyword">if</span> ans &gt; triangle[n<span class="number">-1</span>][i] &#123;</span><br><span class="line">      ans = triangle[n<span class="number">-1</span>][i]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ans</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="01-背包"><a href="#01-背包" class="headerlink" title="01 背包"></a>01 背包</h2><blockquote>
+<p>给你一个 <strong>只包含正整数</strong> 的 <strong>非空</strong> 数组 <code>nums</code> 。请你判断是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/partition-equal-subset-sum/">https://leetcode-cn.com/problems/partition-equal-subset-sum/</a></p>
+</blockquote>
+<p>每个元素可以选或者不选，最后的目标是选择的总和为数组和的一半。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">canPartition</span><span class="params">(nums []<span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	sum := <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> _, v := <span class="keyword">range</span> nums &#123;</span><br><span class="line">		sum += v</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> sum&amp;<span class="number">1</span> == <span class="number">1</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line">	target := sum &gt;&gt; <span class="number">1</span></span><br><span class="line">	n := <span class="built_in">len</span>(nums)</span><br><span class="line">	dp := <span class="built_in">make</span>([]<span class="keyword">bool</span>, target+<span class="number">1</span>)</span><br><span class="line">	dp[<span class="number">0</span>] = <span class="literal">true</span></span><br><span class="line">	<span class="keyword">if</span> nums[<span class="number">0</span>] &lt;= target &#123;</span><br><span class="line">		dp[nums[<span class="number">0</span>]] = <span class="literal">true</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">1</span>; i &lt; n; i++ &#123;</span><br><span class="line">		<span class="keyword">for</span> j := target; j &gt;= <span class="number">0</span>; j-- &#123;</span><br><span class="line">			dp[j] = (j &gt;= nums[i] &amp;&amp; dp[j-nums[i]]) || dp[j]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> dp[target]</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>这里最后还是比较了最小值。同时在循环中又做了边界处理，我们能不能有更好的解法呢。事实上，有的，只要我们修改了<code>dp[i][j]</code>的含义。我们将它定义为从底部到<code>triangle(i,j)</code>的最小值，这要我们的最小值一定是<code>dp[0][0]</code>!</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">minimumTotal</span><span class="params">(triangle [][]<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  n := <span class="built_in">len</span>(triangle)</span><br><span class="line">  dp := <span class="built_in">make</span>([]<span class="keyword">int</span>, n)</span><br><span class="line">  <span class="built_in">copy</span>(dp, triangle[n<span class="number">-1</span>])</span><br><span class="line">  <span class="keyword">for</span> i := n<span class="number">-2</span>; i &gt;=<span class="number">0</span>; i-- &#123;</span><br><span class="line">    <span class="keyword">for</span> j := <span class="number">0</span>; j &lt;= i; j++ &#123;</span><br><span class="line">      <span class="keyword">if</span> dp[j] &gt; dp[j+<span class="number">1</span>] &#123;</span><br><span class="line">        dp[j] = triangle[i][j] + dp[j+<span class="number">1</span>]</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        dp[j] = triangle[i][j] + dp[j]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> dp[<span class="number">0</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h2><blockquote>
+<p>给定正整数 n，找到若干个完全平方数（比如 1, 4, 9, 16, …）使得它们的和等于 n。你需要让组成和的完全平方数的个数最少。</p>
+<p>给你一个整数 n ，返回和为 n 的完全平方数的 最少数量 。</p>
+<p>完全平方数 是一个整数，其值等于另一个整数的平方；换句话说，其值等于一个整数自乘的积。例如，1、4、9 和 16 都是完全平方数，而 3 和 11 不是。</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/perfect-squares">https://leetcode-cn.com/problems/perfect-squares</a></p>
+</blockquote>
+<h3 id="转化为01背包问题"><a href="#转化为01背包问题" class="headerlink" title="转化为01背包问题"></a>转化为01背包问题</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">numSquares</span><span class="params">(n <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> candidates, costs []<span class="keyword">int</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">1</span>; i*i &lt;= n; i++ &#123;</span><br><span class="line">		<span class="keyword">for</span> j := <span class="number">0</span>; i*i*(<span class="number">1</span>&lt;&lt;j) &lt;= n; j++ &#123;</span><br><span class="line">			candidates = <span class="built_in">append</span>(candidates, i*i*(<span class="number">1</span>&lt;&lt;j))</span><br><span class="line">			costs = <span class="built_in">append</span>(costs, <span class="number">1</span>&lt;&lt;j)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	dp := <span class="built_in">make</span>([]<span class="keyword">int</span>, n+<span class="number">1</span>)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="keyword">range</span> dp &#123;</span><br><span class="line">		dp[i] = i</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">1</span>; i &lt; <span class="built_in">len</span>(candidates); i++ &#123;</span><br><span class="line">		<span class="keyword">for</span> j := n; j &gt;= candidates[i]; j-- &#123;</span><br><span class="line">			dp[j] = min(dp[j-candidates[i]]+costs[i], dp[j])</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> dp[n]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>当然这里也可以修改<code>triangle</code>矩阵，但往往我们是不能做原地修改的。</p>
+<h3 id="O-VN-解法"><a href="#O-VN-解法" class="headerlink" title="O(VN) 解法"></a>O(VN) 解法</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">numSquares</span><span class="params">(n <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	dp := <span class="built_in">make</span>([]<span class="keyword">int</span>, n+<span class="number">1</span>)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="keyword">range</span> dp &#123;</span><br><span class="line">		dp[i] = <span class="number">0x3f3f3f3f</span></span><br><span class="line">	&#125;</span><br><span class="line">	dp[<span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">1</span>; i*i &lt;= n; i++ &#123;</span><br><span class="line">		x := i * i</span><br><span class="line">		<span class="keyword">for</span> j := x; j &lt;= n; j++ &#123;</span><br><span class="line">			dp[j] = min(dp[j], dp[j-x]+<span class="number">1</span>)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> dp[n]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>心得：01 背包中，第二层循环从大到小；完全背包问题中，从小到大。</p>
+</blockquote>
+<blockquote>
+<p>零钱兑换</p>
+<p>给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1。</p>
+<p>你可以认为每种硬币的数量是无限的。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/coin-change">https://leetcode-cn.com/problems/coin-change</a></p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">coinChange</span><span class="params">(coins []<span class="keyword">int</span>, amount <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  dp := <span class="built_in">make</span>([]<span class="keyword">int</span>, amount+<span class="number">1</span>)</span><br><span class="line">  <span class="keyword">for</span> i := <span class="keyword">range</span> dp &#123;</span><br><span class="line">    dp[i] = <span class="number">0x3f3f3f3f</span></span><br><span class="line">  &#125;</span><br><span class="line">  dp[<span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">  <span class="keyword">for</span> _, c := <span class="keyword">range</span> coins &#123;</span><br><span class="line">    <span class="keyword">for</span> j := c; j &lt;= amount; j++ &#123;</span><br><span class="line">      dp[j] = min(dp[j], dp[j-c]+<span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> dp[amount] == <span class="number">0x3f3f3f3f</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> dp[amount]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">min</span><span class="params">(a, b <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  <span class="keyword">if</span> a &lt; b &#123;</span><br><span class="line">    <span class="keyword">return</span> a</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="多维背包"><a href="#多维背包" class="headerlink" title="多维背包"></a>多维背包</h2><blockquote>
+<p>给你一个二进制字符串数组 strs 和两个整数 m 和 n 。</p>
+<p>请你找出并返回 strs 的最大子集的大小，该子集中 最多 有 m 个 0 和 n 个 1 。</p>
+<p>如果 x 的所有元素也是 y 的元素，集合 x 是集合 y 的 子集 。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/ones-and-zeroes">https://leetcode-cn.com/problems/ones-and-zeroes</a></p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">findMaxForm</span><span class="params">(strs []<span class="keyword">string</span>, m <span class="keyword">int</span>, n <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  dp := <span class="built_in">make</span>([][]<span class="keyword">int</span>, m+<span class="number">1</span>)</span><br><span class="line">  <span class="keyword">for</span> i := <span class="keyword">range</span> dp &#123;</span><br><span class="line">    dp[i] = <span class="built_in">make</span>([]<span class="keyword">int</span>, n+<span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> _, s := <span class="keyword">range</span> strs &#123;</span><br><span class="line">    c0, c1 := count01(s)</span><br><span class="line">    <span class="keyword">for</span> i := m; i &gt;= c0; i-- &#123;</span><br><span class="line">      <span class="keyword">for</span> j := n; j &gt;= c1; j-- &#123;</span><br><span class="line">        dp[i][j] = max(dp[i][j], dp[i-c0][j-c1]+<span class="number">1</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> dp[m][n]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">count01</span><span class="params">(s <span class="keyword">string</span>)</span> <span class="params">(c0 <span class="keyword">int</span>, c1 <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="keyword">range</span> s &#123;</span><br><span class="line">		<span class="keyword">if</span> s[i] == <span class="string">&#x27;0&#x27;</span> &#123;</span><br><span class="line">			c0++</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			c1++</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">max</span><span class="params">(a, b <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  <span class="keyword">if</span> a &gt; b &#123;</span><br><span class="line">    <span class="keyword">return</span> a</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>盈利计划</p>
+<p>集团里有 n 名员工，他们可以完成各种各样的工作创造利润。</p>
+<p>第 i 种工作会产生 profit[i] 的利润，它要求 group[i] 名成员共同参与。如果成员参与了其中一项工作，就不能参与另一项工作。</p>
+<p>工作的任何至少产生 minProfit 利润的子集称为 盈利计划 。并且工作的成员总数最多为 n 。</p>
+<p>有多少种计划可以选择？因为答案很大，所以 返回结果模 10^9 + 7 的值。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/profitable-schemes">https://leetcode-cn.com/problems/profitable-schemes</a></p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">profitableSchemes</span><span class="params">(n <span class="keyword">int</span>, minProfit <span class="keyword">int</span>, group []<span class="keyword">int</span>, profit []<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	dp := <span class="built_in">make</span>([][]<span class="keyword">int</span>, n+<span class="number">1</span>)</span><br><span class="line">	mod := <span class="number">1000000007</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="keyword">range</span> dp &#123;</span><br><span class="line">		dp[i] = <span class="built_in">make</span>([]<span class="keyword">int</span>, minProfit+<span class="number">1</span>)</span><br><span class="line">		dp[i][<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="keyword">range</span> group &#123;</span><br><span class="line">		<span class="keyword">for</span> j := n; j &gt;= group[i]; j-- &#123;</span><br><span class="line">			<span class="keyword">for</span> k := minProfit; k &gt;= <span class="number">0</span>; k-- &#123;</span><br><span class="line">				dp[j][k] += (dp[j-group[i]][max(k-profit[i], <span class="number">0</span>)]) % mod</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> dp[n][minProfit] % mod</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">max</span><span class="params">(a, b <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  <span class="keyword">if</span> a &gt; b &#123;</span><br><span class="line">    <span class="keyword">return</span> a</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>心得：迄今为止，我们遇到的问题都是<em>容量不超过</em>，对于<em>容量不少于</em>，我们有两种思路：</p>
+<ol>
+<li>做差——先不考虑容量，计算出所有位置的最大值（爬楼梯），然后计算容量不超过的最大值，最后做差即可。</li>
+<li>在状态转移方程处入手：类似<code>dp[j][k] += (dp[j-group[i]][max(k-profit[i], 0)])</code></li>
+</ol>
+</blockquote>
+<h2 id="可以转化为-01-背包问题"><a href="#可以转化为-01-背包问题" class="headerlink" title="可以转化为 01 背包问题"></a>可以转化为 01 背包问题</h2><blockquote>
+<p>目标和</p>
+<p>给你一个整数数组 nums 和一个整数 target 。</p>
+<p>向数组中的每个整数前添加 ‘+’ 或 ‘-‘ ，然后串联起所有整数，可以构造一个 表达式 ：</p>
+<p>例如，nums = [2, 1] ，可以在 2 之前添加 ‘+’ ，在 1 之前添加 ‘-‘ ，然后串联起来得到表达式 “+2-1” 。<br>返回可以通过上述方法构造的、运算结果等于 target 的不同 表达式 的数目。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/target-sum">https://leetcode-cn.com/problems/target-sum</a></p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">findTargetSumWays</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> target &lt; <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> findTargetSumWays(nums, -target)</span><br><span class="line">	&#125;</span><br><span class="line">	n, sum := <span class="built_in">len</span>(nums), <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> _, v := <span class="keyword">range</span> nums &#123;</span><br><span class="line">    sum += v</span><br><span class="line">	&#125;</span><br><span class="line">  <span class="keyword">if</span> target &gt; sum || (sum-target)&amp;<span class="number">1</span> == <span class="number">1</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">  &#125; </span><br><span class="line"></span><br><span class="line">  m := (sum-target)&gt;&gt;<span class="number">1</span></span><br><span class="line">  dp := <span class="built_in">make</span>([]<span class="keyword">int</span>, m+<span class="number">1</span>)</span><br><span class="line">	dp[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; n; i++ &#123;</span><br><span class="line">		<span class="keyword">for</span> j := m; j &gt;= nums[i]; j-- &#123;</span><br><span class="line">      dp[j] += dp[j-nums[i]]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> dp[m]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>Author: <a href="https://konoakira.com">Akira</a>
-            <p>Post Link: <a href="https://konoakira.com/2021/06/09/minimum-path-sum-from-top-to-bottom/">https://konoakira.com/2021/06/09/minimum-path-sum-from-top-to-bottom/</a>
-            <p>Publish Date: <a href="https://konoakira.com/2021/06/09/minimum-path-sum-from-top-to-bottom/">June 9th 2021, 9:06:07 pm</a>
-            <p>Update Date: <a href="https://konoakira.com/2021/06/09/minimum-path-sum-from-top-to-bottom/">June 9th 2021, 9:26:00 pm</a>
+            <p>Post Link: <a href="https://konoakira.com/2021/06/13/backpack-problems/">https://konoakira.com/2021/06/13/backpack-problems/</a>
+            <p>Publish Date: <a href="https://konoakira.com/2021/06/13/backpack-problems/">June 13th 2021, 12:34:08 am</a>
+            <p>Update Date: <a href="https://konoakira.com/2021/06/13/backpack-problems/">June 13th 2021, 11:20:27 am</a>
             <p>Copyright Notice: All articles in this blog are licensed under <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/"> unless stating additionally.</p>
         </div>
     
@@ -456,17 +506,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2021/06/10/best-time-to-buy-sell-stock/" title= "Best Time to Buy & Sell Stock">
-                    <div class="nextTitle">Best Time to Buy & Sell Stock</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2021/06/08/n-queens-my-template/" title= "n 皇后，我的套路">
-                    <div class="prevTitle">n 皇后，我的套路</div>
+                <a href= "/2021/06/11/median-of-two-sorted-arrays/" title= "median of two sorted arrays">
+                    <div class="prevTitle">median of two sorted arrays</div>
                 </a>
             
         </li>
@@ -486,7 +531,7 @@ height:50vh;
         var gitalk = new Gitalk({
             clientID: 'c2bb6ecdc360d1417817',
             clientSecret: '3081aae8990bcbf19f97f3e13ce016eaa434b878',
-            id: '1623243967000',
+            id: '1623515648000',
             repo: 'konoakira.github.io',
             owner: 'konoakira',
             admin: "konoakira",
@@ -605,7 +650,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#01-%E8%83%8C%E5%8C%85"><span class="toc-number">1.</span> <span class="toc-text">01 背包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85"><span class="toc-number">2.</span> <span class="toc-text">完全背包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E5%8C%96%E4%B8%BA01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98"><span class="toc-number">2.1.</span> <span class="toc-text">转化为01背包问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#O-VN-%E8%A7%A3%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">O(VN) 解法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%BB%B4%E8%83%8C%E5%8C%85"><span class="toc-number">3.</span> <span class="toc-text">多维背包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E4%BB%A5%E8%BD%AC%E5%8C%96%E4%B8%BA-01-%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98"><span class="toc-number">4.</span> <span class="toc-text">可以转化为 01 背包问题</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
