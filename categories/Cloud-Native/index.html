@@ -372,26 +372,23 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2021/06/07/docker-review-2/" >
+        <a class="abstract-title" href = "/2021/06/23/k8s-container-network/" >
             
-                <span>Docker 总结二 overlay2 与 镜像</span>
+                <span>k8s 容器网络</span>
         </a>
         <div class="abstract-content">
-            <h2 id="Mount-Namespace"><a href="#Mount-Namespace" class="headerlink" title="Mount Namespace"></a>Mount Namespace</h2><blockquote>
-<p>每个文件系统都有独立的inode、block，super block等信息，这些文件系统要链接到目录树才能够被使用。将文件系统与目录树结合的操作被称为挂载。其中，挂载点是目录，该目录是进入文件系统的入口。</p>
-<p><em>《鸟哥的Linux私房菜》</em></p>
-</blockquote>
+            <p>既然不同容器可以使用不同的 <code>Network Namespace</code>，那外界又是如何与这个容器通信呢，或者容器之间又是如何通信的呢？当然，我们可以使用<code>docker run -d -net=host ...</code>让容器使用主机的网络。这样直接的方式可以为容器提供良好的网络性能，但也会不可避免地引入共享网络资源的问题，比如端口冲突。所以，在大多数情况下，我们都希望容器进程能使用自己Network Namespace里的网络栈，即：拥有属于自己的IP地址和端口。</p>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/07</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/23</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "docker">docker</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
     
 </div>
             
@@ -404,24 +401,26 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2021/06/06/docker-review-1/" >
+        <a class="abstract-title" href = "/2021/06/23/k8s-best-practice/" >
             
-                <span>Docker 总结一 隔离与限制</span>
+                <span>k8s 最佳实践（For me 🙂）</span>
         </a>
         <div class="abstract-content">
-            <h2 id="容器技术"><a href="#容器技术" class="headerlink" title="容器技术"></a>容器技术</h2><p>进程来说，它的静态表现就是程序，平常都安安静静地待在磁盘上；而一旦运行起来，它就变成了计算机里的数据和状态的总和，这就是它的动态表现。而<strong>容器技术的核心功能，就是通过约束和修改进程的动态表现，从而为其创造出一个“边界”。</strong></p>
-<p>对于 <code>Docker</code>等大多数 Linux 容器， <code>Cgroups</code> 技术用来制造约束;<code>Namespace</code>技术用来修改进程视图。</p>
+            本文记录我从头搭建 k8s 的过程。使用的服务器为 bandwagon 美国机房的双核，2G RAM，40G 硬盘空间的主机，操作系统为 ubuntu 18.04。
+Install Docker &amp; Kubeadm123curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -apt-get updateapt-get install -y docker.io kubeadm
+
+很简单，可能是我用的是美国的机房，没有糟心的换源操作。我没有用 minikube 那一套，直接学习的是 k8...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/06</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/23</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "docker">docker</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
     
 </div>
             
@@ -737,9 +736,39 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 19
+        Total : 21
         </div>
         <!-- search  -->
         
@@ -756,6 +785,16 @@
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/2021/06/23/k8s-container-network/" >k8s 容器网络</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/2021/06/23/k8s-best-practice/" >k8s 最佳实践（For me 🙂）</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -875,6 +914,8 @@
     
         <span class="sidebar-tag-name" data-tags="advanced"><span class="iconfont-archer">&#xe606;</span>advanced</span>
     
+        <span class="sidebar-tag-name" data-tags="k8s"><span class="iconfont-archer">&#xe606;</span>k8s</span>
+    
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
     <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
@@ -921,6 +962,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="leetcode"><span class="iconfont-archer">&#xe60a;</span>leetcode</span>
     
         <span class="sidebar-category-name" data-categories="microservices"><span class="iconfont-archer">&#xe60a;</span>microservices</span>
+    
+        <span class="sidebar-category-name" data-categories="Cloud-Native"><span class="iconfont-archer">&#xe60a;</span>Cloud-Native</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
