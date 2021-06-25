@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="Akira">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Akira">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog,blog,java,golang">
+    
+    <meta name="description" content="akira's notes.">
+    <meta name="description" content="本文记录我从头搭建 k8s 的过程。使用的服务器为 bandwagon 美国机房的双核，2G RAM，40G 硬盘空间的主机，操作系统为 ubuntu 18.04。 Install Docker &amp; Kubeadm123curl -s https:&#x2F;&#x2F;packages.cloud.google.com&#x2F;apt&#x2F;doc&#x2F;apt-key.gpg | apt-key add -apt-get u">
+<meta property="og:type" content="article">
+<meta property="og:title" content="k8s 最佳实践（For me 🙂）">
+<meta property="og:url" content="https://konoakira.com/2020/12/23/k8s-best-practice/index.html">
+<meta property="og:site_name" content="DYSTOPIA">
+<meta property="og:description" content="本文记录我从头搭建 k8s 的过程。使用的服务器为 bandwagon 美国机房的双核，2G RAM，40G 硬盘空间的主机，操作系统为 ubuntu 18.04。 Install Docker &amp; Kubeadm123curl -s https:&#x2F;&#x2F;packages.cloud.google.com&#x2F;apt&#x2F;doc&#x2F;apt-key.gpg | apt-key add -apt-get u">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-23T01:22:04.000Z">
+<meta property="article:modified_time" content="2021-06-24T02:43:00.518Z">
+<meta property="article:author" content="Akira">
+<meta property="article:tag" content="k8s">
+<meta name="twitter:card" content="summary">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>k8s 最佳实践（For me 🙂） · DYSTOPIA</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20210204" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20210204" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js?v=20210204" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    <script src="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.3/js/all.min.js"  data-auto-replace-svg="nest" ></script>
+    
+        <!-- algolia -->
+        <script>
+            
+            var hits = JSON.parse('{"per_page":10}')
+            var labels = JSON.parse('{"input_placeholder":"Search for Posts","hits_empty":"We did not find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}')
+
+            var algolia = {
+                appId: '66KI0W75FJ',
+                apiKey: '0ca84f70627c86b59375264768a98a0d',
+                indexName: 'dystopia',
+                hits: hits,
+                labels: labels
+            }
+        </script>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >DYSTOPIA</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">k8s 最佳实践（For me 🙂）</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>DYSTOPIA</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(https://source.unsplash.com/random)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            k8s 最佳实践（For me 🙂）
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">3.8k</span>Reading time: <span class="post-count reading-time">18 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/12/23</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>本文记录我从头搭建 k8s 的过程。使用的服务器为 bandwagon 美国机房的双核，2G RAM，40G 硬盘空间的主机，操作系统为 ubuntu 18.04。</p>
+<h2 id="Install-Docker-amp-Kubeadm"><a href="#Install-Docker-amp-Kubeadm" class="headerlink" title="Install Docker &amp; Kubeadm"></a>Install Docker &amp; Kubeadm</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -</span><br><span class="line">apt-get update</span><br><span class="line">apt-get install -y docker.io kubeadm</span><br></pre></td></tr></table></figure>
+
+<p>很简单，可能是我用的是美国的机房，没有糟心的换源操作。我没有用 minikube 那一套，直接学习的是 k8s 官网的 kubeadm，可能这样会有助于接下来的 k8s 的学习吧。</p>
+<h2 id="First-k8s-Cluster-Node"><a href="#First-k8s-Cluster-Node" class="headerlink" title="First k8s Cluster Node"></a>First k8s Cluster Node</h2><p>这里我用的是 yaml 格式的配置文件来部署的：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">kubeadm.k8s.io/v1beta2</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ClusterConfiguration</span></span><br><span class="line"><span class="attr">kubernetesVersion:</span> <span class="string">v1.21.0</span></span><br><span class="line"><span class="attr">apiServer:</span></span><br><span class="line">  <span class="attr">extraArgs:</span></span><br><span class="line">    <span class="attr">runtime-config:</span> <span class="string">&quot;api/all=true&quot;</span></span><br><span class="line"><span class="attr">controllerManager:</span></span><br><span class="line">  <span class="attr">extraArgs:</span></span><br><span class="line">    <span class="attr">node-monitor-grace-period-duration:</span> <span class="string">&quot;10s&quot;</span></span><br><span class="line">    <span class="attr">horizontal-pod-autoscaler-sync-period:</span> <span class="string">&quot;10s&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到我用的是最新版的 k8s，使用的 kubeadm 版本是 <code>kubeadm.k8s.io/v1beta2</code>，为此，我付出了很大的代价，网络上的教程很多还是<code>kubeadm.k8s.io/v1alpha1</code>。</p>
+<p>使用命令<code>kubeadm init --config kubeadm.yaml</code>，就可以完成部署了。我们可以看一看安装时的log：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">[init] Using Kubernetes version: v1.21.0</span><br><span class="line">[preflight] Running pre-flight checks</span><br><span class="line">        [WARNING IsDockerSystemdCheck]: detected &quot;cgroupfs&quot; as the Docker cgroup driver. The recommended driver is &quot;systemd&quot;. Please follow the guide at https://kubernetes.io/docs/setup/cri/</span><br><span class="line">// 起飞前 拉取配置 k8s 集群需要的镜像</span><br><span class="line">[preflight] Pulling images required for setting up a Kubernetes cluster</span><br><span class="line">[preflight] This might take a minute or two, depending on the speed of your internet connection</span><br><span class="line">// 我们可以用命令 kubeadm config images pull 来提前拉取镜像</span><br><span class="line">[preflight] You can also perform this action in beforehand using &#x27;kubeadm config images pull&#x27;</span><br><span class="line">// 开始配置证书</span><br><span class="line">[certs] Using certificateDir folder &quot;/etc/kubernetes/pki&quot;</span><br><span class="line">// ca 证书和key</span><br><span class="line">[certs] Generating &quot;ca&quot; certificate and key</span><br><span class="line">// api 服务器 证书和key</span><br><span class="line">[certs] Generating &quot;apiserver&quot; certificate and key</span><br><span class="line">// api 服务器证书签名给了这些 dns 域名和 ip</span><br><span class="line">[certs] apiserver serving cert is signed for DNS names [kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local lucid-gigs-2.localdomain] and IPs [10.96.0.1 23.105.209.66]</span><br><span class="line">// 生成 各种证书和key</span><br><span class="line">[certs] Generating &quot;apiserver-kubelet-client&quot; certificate and key</span><br><span class="line">[certs] Generating &quot;front-proxy-ca&quot; certificate and key</span><br><span class="line">[certs] Generating &quot;front-proxy-client&quot; certificate and key</span><br><span class="line">[certs] Generating &quot;etcd/ca&quot; certificate and key</span><br><span class="line">[certs] Generating &quot;etcd/server&quot; certificate and key</span><br><span class="line">[certs] etcd/server serving cert is signed for DNS names [localhost lucid-gigs-2.localdomain] and IPs [23.105.209.66 127.0.0.1 ::1]</span><br><span class="line">[certs] Generating &quot;etcd/peer&quot; certificate and key</span><br><span class="line">[certs] etcd/peer serving cert is signed for DNS names [localhost lucid-gigs-2.localdomain] and IPs [23.105.209.66 127.0.0.1 ::1]</span><br><span class="line">[certs] Generating &quot;etcd/healthcheck-client&quot; certificate and key</span><br><span class="line">[certs] Generating &quot;apiserver-etcd-client&quot; certificate and key</span><br><span class="line">[certs] Generating &quot;sa&quot; key and public key</span><br><span class="line">// 写入 k8s 配置</span><br><span class="line">[kubeconfig] Using kubeconfig folder &quot;/etc/kubernetes&quot;</span><br><span class="line">[kubeconfig] Writing &quot;admin.conf&quot; kubeconfig file</span><br><span class="line">[kubeconfig] Writing &quot;kubelet.conf&quot; kubeconfig file</span><br><span class="line">[kubeconfig] Writing &quot;controller-manager.conf&quot; kubeconfig file</span><br><span class="line">[kubeconfig] Writing &quot;scheduler.conf&quot; kubeconfig file</span><br><span class="line">// 准备启动 Kubelet</span><br><span class="line">[kubelet-start] Writing kubelet environment file with flags to file &quot;/var/lib/kubelet/kubeadm-flags.env&quot;</span><br><span class="line">[kubelet-start] Writing kubelet configuration to file &quot;/var/lib/kubelet/config.yaml&quot;</span><br><span class="line">[kubelet-start] Starting the kubelet</span><br><span class="line">// 创建各种pod</span><br><span class="line">[control-plane] Using manifest folder &quot;/etc/kubernetes/manifests&quot;</span><br><span class="line">[control-plane] Creating static Pod manifest for &quot;kube-apiserver&quot;</span><br><span class="line">[control-plane] Creating static Pod manifest for &quot;kube-controller-manager&quot;</span><br><span class="line">[control-plane] Creating static Pod manifest for &quot;kube-scheduler&quot;</span><br><span class="line">[etcd] Creating static Pod manifest for local etcd in &quot;/etc/kubernetes/manifests&quot;</span><br><span class="line">[wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory &quot;/etc/kubernetes/manifests&quot;. This can take up to 4m0s</span><br><span class="line">// 还检查了一遍健康</span><br><span class="line">[apiclient] All control plane components are healthy after 33.023699 seconds</span><br><span class="line">// 保存上传Kubeadm配置到 命名空间 kube-system 下的 kubeadm-config</span><br><span class="line">[upload-config] Storing the configuration used in ConfigMap &quot;kubeadm-config&quot; in the &quot;kube-system&quot; Namespace</span><br><span class="line">[kubelet] Creating a ConfigMap &quot;kubelet-config-1.21&quot; in namespace kube-system with the configuration for the kubelets in the cluster</span><br><span class="line">// 上传证书</span><br><span class="line">[upload-certs] Skipping phase. Please see --upload-certs</span><br><span class="line">// 标记 control plane</span><br><span class="line">[mark-control-plane] Marking the node lucid-gigs-2.localdomain as control-plane by adding the labels: [node-role.kubernetes.io/master(deprecated) node-role.kubernetes.io/control-plane node.kubernetes.io/exclude-from-external-load-balancers]</span><br><span class="line">[mark-control-plane] Marking the node lucid-gigs-2.localdomain as control-plane by adding the taints [node-role.kubernetes.io/master:NoSchedule]</span><br><span class="line">[bootstrap-token] Using token: 4z7j17.6crhs6bqjcjm7uyn</span><br><span class="line">[bootstrap-token] Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles</span><br><span class="line">[bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to get nodes</span><br><span class="line">[bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials</span><br><span class="line">[bootstrap-token] configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token</span><br><span class="line">[bootstrap-token] configured RBAC rules to allow certificate rotation for all node client certificates in the cluster</span><br><span class="line">// 保存 cluster-info 配置到 kube-public 命名空间下</span><br><span class="line">[bootstrap-token] Creating the &quot;cluster-info&quot; ConfigMap in the &quot;kube-public&quot; namespace</span><br><span class="line">[kubelet-finalize] Updating &quot;/etc/kubernetes/kubelet.conf&quot; to point to a rotatable kubelet client certificate and key</span><br><span class="line">// 应用 CoreDNS kube-proxy</span><br><span class="line">[addons] Applied essential addon: CoreDNS</span><br><span class="line">[addons] Applied essential addon: kube-proxy</span><br><span class="line"></span><br><span class="line">Your Kubernetes control-plane has initialized successfully!</span><br></pre></td></tr></table></figure>
+
+<p>个人感觉整个过程还是十分清晰的（虽然不是很明确各个组件的具体职责，但能大概察觉到 k8s 应该有这些核心功能）。然后复制配置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p $HOME/.kube</span><br><span class="line">sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config</span><br><span class="line">sudo chown $(id -u):$(id -g) $HOME/.kube/config</span><br><span class="line">// Alternatively, if you are the root user, you can run:</span><br><span class="line">export KUBECONFIG=/etc/kubernetes/admin.conf</span><br></pre></td></tr></table></figure>
+
+<p>需要这些配置命令的原因是：Kubernetes集群默认需要加密方式访问。所以，这几条命令，就是将刚刚部署生成的Kubernetes集群的安全配置文件，保存到当前用户的<code>.kube</code>目录下，kubectl默认会使用这个目录下的授权信息访问Kubernetes集群。当然，作为一个 root 用户，我们可以通过<code>export KUBECONFIG</code>环境变量告诉kubectl这个安全配置文件的位置。</p>
+<p>最后，我们可以通过命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubeadm join 23.105.209.66:6443 --token 4z7j17.6crhs6bqjcjm7uyn \</span><br><span class="line">        --discovery-token-ca-cert-hash sha256:3d2617928c09a3341f16f71de5b5722800c88cacbd6fdc3f4795020bb524a201</span><br></pre></td></tr></table></figure>
+
+<p>来加入其他节点了。</p>
+<h2 id="Check-Node"><a href="#Check-Node" class="headerlink" title="Check Node"></a>Check Node</h2><p>使用命令<code>kubectl get nodes</code>查看节点状态：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">❯ kubectl get nodes</span><br><span class="line">NAME                       STATUS     ROLES                  AGE   VERSION</span><br><span class="line">lucid-gigs-2.localdomain   NotReady   control-plane,master   42m   v1.21.1</span><br></pre></td></tr></table></figure>
+
+<p>可以看到这个唯一的节点还未准备就绪：<code>NotReady</code>。</p>
+<p>使用命令<code>kubectl describe node lucid-gigs-2.localdomain</code>, 很不幸，我忘记配置它的名字了，导致这个名字过于冗长。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">❯ kubectl describe node lucid-gigs-2.localdomain</span><br><span class="line">Name:               lucid-gigs-2.localdomain</span><br><span class="line">Roles:              control-plane,master</span><br><span class="line">Labels:             beta.kubernetes.io/arch=amd64</span><br><span class="line">                    beta.kubernetes.io/os=linux</span><br><span class="line">                    kubernetes.io/arch=amd64</span><br><span class="line">                    kubernetes.io/hostname=lucid-gigs-2.localdomain</span><br><span class="line">                    kubernetes.io/os=linux</span><br><span class="line">                    node-role.kubernetes.io/control-plane=</span><br><span class="line">                    node-role.kubernetes.io/master=</span><br><span class="line">                    node.kubernetes.io/exclude-from-external-load-balancers=</span><br><span class="line">Annotations:        kubeadm.alpha.kubernetes.io/cri-socket: /var/run/dockershim.sock</span><br><span class="line">                    volumes.kubernetes.io/controller-managed-attach-detach: true</span><br><span class="line">CreationTimestamp:  Tue, 22 Jun 2021 21:20:38 -0400</span><br><span class="line">Taints:             node-role.kubernetes.io/master:NoSchedule</span><br><span class="line">                    node.kubernetes.io/not-ready:NoSchedule</span><br><span class="line">Unschedulable:      false</span><br><span class="line">Lease:</span><br><span class="line">  HolderIdentity:  lucid-gigs-2.localdomain</span><br><span class="line">  AcquireTime:     &lt;unset&gt;</span><br><span class="line">  RenewTime:       Tue, 22 Jun 2021 22:07:35 -0400</span><br><span class="line">Conditions:</span><br><span class="line">  Type             Status  LastHeartbeatTime                 LastTransitionTime                Reason                       Message</span><br><span class="line">  ----             ------  -----------------                 ------------------                ------                       -------</span><br><span class="line">  MemoryPressure   False   Tue, 22 Jun 2021 22:06:34 -0400   Tue, 22 Jun 2021 21:20:30 -0400   KubeletHasSufficientMemory   kubelet has sufficient memory available</span><br><span class="line">  DiskPressure     False   Tue, 22 Jun 2021 22:06:34 -0400   Tue, 22 Jun 2021 21:20:30 -0400   KubeletHasNoDiskPressure     kubelet has no disk pressure</span><br><span class="line">  PIDPressure      False   Tue, 22 Jun 2021 22:06:34 -0400   Tue, 22 Jun 2021 21:20:30 -0400   KubeletHasSufficientPID      kubelet has sufficient PID available</span><br><span class="line">  Ready            False   Tue, 22 Jun 2021 22:06:34 -0400   Tue, 22 Jun 2021 21:20:30 -0400   KubeletNotReady              container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:docker: network plugin is not ready: cni config uninitialized</span><br><span class="line">Addresses:</span><br><span class="line">  InternalIP:  23.105.209.66</span><br><span class="line">  Hostname:    lucid-gigs-2.localdomain</span><br><span class="line">Capacity:</span><br><span class="line">  cpu:                3</span><br><span class="line">  ephemeral-storage:  40751112Ki</span><br><span class="line">  hugepages-1Gi:      0</span><br><span class="line">  hugepages-2Mi:      0</span><br><span class="line">  memory:             2057260Ki</span><br><span class="line">  pods:               110</span><br><span class="line">Allocatable:</span><br><span class="line">  cpu:                3</span><br><span class="line">  ephemeral-storage:  37556224758</span><br><span class="line">  hugepages-1Gi:      0</span><br><span class="line">  hugepages-2Mi:      0</span><br><span class="line">  memory:             1954860Ki</span><br><span class="line">  pods:               110</span><br><span class="line">System Info:</span><br><span class="line">  Machine ID:                 85065e0182c7b9ae16af18873cda9e4d</span><br><span class="line">  System UUID:                F00F9141-B635-42BE-A4C7-F42024C5C839</span><br><span class="line">  Boot ID:                    22515326-9675-4ac3-99c5-b21dd97dfda4</span><br><span class="line">  Kernel Version:             4.15.0-20-generic</span><br><span class="line">  OS Image:                   Ubuntu 18.04 LTS</span><br><span class="line">  Operating System:           linux</span><br><span class="line">  Architecture:               amd64</span><br><span class="line">  Container Runtime Version:  docker://20.10.2</span><br><span class="line">  Kubelet Version:            v1.21.1</span><br><span class="line">  Kube-Proxy Version:         v1.21.1</span><br><span class="line">Non-terminated Pods:          (4 in total)</span><br><span class="line">  Namespace                   Name                                                CPU Requests  CPU Limits  Memory Requests  Memory Limits  Age</span><br><span class="line">  ---------                   ----                                                ------------  ----------  ---------------  -------------  ---</span><br><span class="line">  kube-system                 etcd-lucid-gigs-2.localdomain                       100m (3%)     0 (0%)      100Mi (5%)       0 (0%)         46m</span><br><span class="line">  kube-system                 kube-apiserver-lucid-gigs-2.localdomain             250m (8%)     0 (0%)      0 (0%)           0 (0%)         46m</span><br><span class="line">  kube-system                 kube-controller-manager-lucid-gigs-2.localdomain    200m (6%)     0 (0%)      0 (0%)           0 (0%)         46m</span><br><span class="line">  kube-system                 kube-scheduler-lucid-gigs-2.localdomain             100m (3%)     0 (0%)      0 (0%)           0 (0%)         46m</span><br><span class="line">Allocated resources:</span><br><span class="line">  (Total limits may be over 100 percent, i.e., overcommitted.)</span><br><span class="line">  Resource           Requests    Limits</span><br><span class="line">  --------           --------    ------</span><br><span class="line">  cpu                650m (21%)  0 (0%)</span><br><span class="line">  memory             100Mi (5%)  0 (0%)</span><br><span class="line">  ephemeral-storage  100Mi (0%)  0 (0%)</span><br><span class="line">  hugepages-1Gi      0 (0%)      0 (0%)</span><br><span class="line">  hugepages-2Mi      0 (0%)      0 (0%)</span><br><span class="line">Events:</span><br><span class="line">  Type    Reason                   Age                From     Message</span><br><span class="line">  ----    ------                   ----               ----     -------</span><br><span class="line">  Normal  NodeHasSufficientMemory  47m (x6 over 47m)  kubelet  Node lucid-gigs-2.localdomain status is now: NodeHasSufficientMemory</span><br><span class="line">  Normal  NodeHasNoDiskPressure    47m (x6 over 47m)  kubelet  Node lucid-gigs-2.localdomain status is now: NodeHasNoDiskPressure</span><br><span class="line">  Normal  NodeHasSufficientPID     47m (x6 over 47m)  kubelet  Node lucid-gigs-2.localdomain status is now: NodeHasSufficientPID</span><br><span class="line">  Normal  Starting                 46m                kubelet  Starting kubelet.</span><br><span class="line">  Normal  NodeHasSufficientMemory  46m                kubelet  Node lucid-gigs-2.localdomain status is now: NodeHasSufficientMemory</span><br><span class="line">  Normal  NodeHasNoDiskPressure    46m                kubelet  Node lucid-gigs-2.localdomain status is now: NodeHasNoDiskPressure</span><br><span class="line">  Normal  NodeHasSufficientPID     46m                kubelet  Node lucid-gigs-2.localdomain status is now: NodeHasSufficientPID</span><br><span class="line">  Normal  NodeAllocatableEnforced  46m                kubelet  Updated Node Allocatable limit across pods</span><br></pre></td></tr></table></figure>
+
+<p>可以看到除了节点的详细信息，还有状态和事件，它们都有<code>Reason</code>这个字段，透过它，我们可以知道<code>MemoryPressure</code>,<code>DiskPressure</code>和<code>PIDPressure</code>都为<code>false</code>，比较刚刚搭建好各种资源都很充裕。之所以这个节点还未准备好是因为：<code>container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:docker: network plugin is not ready: cni config uninitialized</code>, 没有安装网络插件。</p>
+<h2 id="Install-Plugin"><a href="#Install-Plugin" class="headerlink" title="Install Plugin"></a>Install Plugin</h2><p>到这里我踩了最大的坑，为此我反复重复上面的步骤几个小时！我使用了<code>kubectl apply -f &quot;https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d &#39;\n&#39;)&quot;</code>来安装<code>weave</code>插件，但是就是死活不成功👿！后来我更改了网桥的配置后才算成功：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">modprobe br_netfilter</span><br><span class="line">sysctl -p</span><br><span class="line">sudo sysctl net.bridge.bridge-nf-call-iptables=1</span><br></pre></td></tr></table></figure>
+
+<h2 id="Check-Pods"><a href="#Check-Pods" class="headerlink" title="Check Pods"></a>Check Pods</h2><p>使用命令<code>kubectl get pods</code> 查看pods 状态：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">❯ kubectl get pods -n kube-system</span><br><span class="line">NAME                                               READY   STATUS             RESTARTS   AGE</span><br><span class="line">etcd-lucid-gigs-2.localdomain                      1/1     Running            0          63m</span><br><span class="line">kube-apiserver-lucid-gigs-2.localdomain            1/1     Running            0          63m</span><br><span class="line">kube-controller-manager-lucid-gigs-2.localdomain   0/1     CrashLoopBackOff   18         63m</span><br><span class="line">kube-scheduler-lucid-gigs-2.localdomain            1/1     Running            0          63m</span><br></pre></td></tr></table></figure>
+
+<p>kube-system是Kubernetes项目预留的系统Pod的工作空间（Namepsace，注意它并不是Linux Namespace，它只是Kubernetes划分不同工作空间的单位）。</p>
+<h2 id="Taint-Toleration"><a href="#Taint-Toleration" class="headerlink" title="Taint/Toleration"></a>Taint/Toleration</h2><p>Kubernetes的Taint/Toleration机制使得默认情况下Master节点是不允许运行用户Pod——一旦某个节点被加上了一个Taint，即被“打上了污点”，那么所有Pod就都不能在这个节点上运行，因为Kubernetes的Pod都有“洁癖”。除非，有个别的Pod声明自己能“容忍”这个“污点”，即声明了Toleration，它才可以在这个节点上运行。</p>
+<p>我们可以使用命令<code>kubectl taint nodes mynode foo=bar:NoSchedule</code>打上污点。在配置pod时则需要：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">tolerations:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">key:</span> <span class="string">&quot;foo&quot;</span></span><br><span class="line">    <span class="attr">operator:</span> <span class="string">&quot;Equal&quot;</span></span><br><span class="line">    <span class="attr">value:</span> <span class="string">&quot;bar&quot;</span></span><br><span class="line">    <span class="attr">effect:</span> <span class="string">&quot;NoSchedule&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中<code>NoSchedule</code>，意味着这个Taint只会在调度新Pod时产生作用，而不会影响已经在节点上运行的Pod，哪怕它们没有Toleration。这个Pod能“容忍”所有键值对为foo=bar的Taint（ operator: “Equal”，“等于”操作）。</p>
+<p>对于我这个新建的节点，可以发现：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Taints:             node-role.kubernetes.io/master:NoSchedule</span><br></pre></td></tr></table></figure>
+
+<p>这里只有键，那么配置pod时需要：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">...</span><br><span class="line">spec:</span><br><span class="line">  tolerations:</span><br><span class="line">  - key: &quot;foo&quot;</span><br><span class="line">    operator: &quot;Exists&quot;</span><br><span class="line">    effect: &quot;NoSchedule&quot;</span><br></pre></td></tr></table></figure>
+
+<p>而我只想要一个单节点的k8s，所以我选择删掉这个taint：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl taint nodes --all node-role.kubernetes.io/master-</span><br></pre></td></tr></table></figure>
+
+<p>在“<code>node-role.kubernetes.io/master</code>”这个键后面加上了一个短横线“-”，这个格式就意味着移除所有以“<code>node-role.kubernetes.io/master</code>”为键的Taint。</p>
+<h2 id="Deploy-Dashboard-plugin"><a href="#Deploy-Dashboard-plugin" class="headerlink" title="Deploy Dashboard plugin"></a>Deploy Dashboard plugin</h2><p>使用<code>kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.2.0/aio/deploy/recommended.yaml</code>部署<code>Dashboard</code>。</p>
+<h2 id="Deploy-Rook-plugin"><a href="#Deploy-Rook-plugin" class="headerlink" title="Deploy Rook plugin"></a>Deploy Rook plugin</h2><blockquote>
+<p>Rook项目是一个基于Ceph的Kubernetes存储插件（它后期也在加入对更多存储实现的支持）。不过，不同于对Ceph的简单封装，Rook在自己的实现中加入了水平扩展、迁移、灾难备份、监控等大量的企业级功能，使得这个项目变成了一个完整的、生产级别可用的容器存储插件。</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone --single-branch --branch v1.3.11 https://github.com/rook/rook.git</span><br><span class="line">cd rook/cluster/examples/kubernetes/ceph</span><br><span class="line">kubectl create -f common.yaml</span><br><span class="line">kubectl create -f operator.yaml</span><br><span class="line">kubectl create -f cluster.yaml</span><br></pre></td></tr></table></figure>
+
+<p>到这里我又遇到错误了：<code>no matches for kind &quot;CephCluster&quot; in version &quot;ceph.rook.io/v1&quot;</code>,原因是没有先装上<code>common</code>，没办法只能删了重装。</p>
+<h2 id="First-Pod-😹"><a href="#First-Pod-😹" class="headerlink" title="First Pod 😹"></a>First Pod 😹</h2><p>这里我用了官方的例子：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx-deployment</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">editor:</span> <span class="string">vscode</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">          <span class="attr">image:</span> <span class="string">nginx:latest</span></span><br><span class="line">          <span class="attr">ports:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>记录一下名词：</p>
+<ul>
+<li><p><code>yaml</code>：对应到Kubernetes中，就是一个API Object</p>
+</li>
+<li><p><code>kind</code>：这个API对象的类型（Type）</p>
+</li>
+<li><p><code>Deployment</code>：一个定义多副本应用（即多个副本Pod）的对象，在Pod定义发生变化时，对每个副本进行滚动更新（Rolling Update）</p>
+</li>
+<li><p><code>sepc.replicas</code>：Pod副本个数</p>
+</li>
+<li><p><code>spec.template</code>：描述了创建 Pod 的细节</p>
+</li>
+<li><p><code>metadata</code>：API对象的“标识”，即元数据，它也是我们从Kubernetes里找到这个对象的主要依据。这其中最主要使用到的字段是<code>labels</code></p>
+</li>
+<li><p><code>labels</code>：一组key-value格式的标签</p>
+</li>
+<li><p><code>spec.selector.matchLabels</code>：顾名思义，从Kubernetes中利用<code>label</code>过滤出它所关心的被控制对象。Deployment会把所有正在运行的、携带“app: nginx”标签的Pod识别为被管理的对象，并确保这些Pod的总数严格等于两个。</p>
+</li>
+<li><p><code>annotations</code>：专门用来携带key-value格式的内部信息。所谓内部信息，指的是对这些信息感兴趣的，是Kubernetes组件本身，而不是用户</p>
+</li>
+</ul>
+<p>利用命令<code>kubectl create -f nginx-deployment.yaml</code>即可创建两个pods：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">❯ kubectl get pods -l app=nginx</span><br><span class="line">NAME                                READY   STATUS    RESTARTS   AGE</span><br><span class="line">nginx-deployment-59766c6d77-cn2tj   1/1     Running   0          13m</span><br><span class="line">nginx-deployment-59766c6d77-xmkr4   1/1     Running   0          13m</span><br></pre></td></tr></table></figure>
+
+<h2 id="Describe-pod"><a href="#Describe-pod" class="headerlink" title="Describe pod"></a>Describe pod</h2><p>使用<code>kubectl describe pod nginx-deployment-59766c6d77-cn2tj</code>可以查看 pod 详细信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">Name:         nginx-deployment-59766c6d77-cn2tj</span><br><span class="line">Namespace:    default</span><br><span class="line">Priority:     0</span><br><span class="line">Node:         lucid-gigs-2.localdomain/23.105.209.66</span><br><span class="line">Start Time:   Wed, 23 Jun 2021 07:00:45 -0400</span><br><span class="line">Labels:       app=nginx</span><br><span class="line">              editor=vscode</span><br><span class="line">              pod-template-hash=59766c6d77</span><br><span class="line">Annotations:  &lt;none&gt;</span><br><span class="line">Status:       Running</span><br><span class="line">IP:           10.32.0.9</span><br><span class="line">IPs:</span><br><span class="line">  IP:           10.32.0.9</span><br><span class="line">Controlled By:  ReplicaSet/nginx-deployment-59766c6d77</span><br><span class="line">Containers:</span><br><span class="line">  nginx:</span><br><span class="line">    Container ID:   docker://aafc006f5b0c17f0f5dc38284783c2615c3fb9e07687ec40bdcc4dce10bc88d5</span><br><span class="line">    Image:          nginx:latest</span><br><span class="line">    Image ID:       docker-pullable://nginx@sha256:47ae43cdfc7064d28800bc42e79a429540c7c80168e8c8952778c0d5af1c09db</span><br><span class="line">    Port:           80/TCP</span><br><span class="line">    Host Port:      0/TCP</span><br><span class="line">    State:          Running</span><br><span class="line">      Started:      Wed, 23 Jun 2021 07:01:32 -0400</span><br><span class="line">    Ready:          True</span><br><span class="line">    Restart Count:  0</span><br><span class="line">    Environment:    &lt;none&gt;</span><br><span class="line">    Mounts:</span><br><span class="line">      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-gmckr (ro)</span><br><span class="line">Conditions:</span><br><span class="line">  Type              Status</span><br><span class="line">  Initialized       True </span><br><span class="line">  Ready             True </span><br><span class="line">  ContainersReady   True </span><br><span class="line">  PodScheduled      True </span><br><span class="line">Volumes:</span><br><span class="line">  kube-api-access-gmckr:</span><br><span class="line">    Type:                    Projected (a volume that contains injected data from multiple sources)</span><br><span class="line">    TokenExpirationSeconds:  3607</span><br><span class="line">    ConfigMapName:           kube-root-ca.crt</span><br><span class="line">    ConfigMapOptional:       &lt;nil&gt;</span><br><span class="line">    DownwardAPI:             true</span><br><span class="line">QoS Class:                   BestEffort</span><br><span class="line">Node-Selectors:              &lt;none&gt;</span><br><span class="line">Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s</span><br><span class="line">                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s</span><br><span class="line">Events:</span><br><span class="line">  Type    Reason     Age   From               Message</span><br><span class="line">  ----    ------     ----  ----               -------</span><br><span class="line">  Normal  Scheduled  14m   default-scheduler  Successfully assigned default/nginx-deployment-59766c6d77-cn2tj to lucid-gigs-2.localdomain</span><br><span class="line">  Normal  Pulling    14m   kubelet            Pulling image &quot;nginx:latest&quot;</span><br><span class="line">  Normal  Pulled     13m   kubelet            Successfully pulled image &quot;nginx:latest&quot; in 31.917109223s</span><br><span class="line">  Normal  Created    13m   kubelet            Created container nginx</span><br><span class="line">  Normal  Started    13m   kubelet            Started container nginx</span><br></pre></td></tr></table></figure>
+
+<p>从<code>Events</code>中我们可以看到，它被调度器分配到了节点<code>lucid-gigs-2.localdomain</code>，然后拉取了镜像，创建并启动了容器。</p>
+<h2 id="声明式API"><a href="#声明式API" class="headerlink" title="声明式API"></a>声明式API</h2><p>如果我们要更改nginx的版本或者修改配置，可以直接修改<code>nginx-deployment.yaml</code>，然后执行<code>kubectl apply -f nginx-deployment.yaml</code>。作为用户，我们不必关心当前的操作是创建，还是更新，执行的命令始终是<code>kubectl apply</code>，而 k8s 则会根据YAML文件的内容变化，自动进行具体的处理。而这个流程的好处是，它有助于帮助开发和运维人员，围绕着可以版本化管理的YAML文件，而不是“行踪不定”的命令行进行协作，从而大大降低开发人员和运维人员之间的沟通成本。</p>
+<p>修改配置如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx-deployment</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">editor:</span> <span class="string">vscode</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">          <span class="attr">image:</span> <span class="string">nginx:latest</span></span><br><span class="line">          <span class="attr">ports:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">          <span class="attr">volumeMounts:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">&quot;/usr/share/nginx/html&quot;</span></span><br><span class="line">              <span class="attr">name:</span> <span class="string">nginx-vol</span></span><br><span class="line">      <span class="attr">volumes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx-vol</span></span><br><span class="line">          <span class="attr">emptyDir:</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后，运行<code>kubectl create -f nginx-deployment.yaml</code>，就可以更新了。</p>
+<p>不得不说，到最后只要修改<code>yaml</code>文件就可以更新配置是我从前想都不敢想的，尽管遇到了坑卡了几个小时，但是到最后体会到它的强大，太值了！</p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author: <a href="https://konoakira.com">Akira</a>
+            <p>Post Link: <a href="https://konoakira.com/2020/12/23/k8s-best-practice/">https://konoakira.com/2020/12/23/k8s-best-practice/</a>
+            <p>Publish Date: <a href="https://konoakira.com/2020/12/23/k8s-best-practice/">December 23rd 2020, 9:22:04 am</a>
+            <p>Update Date: <a href="https://konoakira.com/2020/12/23/k8s-best-practice/">June 24th 2021, 10:43:00 am</a>
+            <p>Copyright Notice: All articles in this blog are licensed under <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/"> unless stating additionally.</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2021/01/11/median-of-two-sorted-arrays/" title= "median of two sorted arrays">
+                    <div class="nextTitle">median of two sorted arrays</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/12/09/minimum-path-sum-from-top-to-bottom/" title= "三角形最小路径和">
+                    <div class="prevTitle">三角形最小路径和</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <div id="comment-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.0/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1.6.0/dist/gitalk.min.js"></script>
+    <script>
+        var gitalk = new Gitalk({
+            clientID: 'c2bb6ecdc360d1417817',
+            clientSecret: '3081aae8990bcbf19f97f3e13ce016eaa434b878',
+            id: '1608686524000',
+            repo: 'konoakira.github.io',
+            owner: 'konoakira',
+            admin: "konoakira",
+            createIssueManually: true,
+            distractionFreeMode: false
+        })
+        gitalk.render('comment-container')
+    </script>
+    
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+
+    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    
+</main>
+
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:konoakira@outlook.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/konoakira" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+		<!-- mermaid -->
+		
+			<script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+			<script>
+				if (window.mermaid) {
+					mermaid.initialize({theme: 'forest'});
+				}
+			</script>
+				
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-Docker-amp-Kubeadm"><span class="toc-number">1.</span> <span class="toc-text">Install Docker &amp; Kubeadm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#First-k8s-Cluster-Node"><span class="toc-number">2.</span> <span class="toc-text">First k8s Cluster Node</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Check-Node"><span class="toc-number">3.</span> <span class="toc-text">Check Node</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-Plugin"><span class="toc-number">4.</span> <span class="toc-text">Install Plugin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Check-Pods"><span class="toc-number">5.</span> <span class="toc-text">Check Pods</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Taint-Toleration"><span class="toc-number">6.</span> <span class="toc-text">Taint&#x2F;Toleration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deploy-Dashboard-plugin"><span class="toc-number">7.</span> <span class="toc-text">Deploy Dashboard plugin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deploy-Rook-plugin"><span class="toc-number">8.</span> <span class="toc-text">Deploy Rook plugin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#First-Pod-%F0%9F%98%B9"><span class="toc-number">9.</span> <span class="toc-text">First Pod 😹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Describe-pod"><span class="toc-number">10.</span> <span class="toc-text">Describe pod</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8FAPI"><span class="toc-number">11.</span> <span class="toc-text">声明式API</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 22
+        </div>
+        <!-- search  -->
+        
+            <div class="site-search popup-trigger">
+                <span class="iconfont-archer search-icon">&#xe627;</span>
+            </div>
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/24</span><a class="archive-post-title" href= "/2021/06/24/k8s-Controllers/" >k8s 控制器探秘</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/19</span><a class="archive-post-title" href= "/2021/06/19/java-advanced-data-type/" >Java 数据类型进阶</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/16</span><a class="archive-post-title" href= "/2021/06/16/egg-stone-ballon/" >鸡蛋，石头与气球</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/13</span><a class="archive-post-title" href= "/2021/06/13/backpack-problems/" >背包问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2021/06/10/best-time-to-buy-sell-stock/" >Best Time to Buy & Sell Stock</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/07</span><a class="archive-post-title" href= "/2021/06/07/docker-review-2/" >Docker 总结二 overlay2 与 镜像</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2021/06/06/docker-review-1/" >Docker 总结一 隔离与限制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2021/06/06/fail-fast-&-fail-safe-iterator/" >Fail Fast & Fail Safe 迭代器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/04</span><a class="archive-post-title" href= "/2021/06/04/java-basics-collections/" >Java 集合类总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/23</span><a class="archive-post-title" href= "/2021/03/23/k8s-container-network/" >k8s 容器网络</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/08</span><a class="archive-post-title" href= "/2021/03/08/n-queens-my-template/" >n 皇后，我的套路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/02</span><a class="archive-post-title" href= "/2021/03/02/java-basics-map/" >Java map 总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/15</span><a class="archive-post-title" href= "/2021/02/15/java-basics-oop/" >Java 面向对象总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/14</span><a class="archive-post-title" href= "/2021/02/14/java-basics-data-type/" >Java 数据类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/21</span><a class="archive-post-title" href= "/2021/01/21/deterministic-finite-automaton/" >确定有限状态自动机</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/11</span><a class="archive-post-title" href= "/2021/01/11/median-of-two-sorted-arrays/" >median of two sorted arrays</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/23</span><a class="archive-post-title" href= "/2020/12/23/k8s-best-practice/" >k8s 最佳实践（For me 🙂）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/09</span><a class="archive-post-title" href= "/2020/12/09/minimum-path-sum-from-top-to-bottom/" >三角形最小路径和</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2020/11/25/slice-and-backtrack/" >切片和回溯法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/14</span><a class="archive-post-title" href= "/2020/09/14/golang-basics-data-structure/" >golang basics - data structure</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href= "/2020/05/07/Why-I-Implement-Binary-Search-Like-This/" >为什么我要这么写二分查找?</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/29</span><a class="archive-post-title" href= "/2020/03/29/spring-cloud-alibaba-tutorial-1/" >spring cloud alibaba 全家桶食用记录-1：dubbo</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="binary search"><span class="iconfont-archer">&#xe606;</span>binary search</span>
+    
+        <span class="sidebar-tag-name" data-tags="dynamic programming"><span class="iconfont-archer">&#xe606;</span>dynamic programming</span>
+    
+        <span class="sidebar-tag-name" data-tags="deterministic finite automaton"><span class="iconfont-archer">&#xe606;</span>deterministic finite automaton</span>
+    
+        <span class="sidebar-tag-name" data-tags="docker"><span class="iconfont-archer">&#xe606;</span>docker</span>
+    
+        <span class="sidebar-tag-name" data-tags="basic"><span class="iconfont-archer">&#xe606;</span>basic</span>
+    
+        <span class="sidebar-tag-name" data-tags="advanced"><span class="iconfont-archer">&#xe606;</span>advanced</span>
+    
+        <span class="sidebar-tag-name" data-tags="kubernetes"><span class="iconfont-archer">&#xe606;</span>kubernetes</span>
+    
+        <span class="sidebar-tag-name" data-tags="k8s"><span class="iconfont-archer">&#xe606;</span>k8s</span>
+    
+        <span class="sidebar-tag-name" data-tags="backtrack"><span class="iconfont-archer">&#xe606;</span>backtrack</span>
+    
+        <span class="sidebar-tag-name" data-tags="slice"><span class="iconfont-archer">&#xe606;</span>slice</span>
+    
+        <span class="sidebar-tag-name" data-tags="dubbo"><span class="iconfont-archer">&#xe606;</span>dubbo</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="algorithms"><span class="iconfont-archer">&#xe60a;</span>algorithms</span>
+    
+        <span class="sidebar-category-name" data-categories="leetcode"><span class="iconfont-archer">&#xe60a;</span>leetcode</span>
+    
+        <span class="sidebar-category-name" data-categories="leetocode"><span class="iconfont-archer">&#xe60a;</span>leetocode</span>
+    
+        <span class="sidebar-category-name" data-categories="Cloud-Native"><span class="iconfont-archer">&#xe60a;</span>Cloud-Native</span>
+    
+        <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
+    
+        <span class="sidebar-category-name" data-categories="golang"><span class="iconfont-archer">&#xe60a;</span>golang</span>
+    
+        <span class="sidebar-category-name" data-categories="Cloud-Native"><span class="iconfont-archer">&#xe60a;</span>Cloud-Native</span>
+    
+        <span class="sidebar-category-name" data-categories="microservices"><span class="iconfont-archer">&#xe60a;</span>microservices</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "Akira"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+        <div class="site-search">
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="iconfont-archer">&#xe609;</i>
+    </span>
+  </div>
+</div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.8.3/dist/instantsearch.production.min.js" integrity="sha256-LAGhRRdtVoD6RLo2qDQsU2mp+XVSciKRC8XPOBWmofM=" crossorigin="anonymous"></script>
+        <script src="/scripts/search.js" defer></script>
+    
+    <!-- busuanzi  -->
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
+
+

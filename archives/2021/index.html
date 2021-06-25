@@ -372,55 +372,23 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2021/06/23/k8s-container-network/" >
+        <a class="abstract-title" href = "/2021/06/24/k8s-Controllers/" >
             
-                <span>k8s 容器网络</span>
+                <span>k8s 控制器探秘</span>
         </a>
         <div class="abstract-content">
-            <p>既然不同容器可以使用不同的 <code>Network Namespace</code>，那外界又是如何与这个容器通信呢，或者容器之间又是如何通信的呢？当然，我们可以使用<code>docker run -d -net=host ...</code>让容器使用主机的网络。这样直接的方式可以为容器提供良好的网络性能，但也会不可避免地引入共享网络资源的问题，比如端口冲突。所以，在大多数情况下，我们都希望容器进程能使用自己Network Namespace里的网络栈，即：拥有属于自己的IP地址和端口。</p>
+            <p>K8s 中使用 <code>Controller</code>（控制器）模式实现 Pod 的编排，其思路很简单：控制器会从监听者获取集群中某对象的实际状态；从用户传入的 yaml 文件描述获取该对象的期望状态；然后比较状态，如果一样什么都不做，否则执行编排动作，直到实际状态调整为期望状态，这一步叫做<code>reconcile loop</code>（调谐循环，或者 Sync loop，同步循环）。我们经常使用的 yaml 中的 <code>kind</code> 就描述（声明）了这样的对象，比如<code>Pod</code>,<code>Deployment</code>等，我们在传入了这些对象后，控制器又是怎么具体工作的呢？这篇文章抱着这样的目的，去源码中一探究竟。</p>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/23</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/24</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/06/23/k8s-best-practice/" >
-            
-                <span>k8s 最佳实践（For me 🙂）</span>
-        </a>
-        <div class="abstract-content">
-            本文记录我从头搭建 k8s 的过程。使用的服务器为 bandwagon 美国机房的双核，2G RAM，40G 硬盘空间的主机，操作系统为 ubuntu 18.04。
-Install Docker &amp; Kubeadm123curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -apt-get updateapt-get install -y docker.io kubeadm
-
-很简单，可能是我用的是美国的机房，没有糟心的换源操作。我没有用 minikube 那一套，直接学习的是 k8...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "kubernetes">kubernetes</a>
     
 </div>
             
@@ -520,67 +488,6 @@ Install Docker &amp; Kubeadm123curl -s https://packages.cloud.google.com/apt/doc
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2021/06/11/median-of-two-sorted-arrays/" >
-            
-                <span>median of two sorted arrays</span>
-        </a>
-        <div class="abstract-content">
-            <blockquote>
-<p>给定两个大小分别为 <code>m</code> 和 <code>n</code> 的正序（从小到大）数组 <code>nums1</code> 和 <code>nums2</code>。请你找出并返回这两个正序数组的 <strong>中位数</strong> 。</p>
-</blockquote>
-<p>这道题值得多刷，记录一下我的实现。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "binary search">binary search</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/06/11/Why-I-Implement-Binary-Search-Like-This/" >
-            
-                <span>为什么我要这么写二分查找?</span>
-        </a>
-        <div class="abstract-content">
-            <p>平时在写二分查找时，尽管已经写过很多次了，可是敲的时候还是会有些犹豫，比如 while 循环条件是<code>low&lt;=high</code> 还是<code>low&lt;high</code>;再比如，更新时到底是<code>low=mid+1</code>还是<code>low=mid</code>。这篇文章讲述了我是怎么思考这个问题的，当然，我参照的也是一些语言库中的实现。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "binary search">binary search</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
         <a class="abstract-title" href = "/2021/06/10/best-time-to-buy-sell-stock/" >
             
                 <span>Best Time to Buy &amp; Sell Stock</span>
@@ -615,27 +522,26 @@ Install Docker &amp; Kubeadm123curl -s https://packages.cloud.google.com/apt/doc
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2021/06/09/minimum-path-sum-from-top-to-bottom/" >
+        <a class="abstract-title" href = "/2021/06/07/docker-review-2/" >
             
-                <span>三角形最小路径和</span>
+                <span>Docker 总结二 overlay2 与 镜像</span>
         </a>
         <div class="abstract-content">
-            <blockquote>
-<p>给定一个三角形 triangle ，找出自顶向下的最小路径和。</p>
-<p>每一步只能移动到下一行中相邻的结点上。相邻的结点 在这里指的是 下标 与 上一层结点下标 相同或者等于 上一层结点下标 + 1 的两个结点。也就是说，如果正位于当前行的下标 i ，那么下一步可以移动到下一行的下标 i 或 i + 1 。</p>
-<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/triangle">https://leetcode-cn.com/problems/triangle</a></p>
+            <h2 id="Mount-Namespace"><a href="#Mount-Namespace" class="headerlink" title="Mount Namespace"></a>Mount Namespace</h2><blockquote>
+<p>每个文件系统都有独立的inode、block，super block等信息，这些文件系统要链接到目录树才能够被使用。将文件系统与目录树结合的操作被称为挂载。其中，挂载点是目录，该目录是进入文件系统的入口。</p>
+<p><em>《鸟哥的Linux私房菜》</em></p>
 </blockquote>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/09</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/07</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "dynamic programming">dynamic programming</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "docker">docker</a>
     
 </div>
             
@@ -648,23 +554,111 @@ Install Docker &amp; Kubeadm123curl -s https://packages.cloud.google.com/apt/doc
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2021/06/08/n-queens-my-template/" >
+        <a class="abstract-title" href = "/2021/06/06/docker-review-1/" >
             
-                <span>n 皇后，我的套路</span>
+                <span>Docker 总结一 隔离与限制</span>
         </a>
         <div class="abstract-content">
-            <p>n 皇后问题是一个典型的回溯法解决的问题。这篇文章总结了我用回溯法的心得。</p>
+            <h2 id="容器技术"><a href="#容器技术" class="headerlink" title="容器技术"></a>容器技术</h2><p>进程来说，它的静态表现就是程序，平常都安安静静地待在磁盘上；而一旦运行起来，它就变成了计算机里的数据和状态的总和，这就是它的动态表现。而<strong>容器技术的核心功能，就是通过约束和修改进程的动态表现，从而为其创造出一个“边界”。</strong></p>
+<p>对于 <code>Docker</code>等大多数 Linux 容器， <code>Cgroups</code> 技术用来制造约束;<code>Namespace</code>技术用来修改进程视图。</p>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/08</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/06</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "backtrack">backtrack</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "docker">docker</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/06/06/fail-fast-&-fail-safe-iterator/" >
+            
+                <span>Fail Fast &amp; Fail Safe 迭代器</span>
+        </a>
+        <div class="abstract-content">
+            <p>Java中的迭代器是Java集合框架的一部分，我们可以用它们来一个一个地获取元素。Java集合支持两种类型的迭代器；快速失败（Fail Fast）和安全失败（Fail Safe）。这些迭代器在异常处理中非常有用。快速失败迭代器一旦发生故障就会中止操作并停止整个操作。而安全失败迭代器在发生故障时不会中止操作。相反，它试图尽可能地避免失败。</p>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/06</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "basic">basic</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/06/04/java-basics-collections/" >
+            
+                <span>Java 集合类总结</span>
+        </a>
+        <div class="abstract-content">
+            <p>这篇文章总结了 Java 中的 Collection。</p>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/04</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "basic">basic</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/03/23/k8s-container-network/" >
+            
+                <span>k8s 容器网络</span>
+        </a>
+        <div class="abstract-content">
+            <p>既然不同容器可以使用不同的 <code>Network Namespace</code>，那外界又是如何与这个容器通信呢，或者容器之间又是如何通信的呢？当然，我们可以使用<code>docker run -d -net=host ...</code>让容器使用主机的网络。这样直接的方式可以为容器提供良好的网络性能，但也会不可避免地引入共享网络资源的问题，比如端口冲突。所以，在大多数情况下，我们都希望容器进程能使用自己Network Namespace里的网络栈，即：拥有属于自己的IP地址和端口。</p>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/03/23</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
     
 </div>
             
@@ -674,7 +668,7 @@ Install Docker &amp; Kubeadm123curl -s https://packages.cloud.google.com/apt/doc
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/archives/2021/page/2/">2</a><a class="page-number" href="/archives/2021/page/3/">3</a><a class="extend next" rel="next" href="/archives/2021/page/2/">NEXT &gt;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/archives/2021/page/2/">2</a><a class="extend next" rel="next" href="/archives/2021/page/2/">NEXT &gt;</a>
     </nav>
     
 </main>
@@ -1014,9 +1008,20 @@ Install Docker &amp; Kubeadm123curl -s https://packages.cloud.google.com/apt/doc
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 21
+        Total : 22
         </div>
         <!-- search  -->
         
@@ -1036,12 +1041,7 @@ Install Docker &amp; Kubeadm123curl -s https://packages.cloud.google.com/apt/doc
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/2021/06/23/k8s-container-network/" >k8s 容器网络</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/2021/06/23/k8s-best-practice/" >k8s 最佳实践（For me 🙂）</a>
+            <span class="archive-post-date">06/24</span><a class="archive-post-title" href= "/2021/06/24/k8s-Controllers/" >k8s 控制器探秘</a>
         </li>
     
     
@@ -1061,27 +1061,7 @@ Install Docker &amp; Kubeadm123curl -s https://packages.cloud.google.com/apt/doc
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2021/06/11/median-of-two-sorted-arrays/" >median of two sorted arrays</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2021/06/11/Why-I-Implement-Binary-Search-Like-This/" >为什么我要这么写二分查找?</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2021/06/10/best-time-to-buy-sell-stock/" >Best Time to Buy & Sell Stock</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/09</span><a class="archive-post-title" href= "/2021/06/09/minimum-path-sum-from-top-to-bottom/" >三角形最小路径和</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/08</span><a class="archive-post-title" href= "/2021/06/08/n-queens-my-template/" >n 皇后，我的套路</a>
         </li>
     
     
@@ -1106,32 +1086,27 @@ Install Docker &amp; Kubeadm123curl -s https://packages.cloud.google.com/apt/doc
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/02</span><a class="archive-post-title" href= "/2021/06/02/java-basics-map/" >Java map 总结</a>
+            <span class="archive-post-date">03/23</span><a class="archive-post-title" href= "/2021/03/23/k8s-container-network/" >k8s 容器网络</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/01</span><a class="archive-post-title" href= "/2021/06/01/golang-basics-data-structure/" >golang basics - data structure</a>
+            <span class="archive-post-date">03/08</span><a class="archive-post-title" href= "/2021/03/08/n-queens-my-template/" >n 皇后，我的套路</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/01</span><a class="archive-post-title" href= "/2021/06/01/java-basics-oop/" >Java 面向对象总结</a>
+            <span class="archive-post-date">03/02</span><a class="archive-post-title" href= "/2021/03/02/java-basics-map/" >Java map 总结</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/01</span><a class="archive-post-title" href= "/2021/06/01/java-basics-data-type/" >Java 数据类型</a>
+            <span class="archive-post-date">02/15</span><a class="archive-post-title" href= "/2021/02/15/java-basics-oop/" >Java 面向对象总结</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/29</span><a class="archive-post-title" href= "/2021/05/29/spring-cloud-alibaba-tutorial-1/" >spring cloud alibaba 全家桶食用记录-1：dubbo</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/25</span><a class="archive-post-title" href= "/2021/01/25/slice-and-backtrack/" >切片和回溯法</a>
+            <span class="archive-post-date">02/14</span><a class="archive-post-title" href= "/2021/02/14/java-basics-data-type/" >Java 数据类型</a>
         </li>
     
     
@@ -1139,30 +1114,76 @@ Install Docker &amp; Kubeadm123curl -s https://packages.cloud.google.com/apt/doc
             <span class="archive-post-date">01/21</span><a class="archive-post-title" href= "/2021/01/21/deterministic-finite-automaton/" >确定有限状态自动机</a>
         </li>
     
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/11</span><a class="archive-post-title" href= "/2021/01/11/median-of-two-sorted-arrays/" >median of two sorted arrays</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/23</span><a class="archive-post-title" href= "/2020/12/23/k8s-best-practice/" >k8s 最佳实践（For me 🙂）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/09</span><a class="archive-post-title" href= "/2020/12/09/minimum-path-sum-from-top-to-bottom/" >三角形最小路径和</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2020/11/25/slice-and-backtrack/" >切片和回溯法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/14</span><a class="archive-post-title" href= "/2020/09/14/golang-basics-data-structure/" >golang basics - data structure</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href= "/2020/05/07/Why-I-Implement-Binary-Search-Like-This/" >为什么我要这么写二分查找?</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/29</span><a class="archive-post-title" href= "/2020/03/29/spring-cloud-alibaba-tutorial-1/" >spring cloud alibaba 全家桶食用记录-1：dubbo</a>
+        </li>
+    
     </div>
   </div>
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="binary search"><span class="iconfont-archer">&#xe606;</span>binary search</span>
+    
         <span class="sidebar-tag-name" data-tags="dynamic programming"><span class="iconfont-archer">&#xe606;</span>dynamic programming</span>
     
-        <span class="sidebar-tag-name" data-tags="binary search"><span class="iconfont-archer">&#xe606;</span>binary search</span>
+        <span class="sidebar-tag-name" data-tags="deterministic finite automaton"><span class="iconfont-archer">&#xe606;</span>deterministic finite automaton</span>
     
         <span class="sidebar-tag-name" data-tags="docker"><span class="iconfont-archer">&#xe606;</span>docker</span>
     
         <span class="sidebar-tag-name" data-tags="basic"><span class="iconfont-archer">&#xe606;</span>basic</span>
     
-        <span class="sidebar-tag-name" data-tags="dubbo"><span class="iconfont-archer">&#xe606;</span>dubbo</span>
+        <span class="sidebar-tag-name" data-tags="advanced"><span class="iconfont-archer">&#xe606;</span>advanced</span>
+    
+        <span class="sidebar-tag-name" data-tags="kubernetes"><span class="iconfont-archer">&#xe606;</span>kubernetes</span>
+    
+        <span class="sidebar-tag-name" data-tags="k8s"><span class="iconfont-archer">&#xe606;</span>k8s</span>
     
         <span class="sidebar-tag-name" data-tags="backtrack"><span class="iconfont-archer">&#xe606;</span>backtrack</span>
     
         <span class="sidebar-tag-name" data-tags="slice"><span class="iconfont-archer">&#xe606;</span>slice</span>
     
-        <span class="sidebar-tag-name" data-tags="deterministic finite automaton"><span class="iconfont-archer">&#xe606;</span>deterministic finite automaton</span>
-    
-        <span class="sidebar-tag-name" data-tags="advanced"><span class="iconfont-archer">&#xe606;</span>advanced</span>
-    
-        <span class="sidebar-tag-name" data-tags="k8s"><span class="iconfont-archer">&#xe606;</span>k8s</span>
+        <span class="sidebar-tag-name" data-tags="dubbo"><span class="iconfont-archer">&#xe606;</span>dubbo</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -1197,21 +1218,21 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="leetocode"><span class="iconfont-archer">&#xe60a;</span>leetocode</span>
-    
         <span class="sidebar-category-name" data-categories="algorithms"><span class="iconfont-archer">&#xe60a;</span>algorithms</span>
-    
-        <span class="sidebar-category-name" data-categories="Cloud-Native"><span class="iconfont-archer">&#xe60a;</span>Cloud-Native</span>
-    
-        <span class="sidebar-category-name" data-categories="golang"><span class="iconfont-archer">&#xe60a;</span>golang</span>
-    
-        <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
     
         <span class="sidebar-category-name" data-categories="leetcode"><span class="iconfont-archer">&#xe60a;</span>leetcode</span>
     
-        <span class="sidebar-category-name" data-categories="microservices"><span class="iconfont-archer">&#xe60a;</span>microservices</span>
+        <span class="sidebar-category-name" data-categories="leetocode"><span class="iconfont-archer">&#xe60a;</span>leetocode</span>
     
         <span class="sidebar-category-name" data-categories="Cloud-Native"><span class="iconfont-archer">&#xe60a;</span>Cloud-Native</span>
+    
+        <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
+    
+        <span class="sidebar-category-name" data-categories="golang"><span class="iconfont-archer">&#xe60a;</span>golang</span>
+    
+        <span class="sidebar-category-name" data-categories="Cloud-Native"><span class="iconfont-archer">&#xe60a;</span>Cloud-Native</span>
+    
+        <span class="sidebar-category-name" data-categories="microservices"><span class="iconfont-archer">&#xe60a;</span>microservices</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
