@@ -23,7 +23,7 @@
     <meta name="description" content="akira&#39;s notes.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="DYSTOPIA">
-<meta property="og:url" content="https://konoakira.com/archives/page/2/index.html">
+<meta property="og:url" content="https://konoakira.com/archives/2020/06/index.html">
 <meta property="og:site_name" content="DYSTOPIA">
 <meta property="og:description" content="akira&#39;s notes.">
 <meta property="og:locale" content="en_US">
@@ -372,296 +372,28 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2021/03/08/n-queens-my-template/" >
+        <a class="abstract-title" href = "/2020/06/26/bio-nio-aio-netty/" >
             
-                <span>n 皇后，我的套路</span>
+                <span>bio,nio,aio&amp;netty</span>
         </a>
         <div class="abstract-content">
-            <p>n 皇后问题是一个典型的回溯法解决的问题。这篇文章总结了我用回溯法的心得。</p>
+            我们用什么样的通道来进行数据的发送与接收可以建模为IO模型，Java 中共支持 3 种网络编程 IO 模型： BIO，NIO，AIO。
+BIO（Blocking IO)BIO 是 同步阻塞模型，即一个客户端对应一个处理线程。BIO 的程序简单易理解；但是1. 代码里 read 操作是阻塞操作，如果连接不做数据读写操作会导致线程阻塞，浪费资源 2. 如果线程很多，会导致服务器线程太多，压力太大。
+graph LR;
+    A[client] -.-> D((Thread))
+    B[client] -.-> E((Thread))
+    C[client] -.-> F((Thre...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/03/08</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/26</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "backtrack">backtrack</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/03/02/java-basics-map/" >
-            
-                <span>Java map 总结</span>
-        </a>
-        <div class="abstract-content">
-            <p>这篇文章总结了 Java 中 map 的一些知识。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/03/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "basic">basic</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/02/15/java-basics-oop/" >
-            
-                <span>Java 面向对象总结</span>
-        </a>
-        <div class="abstract-content">
-            <p>本文总结了 Java 面向对象的一些知识。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/02/15</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "basic">basic</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/02/14/java-basics-data-type/" >
-            
-                <span>Java 数据类型</span>
-        </a>
-        <div class="abstract-content">
-            <p>本文总结了 Java 中的数据类型知识。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/02/14</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "basic">basic</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/01/21/deterministic-finite-automaton/" >
-            
-                <span>确定有限状态自动机</span>
-        </a>
-        <div class="abstract-content">
-            <p>请实现一个函数用来判断字符串是否表示数值(包括整数和小数).例如，字符串”+100”,”5e2”,”-123”,”3.1416”,”-1E-16”,”0123”都表示数值，但”12e”,”1a3.14”,”1.2.3”,”+-5”及”12e+5.4”都不是.</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/01/21</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "deterministic finite automaton">deterministic finite automaton</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/01/11/median-of-two-sorted-arrays/" >
-            
-                <span>median of two sorted arrays</span>
-        </a>
-        <div class="abstract-content">
-            <blockquote>
-<p>给定两个大小分别为 <code>m</code> 和 <code>n</code> 的正序（从小到大）数组 <code>nums1</code> 和 <code>nums2</code>。请你找出并返回这两个正序数组的 <strong>中位数</strong> 。</p>
-</blockquote>
-<p>这道题值得多刷，记录一下我的实现。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/01/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "binary search">binary search</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/12/23/k8s-best-practice/" >
-            
-                <span>k8s 最佳实践（For me 🙂）</span>
-        </a>
-        <div class="abstract-content">
-            本文记录我从头搭建 k8s 的过程。使用的服务器为 bandwagon 美国机房的双核，2G RAM，40G 硬盘空间的主机，操作系统为 ubuntu 18.04。
-Install Docker &amp; Kubeadm123curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -apt-get updateapt-get install -y docker.io kubeadm
-
-很简单，可能是我用的是美国的机房，没有糟心的换源操作。我没有用 minikube 那一套，直接学习的是 k8...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/12/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/12/09/minimum-path-sum-from-top-to-bottom/" >
-            
-                <span>三角形最小路径和</span>
-        </a>
-        <div class="abstract-content">
-            <blockquote>
-<p>给定一个三角形 triangle ，找出自顶向下的最小路径和。</p>
-<p>每一步只能移动到下一行中相邻的结点上。相邻的结点 在这里指的是 下标 与 上一层结点下标 相同或者等于 上一层结点下标 + 1 的两个结点。也就是说，如果正位于当前行的下标 i ，那么下一步可以移动到下一行的下标 i 或 i + 1 。</p>
-<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/triangle">https://leetcode-cn.com/problems/triangle</a></p>
-</blockquote>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/12/09</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "dynamic programming">dynamic programming</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/11/25/slice-and-backtrack/" >
-            
-                <span>切片和回溯法</span>
-        </a>
-        <div class="abstract-content">
-            <p>回溯法怎么就和切片扯一起了呢。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/25</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "backtrack">backtrack</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "slice">slice</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/09/14/golang-basics-data-structure/" >
-            
-                <span>golang basics - data structure</span>
-        </a>
-        <div class="abstract-content">
-            <p>读<a target="_blank" rel="noopener" href="https://draveness.me/golang/docs/">Go 语言设计与实现</a>笔记。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/14</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "basic">basic</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "netty">netty</a>
     
 </div>
             
@@ -669,10 +401,6 @@ Install Docker &amp; Kubeadm123curl -s https://packages.cloud.google.com/apt/doc
     </article>
     
     <!-- paginator  -->
-    
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/">&lt; PREV</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/3/">NEXT &gt;</a>
-    </nav>
     
 </main>
             <!-- profile -->

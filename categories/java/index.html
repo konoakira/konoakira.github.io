@@ -540,6 +540,40 @@
         </div>
     </article>
     
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/06/26/bio-nio-aio-netty/" >
+            
+                <span>bio,nio,aio&amp;netty</span>
+        </a>
+        <div class="abstract-content">
+            我们用什么样的通道来进行数据的发送与接收可以建模为IO模型，Java 中共支持 3 种网络编程 IO 模型： BIO，NIO，AIO。
+BIO（Blocking IO)BIO 是 同步阻塞模型，即一个客户端对应一个处理线程。BIO 的程序简单易理解；但是1. 代码里 read 操作是阻塞操作，如果连接不做数据读写操作会导致线程阻塞，浪费资源 2. 如果线程很多，会导致服务器线程太多，压力太大。
+graph LR;
+    A[client] -.-> D((Thread))
+    B[client] -.-> E((Thread))
+    C[client] -.-> F((Thre...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "netty">netty</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
     <!-- paginator  -->
     
 </main>
@@ -611,7 +645,7 @@
     
 		<!-- mermaid -->
 		
-			<script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+			<script src='https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js'></script>
 			<script>
 				if (window.mermaid) {
 					mermaid.initialize({theme: 'forest'});
@@ -890,9 +924,24 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 22
+        Total : 23
         </div>
         <!-- search  -->
         
@@ -1021,6 +1070,11 @@
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">06/26</span><a class="archive-post-title" href= "/2020/06/26/bio-nio-aio-netty/" >bio,nio,aio&netty</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">05/07</span><a class="archive-post-title" href= "/2020/05/07/Why-I-Implement-Binary-Search-Like-This/" >为什么我要这么写二分查找?</a>
         </li>
     
@@ -1034,9 +1088,11 @@
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="dynamic programming"><span class="iconfont-archer">&#xe606;</span>dynamic programming</span>
+    
         <span class="sidebar-tag-name" data-tags="binary search"><span class="iconfont-archer">&#xe606;</span>binary search</span>
     
-        <span class="sidebar-tag-name" data-tags="dynamic programming"><span class="iconfont-archer">&#xe606;</span>dynamic programming</span>
+        <span class="sidebar-tag-name" data-tags="netty"><span class="iconfont-archer">&#xe606;</span>netty</span>
     
         <span class="sidebar-tag-name" data-tags="deterministic finite automaton"><span class="iconfont-archer">&#xe606;</span>deterministic finite automaton</span>
     
@@ -1089,15 +1145,15 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="algorithms"><span class="iconfont-archer">&#xe60a;</span>algorithms</span>
-    
         <span class="sidebar-category-name" data-categories="leetcode"><span class="iconfont-archer">&#xe60a;</span>leetcode</span>
     
         <span class="sidebar-category-name" data-categories="leetocode"><span class="iconfont-archer">&#xe60a;</span>leetocode</span>
     
-        <span class="sidebar-category-name" data-categories="Cloud-Native"><span class="iconfont-archer">&#xe60a;</span>Cloud-Native</span>
+        <span class="sidebar-category-name" data-categories="algorithms"><span class="iconfont-archer">&#xe60a;</span>algorithms</span>
     
         <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
+    
+        <span class="sidebar-category-name" data-categories="Cloud-Native"><span class="iconfont-archer">&#xe60a;</span>Cloud-Native</span>
     
         <span class="sidebar-category-name" data-categories="golang"><span class="iconfont-archer">&#xe60a;</span>golang</span>
     
