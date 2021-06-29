@@ -372,6 +372,35 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2021/06/29/alternate-print/" >
+            
+                <span>交替打印</span>
+        </a>
+        <div class="abstract-content">
+            <p>最近忙着八股文，碰到这么一个问题——现在有 T1、T2、T3 三个线程，你怎样保证 T2 在 T1 执行完后执行，T3 在 T2 执行完后执行？</p>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/29</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "concurrency">concurrency</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2021/06/24/k8s-Controllers/" >
             
                 <span>k8s 控制器探秘</span>
@@ -707,10 +736,11 @@
     
 		<!-- mermaid -->
 		
-			<script src='https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js'></script>
+			<script src='https://unpkg.com/mermaid@8.10.2/dist/mermaid.min.js'></script>
 			<script>
 				if (window.mermaid) {
-					mermaid.initialize({theme: 'forest'});
+					var options = JSON.parse('{"flowchart":{"curve":"basis"}}');
+					mermaid.initialize(options);
 				}
 			</script>
 				
@@ -1001,9 +1031,24 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 23
+        Total : 24
         </div>
         <!-- search  -->
         
@@ -1020,6 +1065,11 @@
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/29</span><a class="archive-post-title" href= "/2021/06/29/alternate-print/" >交替打印</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1150,15 +1200,15 @@
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="dynamic programming"><span class="iconfont-archer">&#xe606;</span>dynamic programming</span>
+        <span class="sidebar-tag-name" data-tags="netty"><span class="iconfont-archer">&#xe606;</span>netty</span>
     
         <span class="sidebar-tag-name" data-tags="binary search"><span class="iconfont-archer">&#xe606;</span>binary search</span>
     
-        <span class="sidebar-tag-name" data-tags="netty"><span class="iconfont-archer">&#xe606;</span>netty</span>
-    
-        <span class="sidebar-tag-name" data-tags="deterministic finite automaton"><span class="iconfont-archer">&#xe606;</span>deterministic finite automaton</span>
+        <span class="sidebar-tag-name" data-tags="dynamic programming"><span class="iconfont-archer">&#xe606;</span>dynamic programming</span>
     
         <span class="sidebar-tag-name" data-tags="docker"><span class="iconfont-archer">&#xe606;</span>docker</span>
+    
+        <span class="sidebar-tag-name" data-tags="deterministic finite automaton"><span class="iconfont-archer">&#xe606;</span>deterministic finite automaton</span>
     
         <span class="sidebar-tag-name" data-tags="basic"><span class="iconfont-archer">&#xe606;</span>basic</span>
     
@@ -1173,6 +1223,8 @@
         <span class="sidebar-tag-name" data-tags="slice"><span class="iconfont-archer">&#xe606;</span>slice</span>
     
         <span class="sidebar-tag-name" data-tags="dubbo"><span class="iconfont-archer">&#xe606;</span>dubbo</span>
+    
+        <span class="sidebar-tag-name" data-tags="concurrency"><span class="iconfont-archer">&#xe606;</span>concurrency</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -1207,13 +1259,13 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="leetcode"><span class="iconfont-archer">&#xe60a;</span>leetcode</span>
-    
-        <span class="sidebar-category-name" data-categories="leetocode"><span class="iconfont-archer">&#xe60a;</span>leetocode</span>
+        <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
     
         <span class="sidebar-category-name" data-categories="algorithms"><span class="iconfont-archer">&#xe60a;</span>algorithms</span>
     
-        <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
+        <span class="sidebar-category-name" data-categories="leetocode"><span class="iconfont-archer">&#xe60a;</span>leetocode</span>
+    
+        <span class="sidebar-category-name" data-categories="leetcode"><span class="iconfont-archer">&#xe60a;</span>leetcode</span>
     
         <span class="sidebar-category-name" data-categories="Cloud-Native"><span class="iconfont-archer">&#xe60a;</span>Cloud-Native</span>
     

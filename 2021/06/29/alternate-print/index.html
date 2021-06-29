@@ -20,19 +20,22 @@
     <meta name="keywords" content="hexo,hexo-theme,hexo-blog,blog,java,golang">
     
     <meta name="description" content="akira's notes.">
-    <meta name="description" content="akira&#39;s notes.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="DYSTOPIA">
-<meta property="og:url" content="https://konoakira.com/archives/2020/05/index.html">
+    <meta name="description" content="最近忙着八股文，碰到这么一个问题——现在有 T1、T2、T3 三个线程，你怎样保证 T2 在 T1 执行完后执行，T3 在 T2 执行完后执行？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="交替打印">
+<meta property="og:url" content="https://konoakira.com/2021/06/29/alternate-print/index.html">
 <meta property="og:site_name" content="DYSTOPIA">
-<meta property="og:description" content="akira&#39;s notes.">
+<meta property="og:description" content="最近忙着八股文，碰到这么一个问题——现在有 T1、T2、T3 三个线程，你怎样保证 T2 在 T1 执行完后执行，T3 在 T2 执行完后执行？">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-29T06:50:26.000Z">
+<meta property="article:modified_time" content="2021-06-29T07:22:59.443Z">
 <meta property="article:author" content="Akira">
+<meta property="article:tag" content="concurrency">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>DYSTOPIA</title>
+    <title>交替打印 · DYSTOPIA</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -229,12 +232,23 @@
 <meta name="generator" content="Hexo 5.4.0"></head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >DYSTOPIA</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">交替打印</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>DYSTOPIA</a>
 </header>
@@ -246,24 +260,69 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(https://source.unsplash.com/random)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            交替打印
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "concurrency">concurrency</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">522</span>Reading time: <span class="post-count reading-time">2 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2021/06/29</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -364,40 +423,88 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/07/Why-I-Implement-Binary-Search-Like-This/" >
-            
-                <span>为什么我要这么写二分查找?</span>
-        </a>
-        <div class="abstract-content">
-            <p>平时在写二分查找时，尽管已经写过很多次了，可是敲的时候还是会有些犹豫，比如 while 循环条件是<code>low&lt;=high</code> 还是<code>low&lt;high</code>;再比如，更新时到底是<code>low=mid+1</code>还是<code>low=mid</code>。这篇文章讲述了我是怎么思考这个问题的，当然，我参照的也是一些语言库中的实现。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/07</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "binary search">binary search</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>最近忙着八股文，碰到这么一个问题——现在有 T1、T2、T3 三个线程，你怎样保证 T2 在 T1 执行完后执行，T3 在 T2 执行完后执行？</p>
+<span id="more"></span>
+
+<p>老实说这个问题很简单，这三个线程本质上是串行执行，因此可以使用<code>join()</code>方法实现串行化。但是如果这个问题改成三个线程交替循环执行就不一样了，更困难的是，如果 n 个线程我们改怎么做？比如 <em>n 个线程交替打印a, b, c, d, …</em>?</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>我们还是要用串行化，让一个线程叫醒后面的一个：</p>
+<pre class="mermaid">graph LR;
+S[START] -->|release lock1| A[Thread1] -->|release lock2|B[Thread2]-->D[...]-->|release lockn|C[Thread3]-->|release lock1| A</pre>
+
+<p>我们可以用信号量或条件队列做这件事情。对于条件队列我们需要找到相应的条件，在这里就是<code>count % n == i  </code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AlternatePrint</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> n = <span class="number">7</span>;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">final</span> String[] alphaBelt = <span class="keyword">new</span> String[] &#123;<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>, <span class="string">&quot;d&quot;</span>, <span class="string">&quot;e&quot;</span>, <span class="string">&quot;f&quot;</span>, <span class="string">&quot;g&quot;</span>, <span class="string">&quot;h&quot;</span>&#125;;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    ReentrantLock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">    Condition[] conditions = <span class="keyword">new</span> Condition[n];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">      conditions[i] = lock.newCondition();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">      <span class="keyword">int</span> finalI = i;</span><br><span class="line">      <span class="keyword">new</span> Thread(</span><br><span class="line">              () -&gt; &#123;</span><br><span class="line">                <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                  lock.lock();</span><br><span class="line">                  <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">while</span> (count % n != finalI) &#123;</span><br><span class="line">                      conditions[finalI].await();</span><br><span class="line">                    &#125;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; &quot;</span> + alphaBelt[finalI]);</span><br><span class="line">                    count++;</span><br><span class="line">                    conditions[(finalI + <span class="number">1</span>) % n].signal();</span><br><span class="line">                  &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    lock.unlock();</span><br><span class="line">                  &#125;</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;)</span><br><span class="line">          .start();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>相对来说，消耗量就比较优雅多了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AlternatePrint2</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> n = <span class="number">7</span>;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">final</span> String[] alphaBelt = <span class="keyword">new</span> String[] &#123;<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>, <span class="string">&quot;d&quot;</span>, <span class="string">&quot;e&quot;</span>, <span class="string">&quot;f&quot;</span>, <span class="string">&quot;g&quot;</span>, <span class="string">&quot;h&quot;</span>&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Semaphore[] flags = <span class="keyword">new</span> Semaphore[n];</span><br><span class="line">    Semaphore mutex = <span class="keyword">new</span> Semaphore(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">      flags[i] = <span class="keyword">new</span> Semaphore(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    flags[<span class="number">0</span>].release();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">      <span class="keyword">int</span> finalI = i;</span><br><span class="line">      <span class="keyword">new</span> Thread(</span><br><span class="line">              () -&gt; &#123;</span><br><span class="line">                <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                  <span class="keyword">try</span> &#123;</span><br><span class="line">                    flags[finalI].acquire();</span><br><span class="line">                    mutex.acquire();</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; &quot;</span> + alphaBelt[finalI]);</span><br><span class="line">                    Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">                  &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    mutex.release();</span><br><span class="line">                    flags[(finalI + <span class="number">1</span>) % n].release();</span><br><span class="line">                  &#125;</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;)</span><br><span class="line">          .start();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
     </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author: <a href="https://konoakira.com">Akira</a>
+            <p>Post Link: <a href="https://konoakira.com/2021/06/29/alternate-print/">https://konoakira.com/2021/06/29/alternate-print/</a>
+            <p>Publish Date: <a href="https://konoakira.com/2021/06/29/alternate-print/">June 29th 2021, 2:50:26 pm</a>
+            <p>Update Date: <a href="https://konoakira.com/2021/06/29/alternate-print/">June 29th 2021, 3:22:59 pm</a>
+            <p>Copyright Notice: All articles in this blog are licensed under <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/"> unless stating additionally.</p>
+        </div>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2021/06/24/k8s-Controllers/" title= "k8s 控制器探秘">
+                    <div class="prevTitle">k8s 控制器探秘</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <div id="comment-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.0/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1.6.0/dist/gitalk.min.js"></script>
+    <script>
+        var gitalk = new Gitalk({
+            clientID: 'c2bb6ecdc360d1417817',
+            clientSecret: '3081aae8990bcbf19f97f3e13ce016eaa434b878',
+            id: '1624949426000',
+            repo: 'konoakira.github.io',
+            owner: 'konoakira',
+            admin: "konoakira",
+            createIssueManually: true,
+            distractionFreeMode: false
+        })
+        gitalk.render('comment-container')
+    </script>
+    
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+
+    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
     
 </main>
+
             <!-- profile -->
             
         </div>
@@ -477,6 +584,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">分析</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1060,6 +1185,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
