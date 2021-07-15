@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="Akira">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Akira">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog,blog,java,golang">
+    
+    <meta name="description" content="akira's notes.">
+    <meta name="description" content="最近在准备找工作，由于要被问到项目，就走马灯似地回顾了过去一年半的经历。虽然不是什么大的项目，倒也是有所收获；心态上也稍稍发生了一些变化，觉得 CRUD 也不是那么不堪了。这是第一部分，谈谈我的第一份项目。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="回顾我的三个项目-1">
+<meta property="og:url" content="https://konoakira.com/2021/07/09/memos-of-my-3-projects-1/index.html">
+<meta property="og:site_name" content="DYSTOPIA">
+<meta property="og:description" content="最近在准备找工作，由于要被问到项目，就走马灯似地回顾了过去一年半的经历。虽然不是什么大的项目，倒也是有所收获；心态上也稍稍发生了一些变化，觉得 CRUD 也不是那么不堪了。这是第一部分，谈谈我的第一份项目。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-07-09T04:06:52.000Z">
+<meta property="article:modified_time" content="2021-07-15T05:11:52.156Z">
+<meta property="article:author" content="Akira">
+<meta property="article:tag" content="experience">
+<meta name="twitter:card" content="summary">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>回顾我的三个项目-1 · DYSTOPIA</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20210204" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20210204" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js?v=20210204" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    <script src="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.3/js/all.min.js"  data-auto-replace-svg="nest" ></script>
+    
+        <!-- algolia -->
+        <script>
+            
+            var hits = JSON.parse('{"per_page":10}')
+            var labels = JSON.parse('{"input_placeholder":"Search for Posts","hits_empty":"We did not find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}')
+
+            var algolia = {
+                appId: '66KI0W75FJ',
+                apiKey: '0ca84f70627c86b59375264768a98a0d',
+                indexName: 'dystopia',
+                hits: hits,
+                labels: labels
+            }
+        </script>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >DYSTOPIA</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">回顾我的三个项目-1</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>DYSTOPIA</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(https://source.unsplash.com/random)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            回顾我的三个项目-1
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "experience">experience</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">5.2k</span>Reading time: <span class="post-count reading-time">21 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2021/07/09</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>最近在准备找工作，由于要被问到项目，就走马灯似地回顾了过去一年半的经历。虽然不是什么大的项目，倒也是有所收获；心态上也稍稍发生了一些变化，觉得 CRUD 也不是那么不堪了。这是第一部分，谈谈我的第一份项目。</p>
+<span id="more"></span>
+
+<p>第一个项目是我做过最久的，大概七个月，也是我收获最多的。这个项目中我负责两个模块，一个是普通的业务模块（CRUD），另一个模块是处于下游的负责大部分生产数据查询的模块，向上游业务模块提供查询接口。</p>
+<h2 id="不要犹豫"><a href="#不要犹豫" class="headerlink" title="不要犹豫"></a>不要犹豫</h2><p>做这个项目之前，我真的没有自信。从前的我只用 pytorch 搭网络，真正的工程我从没有接触过，因此我也十分感谢实验室能提供这个机会，尽管后面有些许不愉快。<br>了解到项目基于 <code>Spring boot</code> 框架后，我去找了一些资料，什么 <code>AOP</code>, <code>IoC</code>，看得我一头雾水， 后来我放弃了，直接 github 上找了份入门项目，但我在浏览器中看到一行 Hello, akira！时，我稍稍明白了<code>@controller </code>的意思。这也是我之后学习任何新技能的方式–先做出 Hello，world，再观察；做出变化，再次观察；等到获得足够多的反馈后，去了解原理。事实上我了解 Spring 的原理是我在写完第一个项目后。</p>
+<h2 id="模仿，并改进"><a href="#模仿，并改进" class="headerlink" title="模仿，并改进"></a>模仿，并改进</h2><p>在我写了一个小的 demo 后，老师并没有给我太多时间深入学习，于是我直接投入到项目中去，彼时的我还仅仅对 controller、service、mapper 这些层有大致的概念，但是一旦去写，还是我从下手。于是我把项目中其他人写的的模块看了一遍，抄了过来，改了一下，发现可以用，很是兴奋。然后，我把涉及到的注解诸如<code>@Resource</code>、 <code>@RequestParam</code>、<code> lombok</code> 的官方文档读了一下，尽管不知道原理，但是可以用了。这样的状态持续了几天，我已经可以写稍微复杂的逻辑了。但是我发现了一个问题——我的代码风格及其不规范——由于我模仿别人的代码。比如，我的局部变量用下划线风格表示，我的方法名起的很随便，于是我又花了半天去看源码是怎么命名的，把自己的代码风格确定下来。为此我还去搜索了一下 Google 的命名规范，这也是我之后不管是 go 还是 Python 还是其他语言的命名规范来源。</p>
+<h2 id="剪枝以及代码片粒度"><a href="#剪枝以及代码片粒度" class="headerlink" title="剪枝以及代码片粒度"></a>剪枝以及代码片粒度</h2><p>如果让我回去看我的第一周写的代码，我多半会拍死我自己。长篇的 <code>If...else</code>，到处重复的代码片。在这之后，我利用<code>continue</code>、<code> return</code> 去掉了过深的嵌套；用 <code>switch</code> 去掉过多的<code>else</code> ；将重复的代码抽象出功能函数,并参考源码给它们取 <code>doParse</code>， <code>computeIfAbsent</code>，<code>getOrDefault</code>类似风格的名字，并给它们加上了注释；使用 <code>Yoda</code> 风格让我的条件表达式（多半是字符串）避免空指针异常。</p>
+<h2 id="使用缓存"><a href="#使用缓存" class="headerlink" title="使用缓存"></a>使用缓存</h2><p>差不多半个月左右，我已经能够写出看起来不错的代码了，但是还仅仅停留在能够让人看的水平。我开始思考一下业务逻辑了–我做的业务相当纯粹：定义一个查询模板（表格形式, 日期作为版本号）,列为设备（比如电机），行为指标（电流），能够查出实时数据和统计数据（报表）。对于模板这种不常改变的数据，我就可以把它放到缓存中，一开始我考虑用 HashMap ，后来接触到Redis，决定把它放入Redis中，这样它也可以持久化了。</p>
+<blockquote>
+<p>但是方便是要付出代价的，我很快地面临缓存不一致的问题——也就是明明在我电脑上可以的呀？我需要在模板修改时注意清掉这个缓存，为此，我付出了一个多小时去找代码中的bug。</p>
+</blockquote>
+<h2 id="如果业务写起来麻烦，很有可能是数据库没设计好"><a href="#如果业务写起来麻烦，很有可能是数据库没设计好" class="headerlink" title="如果业务写起来麻烦，很有可能是数据库没设计好"></a>如果业务写起来麻烦，很有可能是数据库没设计好</h2><p>当我产生这个感触，已经是我主导（其实是实验室人手不够）第二个项目时了。在写第一个业务时，真的很麻烦去处理各种关系，但是并没有意识到它，一是不懂，二是这些表是老师设计的，老师能犯什么错呢？在这个表中，一个模板关联n个显示项（列,电机），关联m个指标（行,电流），关联，又关联n×m个具体指标（电机的电流）,这几项都是id，此外还有诸个关系表，每次写业务都很麻烦。事实上，只需要让模板关联具体指标就可以了。</p>
+<h2 id="尝试些新花样"><a href="#尝试些新花样" class="headerlink" title="尝试些新花样"></a>尝试些新花样</h2><p>这个项目中唯一称得上有些难度的要数传输实时数据了。为此，我 Google 了几种方法:</p>
+<p>一是前台定时轮询，它的优点是实现起来没有难度，后台接口不用改变，缺点是网络开销大，每次都要三次握手，因此我们第一个排除了它。二是使用长连接，header了加入<code>keep-alive</code>，但是前端仍要轮询，每次传输仍要传输头部，因此也被pass掉了。三是 <code>websocket</code>，它的最大优点是后台能主动推送数据了，而且只需要刚开始连接发生握手，另一个随之而来的优点就是可以有状态查询了，由于每次查询实时数据都要根据查询条件去做逻辑处理获得最终的查询条件，每次根据这个条件去查询最新的数据即可。<br>为了能够给指定的用户定时发送指定视图的数据，我做了三件工作：</p>
+<ol>
+<li><p>引入 WebSocket</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebSocketImpl</span> <span class="keyword">implements</span> <span class="title">WebSocket</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;String, SocketIOClient&gt; clientMap = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String PUSH_EVENT = <span class="string">&quot;push_event&quot;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> SocketIOServer socketIOServer;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">autoStartUp</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        start();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@PreDestroy</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">autoStop</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        stop();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        socketIOServer.addConnectListener(client -&gt; &#123;</span><br><span class="line">            List&lt;String&gt; params = getParamsByClient(client).get(<span class="string">&quot;userid&quot;</span>);</span><br><span class="line">            <span class="keyword">if</span> (params != <span class="keyword">null</span> &amp;&amp; params.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                String userid = params.get(<span class="number">0</span>);</span><br><span class="line">                <span class="keyword">if</span> (StrUtil.isNotBlank(userId)) &#123;</span><br><span class="line">                    clientMap.put(userid, client);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    </span><br><span class="line">        socketIOServer.addDisconnectListener(client -&gt; &#123;</span><br><span class="line">            List&lt;String&gt; params = getParamsByClient(client).get(<span class="string">&quot;userid&quot;</span>);</span><br><span class="line">            <span class="keyword">if</span> (params != <span class="keyword">null</span> &amp;&amp; params.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                String userId = params.get(<span class="number">0</span>);</span><br><span class="line">                <span class="keyword">if</span> (StrUtil.isNotBlank(userId)) &#123;</span><br><span class="line">                    clientMap.remove(userId);</span><br><span class="line">                    client.disconnect();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    </span><br><span class="line">        socketIOServer.addEventListener(PUSH_EVENT, SysMessage.class, (client, sysMessage, ackSender) -&gt; &#123;</span><br><span class="line">            pushMsgToUser(sysMessage);</span><br><span class="line">        &#125;);</span><br><span class="line">        socketIOServer.start();</span><br><span class="line">    &#125;</span><br><span class="line">  ......</span><br></pre></td></tr></table></figure></li>
+<li><p>引入定时任务线程池，实现动态增删定时任务</p>
+</li>
+<li><p>引入守护定时任务，维护失去连接的任务</p>
+</li>
+</ol>
+<h2 id="Github-和-StackOverflow-是好东西"><a href="#Github-和-StackOverflow-是好东西" class="headerlink" title="Github 和 StackOverflow 是好东西"></a>Github 和 StackOverflow 是好东西</h2><p>事实上，但我引入 SocketIO 时就出现了一个棘手的问题——项目在本地可以启动，在服务器却无法启动——出现了一个bindException。Google 了一圈，终于在 SocketIO 的 Github 某个 issue 中看到了一样的问题，居然是 socketio 的配置错误，服务器和本地使用的都是我主机的地址，它们使用的配置都是<code>application-dev.yml</code>这一份文件。之后，我把本地开发和服务器的配置分开在两个文件来写，至此，我也了解了 Spring boot 中 profile 的使用。</p>
+<p>上面提到的动态添加定时任务的方案是我在 StackOverflow 上复制的：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScheduleTaskServiceImpl</span> <span class="title">implements</span> <span class="title">ScheduleTaskService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> final <span class="built_in">Map</span>&lt;<span class="built_in">String</span>, ScheduledFuture&lt;?&gt;&gt; jobsMap = <span class="keyword">new</span> ConcurrentMap&lt;&gt;();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> final <span class="built_in">Map</span>&lt;<span class="built_in">String</span>, List&lt;<span class="built_in">String</span>&gt;&gt; userJobsMap = <span class="keyword">new</span> ConcurrentMap&lt;&gt;();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> final Logger logger = LoggerFactory.getLogger(MeasureScheduleTaskServiceImpl.class);</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> WebSocket webSocket;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Task Scheduler</span></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="meta">@Qualifier</span>(value = <span class="string">&quot;threadPoolTaskScheduler&quot;</span>)</span><br><span class="line">    <span class="keyword">private</span> ThreadPoolTaskScheduler scheduler;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 实例化一个线程池任务调度类,</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> ThreadPoolTaskScheduler <span class="function"><span class="title">threadPoolTaskScheduler</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolTaskScheduler();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">void</span> autoStart() throws Exception &#123;</span><br><span class="line">        daemon();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 注册一个任务</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">void</span> <span class="function"><span class="title">addTaskToScheduler</span>(<span class="params"><span class="built_in">String</span> userId, <span class="built_in">String</span> taskId, Runnable task</span>)</span> &#123;</span><br><span class="line">        ScheduledFuture&lt;?&gt; scheduledTask = scheduler.schedule(task, <span class="keyword">new</span> CronTrigger(<span class="string">&quot;0 */1 * * * *&quot;</span>));</span><br><span class="line">        jobsMap.put(userId + taskId, scheduledTask);</span><br><span class="line">        List&lt;<span class="built_in">String</span>&gt; taskIdList = userJobsMap.getOrDefault(userId, <span class="keyword">new</span> ArrayList&lt;&gt;());</span><br><span class="line">        taskIdList.add(taskId);</span><br><span class="line">        userJobsMap.put(userId, taskIdList);</span><br><span class="line">        logger.info(<span class="string">&quot;[任务&#123;&#125;]成功添加&quot;</span>, userId + taskId);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 移除一个任务</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">void</span> <span class="function"><span class="title">removeTaskFromScheduler</span>(<span class="params"><span class="built_in">String</span> id</span>)</span> &#123;</span><br><span class="line">        ScheduledFuture&lt;?&gt; scheduledTask = jobsMap.get(id);</span><br><span class="line">        <span class="keyword">if</span> (scheduledTask != <span class="literal">null</span>) &#123;</span><br><span class="line">            scheduledTask.cancel(<span class="literal">true</span>);</span><br><span class="line">            logger.info(id + <span class="string">&quot;取消订阅成功&quot;</span>);</span><br><span class="line">            jobsMap.put(id, <span class="literal">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 定期取消没有连接的任务</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">void</span> <span class="function"><span class="title">daemon</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        Runnable task = () -&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (ToolUtil.isEmpty(userJobsMap)) <span class="keyword">return</span>;</span><br><span class="line">    </span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">String</span> userId : userJobsMap.keySet()) &#123;</span><br><span class="line">    </span><br><span class="line">                SocketIOClient client = webSocket.getClient(userId);</span><br><span class="line">    </span><br><span class="line">                <span class="keyword">if</span> (ToolUtil.isEmpty(client) || client.isChannelOpen()) <span class="keyword">continue</span>;</span><br><span class="line">    </span><br><span class="line">                List&lt;<span class="built_in">String</span>&gt; taskIdList = userJobsMap.get(userId);</span><br><span class="line">                <span class="keyword">if</span> (ToolUtil.isEmpty(taskIdList)) <span class="keyword">continue</span>;</span><br><span class="line">    </span><br><span class="line">                <span class="keyword">for</span> (<span class="built_in">String</span> taskId : taskIdList) &#123;</span><br><span class="line">                    removeTaskFromScheduler(userId + taskId);</span><br><span class="line">                    logger.info(<span class="string">&quot;&#123;&#125;已取消订阅&quot;</span>, userId + taskId);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        scheduler.schedule(task, <span class="keyword">new</span> CronTrigger(<span class="string">&quot;30 */5 * * * *&quot;</span>));</span><br><span class="line">        logger.info(<span class="string">&quot;[任务&#123;&#125;]成功添加&quot;</span>, <span class="string">&quot;daemon&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中的<code>daemon</code>定时任务是我后来加入的。这里用的<code>ScheduledFuture</code>类，它有一个方法<code>cancel()</code>可以取消任务。每次收到订阅任务时，将一个任务的<code>userId</code>,<code> taskId</code> 生成键，将<code>scheduleFuture</code>作为值，放入缓存中；同时<code>daemon</code>定时任务遍历缓存，将失去连接的任务扔出缓存，并取消任务。</p>
+<h2 id="阅读源码"><a href="#阅读源码" class="headerlink" title="阅读源码"></a>阅读源码</h2><p>上面的代码让我得意了一阵子，当我静下来思考这一块的逻辑时发现几个问题：</p>
+<ol>
+<li>本质上 client 与 userId 一一对应，这里可以与业务脱离，使用 client</li>
+<li>使用<code>schedule()</code>方法，其实是不能遇到异常停止的，因为我们的任务又被wrap 成了<code>DelegatingErrorHandlingRunnable</code>，如果连续遇到几次异常，我们就应该考虑这是不是业务代码出现了问题，把它停掉，防止浪费资源。</li>
+<li>这里的任务结构都一直，都是用 socketClient 去发送一条查询数据。</li>
+</ol>
+<p>这块的逻辑非常像发送心跳包。几个月后，当我看 nacos 发送心跳包的源码时，突然意识到我也可以这么做。</p>
+<h2 id="代码重构"><a href="#代码重构" class="headerlink" title="代码重构"></a>代码重构</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MeasureScheduleTaskServiceImpl</span> <span class="keyword">implements</span> <span class="title">MeasureScheduleTaskService</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FAIL_RETRIES = <span class="number">3</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INTERVAL = <span class="number">5</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ConcurrentHashMap&lt;String, SendDataTask&gt; runningTasks =</span><br><span class="line">      <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ScheduledExecutorService scheduler =</span><br><span class="line">      <span class="keyword">new</span> ScheduledThreadPoolExecutor(</span><br><span class="line">          <span class="number">2</span>,</span><br><span class="line">          r -&gt; &#123;</span><br><span class="line">            Thread thread = <span class="keyword">new</span> Thread(r);</span><br><span class="line">            thread.setDaemon(<span class="keyword">true</span>);</span><br><span class="line">            thread.setName(<span class="string">&quot;measure-schedule-task-service&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> thread;</span><br><span class="line">          &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">schedule</span><span class="params">(SocketIOClient client, String taskId, Callable&lt;List&lt;?&gt;&gt; task)</span> </span>&#123;</span><br><span class="line">    String key = buildKey(client, taskId);</span><br><span class="line">    SendDataTask existingTask = runningTasks.put(key, <span class="keyword">new</span> SendDataTask(client, taskId, task));</span><br><span class="line">    <span class="keyword">if</span> (existingTask != <span class="keyword">null</span>) &#123;</span><br><span class="line">      existingTask.setStopped(<span class="keyword">true</span>);</span><br><span class="line">      existingTask = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    scheduler.schedule(runningTasks.get(key), <span class="number">0</span>, TimeUnit.SECONDS);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> String <span class="title">buildKey</span><span class="params">(SocketIOClient client, String taskId)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> client.getSessionId() + taskId;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">SendDataTask</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> SocketIOClient client;</span><br><span class="line">    <span class="keyword">private</span> String taskId;</span><br><span class="line">    <span class="keyword">private</span> Callable&lt;List&lt;?&gt;&gt; task;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> fails = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> stopped = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SendDataTask</span><span class="params">(SocketIOClient client, String taskId, Callable&lt;List&lt;?&gt;&gt; task)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.client = client;</span><br><span class="line">      <span class="keyword">this</span>.taskId = taskId;</span><br><span class="line">      <span class="keyword">this</span>.task = task;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isStopped</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> stopped;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setStopped</span><span class="params">(<span class="keyword">boolean</span> stopped)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.stopped = stopped;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (isStopped() || !client.isChannelOpen() || <span class="keyword">this</span>.fails &gt;= FAIL_RETRIES) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">int</span> nextTime = INTERVAL;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        client.sendEvent(taskId, task.call());</span><br><span class="line">        fails = <span class="number">0</span>;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">        fails++;</span><br><span class="line">        nextTime = <span class="number">0</span>;</span><br><span class="line">        log.error(<span class="string">&quot;Exception occurred when retrieving data&quot;</span>, t);</span><br><span class="line">      &#125;</span><br><span class="line">      scheduler.schedule(<span class="keyword">this</span>, nextTime, TimeUnit.SECONDS);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里去掉了守护线程，每次任务会检测任务是否会被覆盖，client 通道是否打开，已经连续遇到的异常数，接着发生数据，并触发下一次任务。</p>
+<h2 id="懂些前端"><a href="#懂些前端" class="headerlink" title="懂些前端"></a>懂些前端</h2><p>当我第一次写返回分页的数据时，我没有返回记录的 id，因为我任务它是没有必要的，它都没有在页面中展示，但事实上，我写的删除数据的接口接收的 id 正是从这里来的，前端用这个 id 作为 vue-for 中的id。这是无知的代价。另一个问题是，将问题过度复杂化，比如一个接口接收的数据是字符串类型的日期，我取在这里写了大量无用的判断代码，而实际上这个日期不是用户通过键盘输入的，而是用日期选择器选的。</p>
+<h2 id="注意设计模式"><a href="#注意设计模式" class="headerlink" title="注意设计模式"></a>注意设计模式</h2><p>在我完成第一个模块后，由于完成的还不错，我又被委派了第二个任务。这个任务要求能够根据数据指标动态地去不同数据库，不同数据表中查询（采样）数据，采样的方式为给出一个时间区间，每隔几个数据点，或每隔一个时间间隔，查询出数据点上的数据或小间隔的统计值；数据也应该考虑是否为累计值（比如电表），此外数据也有量程（即某个时间点的数据可能比之前的小）；之后，查询出来的结果集有可能不是某个业务想要的形式，需要适配一下。 显然，这个任务更注重扩展性和对查询场景的抽象，因此我将这个任务写成了一个框架，利用模板方法来抽象查询的行为（查询条件的封装，查询过程，查询结果集的变换）；利用工厂模式来获取不同查询器（mapper，不如MySql Mapper，Oracle Mapper，SQLServer Mapper）的单例；利用策略模式来分解采样策略（隔点采样，隔时采样）；利用适配器模式来变换结果，并且利用多线程机制来加速变换：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">int</span> threadSize = DataRetrieverConstant.THREAD_SIZE;</span><br><span class="line"><span class="keyword">int</span> threadNum = dataSize / threadSize + <span class="number">1</span>;</span><br><span class="line"><span class="keyword">final</span> ExecutorService executor = ThreadUtil.newExecutor(threadNum);</span><br><span class="line">List&lt;Callable&lt;List&lt;E&gt;&gt;&gt; tasks = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">Callable&lt;List&lt;E&gt;&gt; task;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; threadNum; i++) &#123;</span><br><span class="line">  List&lt;QueryData&lt;T&gt;&gt; slice;</span><br><span class="line">  <span class="keyword">if</span> (i == threadNum - <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (dataSize % threadSize == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    slice = queryDataList.subList(threadSize * i, dataSize);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    slice = queryDataList.subList(threadSize * i, threadSize * (i + <span class="number">1</span>));</span><br><span class="line">  &#125;</span><br><span class="line">  task =</span><br><span class="line">    () -&gt; &#123;</span><br><span class="line">    <span class="keyword">final</span> ArrayList&lt;E&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (QueryData&lt;T&gt; tQueryData : slice) &#123;</span><br><span class="line">      result.add(adapter.transform(tQueryData));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125;;</span><br><span class="line">  tasks.add(task);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">List&lt;Future&lt;List&lt;E&gt;&gt;&gt; futures = executor.invokeAll(tasks);</span><br><span class="line">List&lt;E&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span> (Future&lt;List&lt;E&gt;&gt; future : futures) &#123;</span><br><span class="line">  results.addAll(future.get());</span><br><span class="line">&#125;</span><br><span class="line">executor.shutdown();</span><br></pre></td></tr></table></figure>
+
+<h2 id="查询优化"><a href="#查询优化" class="headerlink" title="查询优化"></a>查询优化</h2><p>这个任务的难度一是对查询过程的抽象建模；二是查询的优化。查询优化我个人总结了三条：1. 减少查询次数 2. 优化 SQL 语句 3. 减少查询结果集大小。</p>
+<p>项目中需要由<code>指标ID</code>获取指标数据源所在数据库，所在数据表，数据源优先级，而这个信息一旦确立是很难改变的，因此需要将它放入缓存中，否则每次查询数据都要去数据库中查一遍，极大浪费时间。</p>
+<p>优化 SQL 语句 1. 依靠建立索引，以此我在这里对采样时间建立了索引，2. 减少搜索范围，利用 Oracle 的<code> with ... as ()</code>机制，先缩小查询范围，再在这个范围中找 3. 变换查询条件，比如查询某天的数据，可以变换为查询两个时刻间的数据。</p>
+<p>项目中涉及到每隔一段时间查出一个数，已经累计数据，需要后一个数据减去前一个数据，如果小于0，需要加上量程。如果这段逻辑要在数据库外处理，数据的传输都是个大麻烦，比如查询一年的数据，每分钟一条，一年就是50多万条。当时翻遍了 stackOverflow，终于找到这么一个解决方案：</p>
+<p>对于后一条减前一条，可以用<code>LAG()</code>函数；对于隔时取数据可以用<code>GROUP BY FLOOR((CAST(samplingTime as date)-CAST(#&#123;startTime&#125; as date))*86400/#&#123;intervalValue&#125;)</code>，相当tricky。</p>
+<p>最后，贴一段 SQL 代码：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">WITH temp1 as (</span><br><span class="line">  SELECT * FROM (</span><br><span class="line">  SELECT $&#123;ew.indexfield&#125; as indexid,</span><br><span class="line">  $&#123;ew.timefield&#125; as samplingTime,</span><br><span class="line">  CASE</span><br><span class="line">  WHEN NVL($&#123;ew.datafield&#125;, 0) - NVL(LAG($&#123;ew.datafield&#125;, 1, 0) OVER ( ORDER BY $&#123;ew.timefield&#125;), 0)</span><br><span class="line">  &lt;![CDATA[&lt;]]&gt; 0 THEN</span><br><span class="line">  NVL($&#123;ew.datafield&#125;, 0) - NVL(LAG($&#123;ew.datafield&#125;, 1, 0) OVER ( ORDER BY $&#123;ew.timefield&#125;), 0) + #&#123;range&#125;</span><br><span class="line">  ELSE NVL($&#123;ew.datafield&#125;, 0) - NVL(LAG($&#123;ew.datafield&#125;, 1, 0) OVER ( ORDER BY $&#123;ew.timefield&#125;), 0) END samplingValue</span><br><span class="line">  FROM $&#123;ew.tablename&#125;</span><br><span class="line">  $&#123;ew.customSqlSegment&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;#&#123;endTime&#125;!=null&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">choose</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">&quot;endCondition==2&quot;</span>&gt;</span></span><br><span class="line">        AND $&#123;ew.timefield&#125; &lt;![CDATA[&lt;]]&gt; #&#123;endTime&#125;</span><br><span class="line">      <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">&quot;endCondition==3&quot;</span>&gt;</span></span><br><span class="line">        AND $&#123;ew.timefield&#125; &lt;![CDATA[&lt;=]]&gt; #&#123;endTime&#125;</span><br><span class="line">      <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">choose</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;#&#123;beforeTime&#125;!=null&quot;</span>&gt;</span></span><br><span class="line">    AND $&#123;ew.timefield&#125; &lt;![CDATA[&gt;=]]&gt; #&#123;beforeTime&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">if</span>&gt;</span>)</span><br><span class="line">  WHERE 1=1</span><br><span class="line">  <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;#&#123;startTime&#125;!=null&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">choose</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">&quot;startCondition==4&quot;</span>&gt;</span></span><br><span class="line">        AND samplingTime &lt;![CDATA[&gt;]]&gt; #&#123;startTime&#125;</span><br><span class="line">      <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">&quot;startCondition==5&quot;</span>&gt;</span></span><br><span class="line">        AND samplingTime &lt;![CDATA[&gt;=]]&gt; #&#123;startTime&#125;</span><br><span class="line">      <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">choose</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">if</span>&gt;</span>)</span><br><span class="line">  SELECT * FROM (SELECT TMP.*, ROWNUM ROW_ID</span><br><span class="line">  FROM (</span><br><span class="line">  SELECT indexid,</span><br><span class="line">  samplingTime,</span><br><span class="line">  samplingValue</span><br><span class="line">  FROM temp1</span><br><span class="line">  WHERE samplingTime in (</span><br><span class="line">  SELECT MIN(samplingTime) as samplingTime</span><br><span class="line">  FROM temp1</span><br><span class="line">  <span class="tag">&lt;<span class="name">choose</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">&quot;intervalCode==0&quot;</span>&gt;</span></span><br><span class="line">      GROUP BY CEIL(ROWNUM/#&#123;intervalValue&#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">&quot;intervalCode==1&quot;</span>&gt;</span></span><br><span class="line">      GROUP BY FLOOR((CAST(samplingTime as date)-CAST(#&#123;startTime&#125; as date))*86400/#&#123;intervalValue&#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">&quot;intervalCode==2&quot;</span>&gt;</span></span><br><span class="line">      GROUP BY FLOOR((CAST(samplingTime as date)-CAST(#&#123;startTime&#125; as date))*1440/#&#123;intervalValue&#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">&quot;intervalCode==3&quot;</span>&gt;</span></span><br><span class="line">      GROUP BY FLOOR((CAST(samplingTime as date)-CAST(#&#123;startTime&#125; as date))*24/#&#123;intervalValue&#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">&quot;intervalCode==4&quot;</span>&gt;</span></span><br><span class="line">      GROUP BY FLOOR((CAST(samplingTime as date)-CAST(#&#123;startTime&#125; as date))/(#&#123;intervalValue&#125;))</span><br><span class="line">    <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">&quot;intervalCode==5&quot;</span>&gt;</span></span><br><span class="line">      GROUP BY FLOOR((CAST(samplingTime as date)-CAST(#&#123;startTime&#125; as date))/(#&#123;intervalValue&#125;*7))</span><br><span class="line">    <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">&quot;intervalCode==6&quot;</span>&gt;</span></span><br><span class="line">      GROUP BY FLOOR((CAST(samplingTime as date)-CAST(#&#123;startTime&#125; as date))/(#&#123;intervalValue&#125;*30))</span><br><span class="line">    <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">otherwise</span>&gt;</span></span><br><span class="line">      GROUP BY FLOOR((CAST(samplingTime as date)-CAST(#&#123;startTime&#125; as date))/(#&#123;intervalValue&#125;*365))</span><br><span class="line">    <span class="tag">&lt;/<span class="name">otherwise</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">choose</span>&gt;</span>)</span><br><span class="line">  ORDER BY samplingTime) TMP</span><br><span class="line">  &lt;![CDATA[WHERE ROWNUM &lt;= #&#123;ew.endPageNo&#125;)</span><br><span class="line">          WHERE ROW_ID &gt; #&#123;ew.startPageNo&#125;]]&gt;</span><br><span class="line">  <span class="tag">&lt;<span class="name">choose</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">&quot;order == 0&quot;</span>&gt;</span></span><br><span class="line">      order by samplingTime ASC</span><br><span class="line">    <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">otherwise</span>&gt;</span></span><br><span class="line">      order by samplingTime DESC</span><br><span class="line">    <span class="tag">&lt;/<span class="name">otherwise</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">choose</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到 <code>$</code>和<code>#</code>号都用上了，这里可以思考二者的不同，这也是我踩过的坑。</p>
+<h2 id="小心魔法值"><a href="#小心魔法值" class="headerlink" title="小心魔法值"></a>小心魔法值</h2><p>这个坑其实在我学程序时都会注意，但是还是给踩上了。项目中有个字段为状态，编码为1位十进制数，到后期，leader 觉得一位编码的位数不够，改为了二位。于是我又苦逼地修改了全部的状态，不过这次我建了个类，专门存放静态final 常量。</p>
+<h2 id="没有什么比沟通更重要的了"><a href="#没有什么比沟通更重要的了" class="headerlink" title="没有什么比沟通更重要的了"></a>没有什么比沟通更重要的了</h2><p>写到最后，我才写沟通，不是我觉得它不重要，事实上它是最重要的，我认为它是一个工程师应具备的素养，决定一个项目的死活。这个项目中我深感沟通是门艺术，会沟通的人往往能把握沟通的时机，沟通的方式，沟通的态度。这个项目中与我合作的大都是学生，没有经历过社会的历练，有些加了微信也不说句问候的话，自己我要什么什么接口；有些在晚上十一二点找我联调，没把我气的半死。到了第三个项目，与我接触的是个工作过的人，他不会在我休息的时候打扰我，每次找我都会问句在吗，你好之类的，遇到不懂的也会谦虚请教，虽然每次都会带来新需求，但是不会让我感到厌烦，合作非常愉快。沟通采用的媒介也非常重要，我们采用线上开会时，一个问题要讲很久才能讲通，对于我这样表达能力差的真的很痛苦；而线下，我们可以在黑板上写写划划，沟通的效率大大提高。</p>
+<h2 id="我真的懂-crud-吗"><a href="#我真的懂-crud-吗" class="headerlink" title="我真的懂 crud 吗"></a>我真的懂 crud 吗</h2><p>做了几个项目后，我发现我厌倦了这些无聊的业务，无法就是增删查改，再复杂能复杂到哪去。然而，当我去学习  Restful 时，我再看我们的项目，连 endpoint 的命名都不是 restful 风格，通常都是以<code>getSomething</code>的形式呈现，项目中也只有<code>GET</code>和<code>POST</code>方法，这很难让人相信我真的会写“业务”。</p>
+<p>其次，我们用的 mvc 模型，<code>controller</code>，<code>service</code>，<code>dao</code>层往往很难区分，我的一套逻辑是，<code>controller</code>层做一些简单的校验，将核心的业务分发给<code>service</code>层，<code>dao</code>负责与数据库的交互；然而我看别人的代码<code>controller</code>层做了大量业务，这很难说是这个人的问题，因为我们的架构就摆在这儿——它允许我们这么做。<code>service</code>调用的获取数据接口是由<code>dao</code>层定义的，显然这又是另一个逻辑问题，难道不应该在<code>service</code>层定义，由<code>dao</code>实现吗？</p>
+<p>直到最近，我才接触到<code>DDD</code>，领域驱动开发，一下子就解决了我的困扰。CRUD，其实也是有学问的。</p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author: <a href="https://konoakira.com">Akira</a>
+            <p>Post Link: <a href="https://konoakira.com/2021/07/09/memos-of-my-3-projects-1/">https://konoakira.com/2021/07/09/memos-of-my-3-projects-1/</a>
+            <p>Publish Date: <a href="https://konoakira.com/2021/07/09/memos-of-my-3-projects-1/">July 9th 2021, 12:06:52 pm</a>
+            <p>Update Date: <a href="https://konoakira.com/2021/07/09/memos-of-my-3-projects-1/">July 15th 2021, 1:11:52 pm</a>
+            <p>Copyright Notice: All articles in this blog are licensed under <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/"> unless stating additionally.</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2021/06/29/alternate-print/" title= "交替打印">
+                    <div class="prevTitle">交替打印</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <div id="comment-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.0/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1.6.0/dist/gitalk.min.js"></script>
+    <script>
+        var gitalk = new Gitalk({
+            clientID: 'c2bb6ecdc360d1417817',
+            clientSecret: '3081aae8990bcbf19f97f3e13ce016eaa434b878',
+            id: '1625803612000',
+            repo: 'konoakira.github.io',
+            owner: 'konoakira',
+            admin: "konoakira",
+            createIssueManually: true,
+            distractionFreeMode: false
+        })
+        gitalk.render('comment-container')
+    </script>
+    
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+
+    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    
+</main>
+
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:konoakira@outlook.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/konoakira" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+		<!-- mermaid -->
+		
+			<script src='https://unpkg.com/mermaid@8.10.2/dist/mermaid.min.js'></script>
+			<script>
+				if (window.mermaid) {
+					var options = JSON.parse('{"flowchart":{"curve":"basis"}}');
+					mermaid.initialize(options);
+				}
+			</script>
+				
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E8%A6%81%E7%8A%B9%E8%B1%AB"><span class="toc-number">1.</span> <span class="toc-text">不要犹豫</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E4%BB%BF%EF%BC%8C%E5%B9%B6%E6%94%B9%E8%BF%9B"><span class="toc-number">2.</span> <span class="toc-text">模仿，并改进</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%AA%E6%9E%9D%E4%BB%A5%E5%8F%8A%E4%BB%A3%E7%A0%81%E7%89%87%E7%B2%92%E5%BA%A6"><span class="toc-number">3.</span> <span class="toc-text">剪枝以及代码片粒度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E7%BC%93%E5%AD%98"><span class="toc-number">4.</span> <span class="toc-text">使用缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E4%B8%9A%E5%8A%A1%E5%86%99%E8%B5%B7%E6%9D%A5%E9%BA%BB%E7%83%A6%EF%BC%8C%E5%BE%88%E6%9C%89%E5%8F%AF%E8%83%BD%E6%98%AF%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B2%A1%E8%AE%BE%E8%AE%A1%E5%A5%BD"><span class="toc-number">5.</span> <span class="toc-text">如果业务写起来麻烦，很有可能是数据库没设计好</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E4%BA%9B%E6%96%B0%E8%8A%B1%E6%A0%B7"><span class="toc-number">6.</span> <span class="toc-text">尝试些新花样</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Github-%E5%92%8C-StackOverflow-%E6%98%AF%E5%A5%BD%E4%B8%9C%E8%A5%BF"><span class="toc-number">7.</span> <span class="toc-text">Github 和 StackOverflow 是好东西</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E6%BA%90%E7%A0%81"><span class="toc-number">8.</span> <span class="toc-text">阅读源码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E9%87%8D%E6%9E%84"><span class="toc-number">9.</span> <span class="toc-text">代码重构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%87%82%E4%BA%9B%E5%89%8D%E7%AB%AF"><span class="toc-number">10.</span> <span class="toc-text">懂些前端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="toc-number">11.</span> <span class="toc-text">注意设计模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96"><span class="toc-number">12.</span> <span class="toc-text">查询优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E5%BF%83%E9%AD%94%E6%B3%95%E5%80%BC"><span class="toc-number">13.</span> <span class="toc-text">小心魔法值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E6%AF%94%E6%B2%9F%E9%80%9A%E6%9B%B4%E9%87%8D%E8%A6%81%E7%9A%84%E4%BA%86"><span class="toc-number">14.</span> <span class="toc-text">没有什么比沟通更重要的了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E7%9C%9F%E7%9A%84%E6%87%82-crud-%E5%90%97"><span class="toc-number">15.</span> <span class="toc-text">我真的懂 crud 吗</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 25
+        </div>
+        <!-- search  -->
+        
+            <div class="site-search popup-trigger">
+                <span class="iconfont-archer search-icon">&#xe627;</span>
+            </div>
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/09</span><a class="archive-post-title" href= "/2021/07/09/memos-of-my-3-projects-1/" >回顾我的三个项目-1</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/29</span><a class="archive-post-title" href= "/2021/06/29/alternate-print/" >交替打印</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/24</span><a class="archive-post-title" href= "/2021/06/24/k8s-Controllers/" >k8s 控制器探秘</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/19</span><a class="archive-post-title" href= "/2021/06/19/java-advanced-data-type/" >Java 数据类型进阶</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/16</span><a class="archive-post-title" href= "/2021/06/16/egg-stone-ballon/" >鸡蛋，石头与气球</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/13</span><a class="archive-post-title" href= "/2021/06/13/backpack-problems/" >背包问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2021/06/10/best-time-to-buy-sell-stock/" >Best Time to Buy & Sell Stock</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/07</span><a class="archive-post-title" href= "/2021/06/07/docker-review-2/" >Docker 总结二 overlay2 与 镜像</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2021/06/06/docker-review-1/" >Docker 总结一 隔离与限制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2021/06/06/fail-fast-&-fail-safe-iterator/" >Fail Fast & Fail Safe 迭代器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/04</span><a class="archive-post-title" href= "/2021/06/04/java-basics-collections/" >Java 集合类总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/23</span><a class="archive-post-title" href= "/2021/03/23/k8s-container-network/" >k8s 容器网络</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/08</span><a class="archive-post-title" href= "/2021/03/08/n-queens-my-template/" >n 皇后，我的套路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/02</span><a class="archive-post-title" href= "/2021/03/02/java-basics-map/" >Java map 总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/15</span><a class="archive-post-title" href= "/2021/02/15/java-basics-oop/" >Java 面向对象总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/14</span><a class="archive-post-title" href= "/2021/02/14/java-basics-data-type/" >Java 数据类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/21</span><a class="archive-post-title" href= "/2021/01/21/deterministic-finite-automaton/" >确定有限状态自动机</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/11</span><a class="archive-post-title" href= "/2021/01/11/median-of-two-sorted-arrays/" >median of two sorted arrays</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/23</span><a class="archive-post-title" href= "/2020/12/23/k8s-best-practice/" >k8s 最佳实践（For me 🙂）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/09</span><a class="archive-post-title" href= "/2020/12/09/minimum-path-sum-from-top-to-bottom/" >三角形最小路径和</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2020/11/25/slice-and-backtrack/" >切片和回溯法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/14</span><a class="archive-post-title" href= "/2020/09/14/golang-basics-data-structure/" >golang basics - data structure</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/26</span><a class="archive-post-title" href= "/2020/06/26/bio-nio-aio-netty/" >bio,nio,aio&netty</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href= "/2020/05/07/Why-I-Implement-Binary-Search-Like-This/" >为什么我要这么写二分查找?</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/29</span><a class="archive-post-title" href= "/2020/03/29/spring-cloud-alibaba-tutorial-1/" >spring cloud alibaba 全家桶食用记录-1：dubbo</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="netty"><span class="iconfont-archer">&#xe606;</span>netty</span>
+    
+        <span class="sidebar-tag-name" data-tags="binary search"><span class="iconfont-archer">&#xe606;</span>binary search</span>
+    
+        <span class="sidebar-tag-name" data-tags="dynamic programming"><span class="iconfont-archer">&#xe606;</span>dynamic programming</span>
+    
+        <span class="sidebar-tag-name" data-tags="docker"><span class="iconfont-archer">&#xe606;</span>docker</span>
+    
+        <span class="sidebar-tag-name" data-tags="deterministic finite automaton"><span class="iconfont-archer">&#xe606;</span>deterministic finite automaton</span>
+    
+        <span class="sidebar-tag-name" data-tags="basic"><span class="iconfont-archer">&#xe606;</span>basic</span>
+    
+        <span class="sidebar-tag-name" data-tags="advanced"><span class="iconfont-archer">&#xe606;</span>advanced</span>
+    
+        <span class="sidebar-tag-name" data-tags="kubernetes"><span class="iconfont-archer">&#xe606;</span>kubernetes</span>
+    
+        <span class="sidebar-tag-name" data-tags="k8s"><span class="iconfont-archer">&#xe606;</span>k8s</span>
+    
+        <span class="sidebar-tag-name" data-tags="backtrack"><span class="iconfont-archer">&#xe606;</span>backtrack</span>
+    
+        <span class="sidebar-tag-name" data-tags="slice"><span class="iconfont-archer">&#xe606;</span>slice</span>
+    
+        <span class="sidebar-tag-name" data-tags="dubbo"><span class="iconfont-archer">&#xe606;</span>dubbo</span>
+    
+        <span class="sidebar-tag-name" data-tags="concurrency"><span class="iconfont-archer">&#xe606;</span>concurrency</span>
+    
+        <span class="sidebar-tag-name" data-tags="experience"><span class="iconfont-archer">&#xe606;</span>experience</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
+    
+        <span class="sidebar-category-name" data-categories="algorithms"><span class="iconfont-archer">&#xe60a;</span>algorithms</span>
+    
+        <span class="sidebar-category-name" data-categories="leetocode"><span class="iconfont-archer">&#xe60a;</span>leetocode</span>
+    
+        <span class="sidebar-category-name" data-categories="leetcode"><span class="iconfont-archer">&#xe60a;</span>leetcode</span>
+    
+        <span class="sidebar-category-name" data-categories="Cloud-Native"><span class="iconfont-archer">&#xe60a;</span>Cloud-Native</span>
+    
+        <span class="sidebar-category-name" data-categories="golang"><span class="iconfont-archer">&#xe60a;</span>golang</span>
+    
+        <span class="sidebar-category-name" data-categories="Cloud-Native"><span class="iconfont-archer">&#xe60a;</span>Cloud-Native</span>
+    
+        <span class="sidebar-category-name" data-categories="microservices"><span class="iconfont-archer">&#xe60a;</span>microservices</span>
+    
+        <span class="sidebar-category-name" data-categories="Projects"><span class="iconfont-archer">&#xe60a;</span>Projects</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "Akira"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+        <div class="site-search">
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="iconfont-archer">&#xe609;</i>
+    </span>
+  </div>
+</div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.8.3/dist/instantsearch.production.min.js" integrity="sha256-LAGhRRdtVoD6RLo2qDQsU2mp+XVSciKRC8XPOBWmofM=" crossorigin="anonymous"></script>
+        <script src="/scripts/search.js" defer></script>
+    
+    <!-- busuanzi  -->
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
+
+
