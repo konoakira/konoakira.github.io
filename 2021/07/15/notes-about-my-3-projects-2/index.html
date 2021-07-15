@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="Akira">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Akira">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog,blog,java,golang">
+    
+    <meta name="description" content="akira's notes.">
+    <meta name="description" content="这一篇回顾我做的另外两个项目，感触并没有上篇那么多，更多的是技术上的处理与思考。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="回顾我的三个项目-下">
+<meta property="og:url" content="https://konoakira.com/2021/07/15/notes-about-my-3-projects-2/index.html">
+<meta property="og:site_name" content="DYSTOPIA">
+<meta property="og:description" content="这一篇回顾我做的另外两个项目，感触并没有上篇那么多，更多的是技术上的处理与思考。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://konoakira.com/images/WechatIMG68.jpeg">
+<meta property="og:image" content="https://konoakira.com/images/WechatIMG66.jpeg">
+<meta property="og:image" content="https://konoakira.com/images/WechatIMG67.jpeg">
+<meta property="article:published_time" content="2021-07-15T05:17:09.000Z">
+<meta property="article:modified_time" content="2021-07-15T08:47:01.282Z">
+<meta property="article:author" content="Akira">
+<meta property="article:tag" content="experience">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://konoakira.com/images/WechatIMG68.jpeg">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>回顾我的三个项目-下 · DYSTOPIA</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20210204" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20210204" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js?v=20210204" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    <script src="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.3/js/all.min.js"  data-auto-replace-svg="nest" ></script>
+    
+        <!-- algolia -->
+        <script>
+            
+            var hits = JSON.parse('{"per_page":10}')
+            var labels = JSON.parse('{"input_placeholder":"Search for Posts","hits_empty":"We did not find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}')
+
+            var algolia = {
+                appId: '66KI0W75FJ',
+                apiKey: '0ca84f70627c86b59375264768a98a0d',
+                indexName: 'dystopia',
+                hits: hits,
+                labels: labels
+            }
+        </script>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >DYSTOPIA</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">回顾我的三个项目-下</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>DYSTOPIA</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(https://source.unsplash.com/random)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            回顾我的三个项目-下
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "experience">experience</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">3k</span>Reading time: <span class="post-count reading-time">10 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2021/07/15</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>这一篇回顾我做的另外两个项目，感触并没有上篇那么多，更多的是技术上的处理与思考。</p>
+<span id="more"></span>
+
+<h1 id="第二个项目"><a href="#第二个项目" class="headerlink" title="第二个项目"></a>第二个项目</h1><p>第二个项目是一个微信公众号引流项目，如下图，用户登录微信小程序获取打印内容二维码，在打印终端上扫码打印，打印时会播放广告。再从打印的票上获取要关注的公众号，公众号会发送链接，点击回到小程序领取红包。</p>
+<p><img src="/images/WechatIMG68.jpeg" alt="project1"></p>
+<p><img src="/images/WechatIMG66.jpeg" alt="project2"></p>
+<p><img src="/images/WechatIMG67.jpeg" alt="project3"></p>
+<p>这个项目设计到四方，服务器端，小程序端，Web 管理端，打印终端。值得夸耀的是，服务器端和Web 管理端的代码完全是我本人写的；小程序端<code>我的</code>页面是我画的，登录逻辑是我实现的；打印终端 C# 授权登录逻辑也是我实现的。这个业务的流程也是由我本人设计并验证的，虽然业务很简单，但是还是有值得推敲的地方的。</p>
+<h2 id="可行性分析"><a href="#可行性分析" class="headerlink" title="可行性分析"></a>可行性分析</h2><p>不得不说，可行性分析是业务的第一位的，应该排在需求的前面。我们面临的第一个问题就是能否发红包，该怎么发红包，在哪里发红包。根据腾讯公众号平台的文档（不得不吐槽做的太差了，该踩的坑一样不会少踩），商户需要注册90天，且有近30天的流水。这一条我们就不满足，索性客户有其他的商户号，又是疫情期间，可以临时顶上拖一阵。第二个问题就是怎么发？我们希望在小程序中发，调用小程序的 API，可是气人的来了，我们需要用户在公众号下的<code>openid</code>，是的，小程序下的<code>openid</code>和它不是一个，也就是说我们不能用这个接口！还好，我发现腾讯有个公众号平台，商户号（开通企业到个人付款）绑定它，小程序再绑定它，皆可以调用企业到个人付款的API，并且是使用小程序的<code>openid</code>。我现在说起来简单，可当时真是折磨的不行。（顺便一提，这个微信红包不能少于三毛钱，有一个坑）。</p>
+<h2 id="架构的安全"><a href="#架构的安全" class="headerlink" title="架构的安全"></a>架构的安全</h2><p>这是我第一次认真思考这个问题，之所以会思考它，是因为我们的业务涉及到金钱。</p>
+<h3 id="传输安全"><a href="#传输安全" class="headerlink" title="传输安全"></a>传输安全</h3><p>这没什么好商量的，只能 HTTPS 传输，防止窃听，篡改和假冒风险。事实上，腾讯支付要求必须要 HTTPS 传输（证书由商户下载给我们），并且对请求参数进行签名。此外，小程序也要求 HTTPS 传输。</p>
+<h3 id="授权安全"><a href="#授权安全" class="headerlink" title="授权安全"></a>授权安全</h3><p>我们要保证打印终端不会被盗用，被假冒。（除了 HTTPS 传输）每台打印机在首次使用时会被要求输入一个唯一的32位授权码，它也可以理解为数据表中的一个键，这样可以保证1. 设备一定是提前存在与数据库中 2. 激活设备时会查询设备的状态，这保证了其一定不会被二次激活。</p>
+<p>我们又是怎么知道打印时机器的编号呢？这里就要说我们的 Token 机制了，传输时服务器生成 JWT token 交给终端，以后终端每次传输携带它。那么是怎么获取 Token 的呢？终端授权成功会，会把终端 id 利用对称加密算法得到的字符串写入注册表中，登录服务器时带上这个加密字符串，服务器解密验证发放 Token。</p>
+<h3 id="交易安全"><a href="#交易安全" class="headerlink" title="交易安全"></a>交易安全</h3><p>首先，交易不是一个幂等的操作，不可能用户点一次领取红包就发一次。这一点其实腾讯已经想到了，我们的系统再不安全，一天也只能给一个用户发最多50块钱的红包。其次，腾讯支付要求交易时携带交易号，而这个交易号是用商户号+日期+10位一天内不能重复的数字构成，我们生成交易号后存入数据库，这一层也保证了安全。最后，腾讯要求只能由白名单中的 IP 才能调用发放红包的接口。</p>
+<p>我们的工作似乎就变成了保证订单号唯一，不会多发红包即可。这一点接下来会详谈。</p>
+<h3 id="数据库安全"><a href="#数据库安全" class="headerlink" title="数据库安全"></a>数据库安全</h3><p>这里真的就很简单了，有时我调试时都会觉得麻烦。首先是强口令。其次是禁止远程访问，最后开启防火墙。这里我想起我们上线就遇到的 bug，开发已经调试时我们所有人的微信昵称没有一个有 emoji 的，上线时好多人都有 emoji，导致无法存入数据库。后来，我把编码改为<code>utf8mb4</code>解决了这个问题，我是怎么发现的，因为我让客户去给我拍下出问题的微信号，它们的共同点就是都是 emoji。</p>
+<h2 id="日志的重要性"><a href="#日志的重要性" class="headerlink" title="日志的重要性"></a>日志的重要性</h2><p>我之前很少记录日志，可能是我对自己的自信，能出现什么 bug 呢？可现实就是我们无法预料到所有场景，比如 emoji 问题，比如红包不能少于三毛钱，比如前端传输时加了引号，比如商户号没有余额等等，由于加了 logging，我能很快定位这些问题。</p>
+<h2 id="如何保证不会超卖"><a href="#如何保证不会超卖" class="headerlink" title="如何保证不会超卖"></a>如何保证不会超卖</h2><p>这里会出现超卖问题吗？老实说，概率很小。解释这个问题，还要先说明我是何时从广告主处扣钱。并非每次打印都会扣钱，打印终端发送打印请求获取打印内容及广告内容，这一部并不会扣钱，因为打印有可能失败（比如打印纸张不够）。打印成功后，终端会发送回执，这一步会扣钱。而打印就注定是同步过程，我们有五个打印机，事实上同时发生打印成功的概率还是很小的。尽管如此我还是加了个 <code>synchronized</code>，并发量最大也就是5，性能没问题的。</p>
+<h2 id="订单号生成策略"><a href="#订单号生成策略" class="headerlink" title="订单号生成策略"></a>订单号生成策略</h2><h2 id="订单号何时生成？"><a href="#订单号何时生成？" class="headerlink" title="订单号何时生成？"></a>订单号何时生成？</h2><p>显然不能是从广告主处扣钱后，因为大多数人很有可能不会去领钱，因此订单号要在其领红包时生成。</p>
+<h3 id="订单号怎么生成？"><a href="#订单号怎么生成？" class="headerlink" title="订单号怎么生成？"></a>订单号怎么生成？</h3><p>前面讲过，订单号由商户号+日期+一天能不能重复的10位数字。我的第一反应是这个数字可以查数据库中的已领取的票数决定，显然这是不对的，可能会有几个人同时领。后来，我回忆起 Redis 有个自增功能，由于它是同步的，于是这个数字就有 Redis 生成。</p>
+<h2 id="订单失效机制"><a href="#订单失效机制" class="headerlink" title="订单失效机制"></a>订单失效机制</h2><p>生成票后，三十分钟，如果用户没有领红包，就让它失效，并把钱还给商家。一开始我想用延时队列做这件事，单开一个线程一直去队列中拿票，后来觉得不够优雅，作罢。因为我想起来 Redis 有个过期键机制，每次生成一个票，就在 Redis中插入一个 30 分钟的键，然后监听过期事件。注意，这里我还考虑了一个懒检测机制，如果某次没有收到监听时间，用户领红包时如果状态是未领取也会再判断一下是否过期（其实这一步是获取用户红包金额时一起做的）。</p>
+<h2 id="容错机制"><a href="#容错机制" class="headerlink" title="容错机制"></a>容错机制</h2><p>发钱时由于通过网络请求腾讯服务器，那它可能就出现网络问题。这里我加了一个 FailOver 机制，如果出现异常，那么就重试再发一次。可能还会失败，怎么办呢？这里就要提我设计的状态机制了。一张票的状态可以是未领取（0），已领取（1），已失效（2），我又加了个领取中（3，4，5）。发红包时把状态设为领取中（3），发红包失败返回让用户重试（多动一下拇指而已），大多数人都会再按一下。如果顾客没有重试，那么在上一步的订单失效机制触发时，如果这个状态还是3，我就再给这个键续30分钟，同时把状态改为5；如果这个状态是5，那我就认为用户不愿再领了，直接把钱还给商家。</p>
+<h2 id="事件机制"><a href="#事件机制" class="headerlink" title="事件机制"></a>事件机制</h2><p>其实，可以看到很多地方都会涉及到商家的状态（如果它账户下没有余额，或者充值后，或者红包退还都会改变状态），这里我就引入了刷新商家的事件。每次其余额更改时都会触发该事件，这样我就不要重复写更改状态的逻辑了。</p>
+<h2 id="终端健康"><a href="#终端健康" class="headerlink" title="终端健康"></a>终端健康</h2><p>这里就用到的简单的心跳机制，我也在这里加入了容错机制。由于终端是连接地铁里的 Wi-Fi，信号难免会差，很可能某次心态没发过来。我在这里容忍三次失联，每次收到心跳时与数据库最后更新时间比，如果超过三次心跳间隔就通过 WebSocket 向 Web 端发出警告。</p>
+<h2 id="扫码枪编码"><a href="#扫码枪编码" class="headerlink" title="扫码枪编码"></a>扫码枪编码</h2><p>其实这不算什么大问题，由于扫码枪扫二维码得到的是一个定长的字符串，这就要求我们的编码具有可扩展性。我们把前32位设为用户 id，把33-34 设为打印内容大类（单词，星座），35-36 设为打印内容小类（天蝎，雅思），这样的设计就满足了我们的需求。日后我们也再增加打印内容（总共100类，远远足够），而不必更改终端代码。</p>
+<h1 id="第三个项目"><a href="#第三个项目" class="headerlink" title="第三个项目"></a>第三个项目</h1><p>第三个项目是一个将任意可执行代码（这里叫算法资源）封装发布成外界可请求的 url 形式，对就是云函数（后者叫 FaaS）这一套。但是，做的及其痛苦，我认为它已经失败了，尽管现在还在做。失败的原因有几个：</p>
+<h2 id="想的太多"><a href="#想的太多" class="headerlink" title="想的太多"></a>想的太多</h2><p>我们的老师同大多数不懂技术的创业者一样，想的太多。我们实验室是个很小的实验室，本来就不多人，结果我们核心功能都没做出来，他就在畅想怎么获利，会员制，计算资源计费…..只有两个人研究核心功能，其他人做社区功能或者其他项目，excuse me？</p>
+<h2 id="软件工程也是一门管理艺术"><a href="#软件工程也是一门管理艺术" class="headerlink" title="软件工程也是一门管理艺术"></a>软件工程也是一门管理艺术</h2><p>凡是设计到工程，必然设计到分工，人员的调度，对工作难度的估计，对团队成员的能力的评估。我们用到的技术不再仅仅是 Spring boot 那一套了，Kubernetes，Docker，Linux 都要有人懂得。是的，我们每一个人懂得。现在的状态就是一个不懂的人带着几个不懂的人瞎搞。</p>
+<h2 id="公平的制度"><a href="#公平的制度" class="headerlink" title="公平的制度"></a>公平的制度</h2><p>这一点我在做第一个项目时就感受到了，本来第二个任务是分配给两个人做的，结果落在了我一个人身上，用他们的话术就是能力越大责任越大。可我只感受到了责任。第二个项目是我在开题时做的，大部分工作都是我一个人完成，包括担任客服角色。做第三个项目我正面临找工作……当然，我也懂得感恩，懂得感谢实验室的资源，可即使如此，即使抗压能力再强，也受不了这样的剥削。</p>
+<p>尽管如此，我还是学习了 Docker 技术，k8s 的搭建，控制器模式，和一些基础的 API object，也算是受虐狂的意外收获吧。</p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author: <a href="https://konoakira.com">Akira</a>
+            <p>Post Link: <a href="https://konoakira.com/2021/07/15/notes-about-my-3-projects-2/">https://konoakira.com/2021/07/15/notes-about-my-3-projects-2/</a>
+            <p>Publish Date: <a href="https://konoakira.com/2021/07/15/notes-about-my-3-projects-2/">July 15th 2021, 1:17:09 pm</a>
+            <p>Update Date: <a href="https://konoakira.com/2021/07/15/notes-about-my-3-projects-2/">July 15th 2021, 4:47:01 pm</a>
+            <p>Copyright Notice: All articles in this blog are licensed under <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/"> unless stating additionally.</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2021/07/09/memos-of-my-3-projects-1/" title= "回顾我的三个项目-上">
+                    <div class="prevTitle">回顾我的三个项目-上</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <div id="comment-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.0/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1.6.0/dist/gitalk.min.js"></script>
+    <script>
+        var gitalk = new Gitalk({
+            clientID: 'c2bb6ecdc360d1417817',
+            clientSecret: '3081aae8990bcbf19f97f3e13ce016eaa434b878',
+            id: '1626326229000',
+            repo: 'konoakira.github.io',
+            owner: 'konoakira',
+            admin: "konoakira",
+            createIssueManually: true,
+            distractionFreeMode: false
+        })
+        gitalk.render('comment-container')
+    </script>
+    
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+
+    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    
+</main>
+
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:konoakira@outlook.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/konoakira" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+		<!-- mermaid -->
+		
+			<script src='https://unpkg.com/mermaid@8.10.2/dist/mermaid.min.js'></script>
+			<script>
+				if (window.mermaid) {
+					var options = JSON.parse('{"flowchart":{"curve":"basis"}}');
+					mermaid.initialize(options);
+				}
+			</script>
+				
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.</span> <span class="toc-text">第二个项目</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%A1%8C%E6%80%A7%E5%88%86%E6%9E%90"><span class="toc-number">1.1.</span> <span class="toc-text">可行性分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E7%9A%84%E5%AE%89%E5%85%A8"><span class="toc-number">1.2.</span> <span class="toc-text">架构的安全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93%E5%AE%89%E5%85%A8"><span class="toc-number">1.2.1.</span> <span class="toc-text">传输安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%88%E6%9D%83%E5%AE%89%E5%85%A8"><span class="toc-number">1.2.2.</span> <span class="toc-text">授权安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%A4%E6%98%93%E5%AE%89%E5%85%A8"><span class="toc-number">1.2.3.</span> <span class="toc-text">交易安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8"><span class="toc-number">1.2.4.</span> <span class="toc-text">数据库安全</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="toc-number">1.3.</span> <span class="toc-text">日志的重要性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E4%B8%8D%E4%BC%9A%E8%B6%85%E5%8D%96"><span class="toc-number">1.4.</span> <span class="toc-text">如何保证不会超卖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A2%E5%8D%95%E5%8F%B7%E7%94%9F%E6%88%90%E7%AD%96%E7%95%A5"><span class="toc-number">1.5.</span> <span class="toc-text">订单号生成策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A2%E5%8D%95%E5%8F%B7%E4%BD%95%E6%97%B6%E7%94%9F%E6%88%90%EF%BC%9F"><span class="toc-number">1.6.</span> <span class="toc-text">订单号何时生成？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A2%E5%8D%95%E5%8F%B7%E6%80%8E%E4%B9%88%E7%94%9F%E6%88%90%EF%BC%9F"><span class="toc-number">1.6.1.</span> <span class="toc-text">订单号怎么生成？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A2%E5%8D%95%E5%A4%B1%E6%95%88%E6%9C%BA%E5%88%B6"><span class="toc-number">1.7.</span> <span class="toc-text">订单失效机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E9%94%99%E6%9C%BA%E5%88%B6"><span class="toc-number">1.8.</span> <span class="toc-text">容错机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6"><span class="toc-number">1.9.</span> <span class="toc-text">事件机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%88%E7%AB%AF%E5%81%A5%E5%BA%B7"><span class="toc-number">1.10.</span> <span class="toc-text">终端健康</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%AB%E7%A0%81%E6%9E%AA%E7%BC%96%E7%A0%81"><span class="toc-number">1.11.</span> <span class="toc-text">扫码枪编码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E4%B8%AA%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.</span> <span class="toc-text">第三个项目</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%83%B3%E7%9A%84%E5%A4%AA%E5%A4%9A"><span class="toc-number">2.1.</span> <span class="toc-text">想的太多</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%9F%E6%98%AF%E4%B8%80%E9%97%A8%E7%AE%A1%E7%90%86%E8%89%BA%E6%9C%AF"><span class="toc-number">2.2.</span> <span class="toc-text">软件工程也是一门管理艺术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AC%E5%B9%B3%E7%9A%84%E5%88%B6%E5%BA%A6"><span class="toc-number">2.3.</span> <span class="toc-text">公平的制度</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 26
+        </div>
+        <!-- search  -->
+        
+            <div class="site-search popup-trigger">
+                <span class="iconfont-archer search-icon">&#xe627;</span>
+            </div>
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/15</span><a class="archive-post-title" href= "/2021/07/15/notes-about-my-3-projects-2/" >回顾我的三个项目-下</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/09</span><a class="archive-post-title" href= "/2021/07/09/memos-of-my-3-projects-1/" >回顾我的三个项目-上</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/29</span><a class="archive-post-title" href= "/2021/06/29/alternate-print/" >交替打印</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/24</span><a class="archive-post-title" href= "/2021/06/24/k8s-Controllers/" >k8s 控制器探秘</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/19</span><a class="archive-post-title" href= "/2021/06/19/java-advanced-data-type/" >Java 数据类型进阶</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/16</span><a class="archive-post-title" href= "/2021/06/16/egg-stone-ballon/" >鸡蛋，石头与气球</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/13</span><a class="archive-post-title" href= "/2021/06/13/backpack-problems/" >背包问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2021/06/10/best-time-to-buy-sell-stock/" >Best Time to Buy & Sell Stock</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/07</span><a class="archive-post-title" href= "/2021/06/07/docker-review-2/" >Docker 总结二 overlay2 与 镜像</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2021/06/06/docker-review-1/" >Docker 总结一 隔离与限制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2021/06/06/fail-fast-&-fail-safe-iterator/" >Fail Fast & Fail Safe 迭代器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/04</span><a class="archive-post-title" href= "/2021/06/04/java-basics-collections/" >Java 集合类总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/23</span><a class="archive-post-title" href= "/2021/03/23/k8s-container-network/" >k8s 容器网络</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/08</span><a class="archive-post-title" href= "/2021/03/08/n-queens-my-template/" >n 皇后，我的套路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/02</span><a class="archive-post-title" href= "/2021/03/02/java-basics-map/" >Java map 总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/15</span><a class="archive-post-title" href= "/2021/02/15/java-basics-oop/" >Java 面向对象总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/14</span><a class="archive-post-title" href= "/2021/02/14/java-basics-data-type/" >Java 数据类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/21</span><a class="archive-post-title" href= "/2021/01/21/deterministic-finite-automaton/" >确定有限状态自动机</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/11</span><a class="archive-post-title" href= "/2021/01/11/median-of-two-sorted-arrays/" >median of two sorted arrays</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/23</span><a class="archive-post-title" href= "/2020/12/23/k8s-best-practice/" >k8s 最佳实践（For me 🙂）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/09</span><a class="archive-post-title" href= "/2020/12/09/minimum-path-sum-from-top-to-bottom/" >三角形最小路径和</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2020/11/25/slice-and-backtrack/" >切片和回溯法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/14</span><a class="archive-post-title" href= "/2020/09/14/golang-basics-data-structure/" >golang basics - data structure</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/26</span><a class="archive-post-title" href= "/2020/06/26/bio-nio-aio-netty/" >bio,nio,aio&netty</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href= "/2020/05/07/Why-I-Implement-Binary-Search-Like-This/" >为什么我要这么写二分查找?</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/29</span><a class="archive-post-title" href= "/2020/03/29/spring-cloud-alibaba-tutorial-1/" >spring cloud alibaba 全家桶食用记录-1：dubbo</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="netty"><span class="iconfont-archer">&#xe606;</span>netty</span>
+    
+        <span class="sidebar-tag-name" data-tags="binary search"><span class="iconfont-archer">&#xe606;</span>binary search</span>
+    
+        <span class="sidebar-tag-name" data-tags="dynamic programming"><span class="iconfont-archer">&#xe606;</span>dynamic programming</span>
+    
+        <span class="sidebar-tag-name" data-tags="docker"><span class="iconfont-archer">&#xe606;</span>docker</span>
+    
+        <span class="sidebar-tag-name" data-tags="deterministic finite automaton"><span class="iconfont-archer">&#xe606;</span>deterministic finite automaton</span>
+    
+        <span class="sidebar-tag-name" data-tags="basic"><span class="iconfont-archer">&#xe606;</span>basic</span>
+    
+        <span class="sidebar-tag-name" data-tags="advanced"><span class="iconfont-archer">&#xe606;</span>advanced</span>
+    
+        <span class="sidebar-tag-name" data-tags="kubernetes"><span class="iconfont-archer">&#xe606;</span>kubernetes</span>
+    
+        <span class="sidebar-tag-name" data-tags="k8s"><span class="iconfont-archer">&#xe606;</span>k8s</span>
+    
+        <span class="sidebar-tag-name" data-tags="backtrack"><span class="iconfont-archer">&#xe606;</span>backtrack</span>
+    
+        <span class="sidebar-tag-name" data-tags="slice"><span class="iconfont-archer">&#xe606;</span>slice</span>
+    
+        <span class="sidebar-tag-name" data-tags="dubbo"><span class="iconfont-archer">&#xe606;</span>dubbo</span>
+    
+        <span class="sidebar-tag-name" data-tags="concurrency"><span class="iconfont-archer">&#xe606;</span>concurrency</span>
+    
+        <span class="sidebar-tag-name" data-tags="experience"><span class="iconfont-archer">&#xe606;</span>experience</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
+    
+        <span class="sidebar-category-name" data-categories="algorithms"><span class="iconfont-archer">&#xe60a;</span>algorithms</span>
+    
+        <span class="sidebar-category-name" data-categories="leetocode"><span class="iconfont-archer">&#xe60a;</span>leetocode</span>
+    
+        <span class="sidebar-category-name" data-categories="leetcode"><span class="iconfont-archer">&#xe60a;</span>leetcode</span>
+    
+        <span class="sidebar-category-name" data-categories="Cloud-Native"><span class="iconfont-archer">&#xe60a;</span>Cloud-Native</span>
+    
+        <span class="sidebar-category-name" data-categories="golang"><span class="iconfont-archer">&#xe60a;</span>golang</span>
+    
+        <span class="sidebar-category-name" data-categories="Cloud-Native"><span class="iconfont-archer">&#xe60a;</span>Cloud-Native</span>
+    
+        <span class="sidebar-category-name" data-categories="microservices"><span class="iconfont-archer">&#xe60a;</span>microservices</span>
+    
+        <span class="sidebar-category-name" data-categories="Projects"><span class="iconfont-archer">&#xe60a;</span>Projects</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "Akira"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+        <div class="site-search">
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="iconfont-archer">&#xe609;</i>
+    </span>
+  </div>
+</div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.8.3/dist/instantsearch.production.min.js" integrity="sha256-LAGhRRdtVoD6RLo2qDQsU2mp+XVSciKRC8XPOBWmofM=" crossorigin="anonymous"></script>
+        <script src="/scripts/search.js" defer></script>
+    
+    <!-- busuanzi  -->
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
+
+
